@@ -8,6 +8,7 @@ import math
 from PIL import Image, ImageDraw, ImageFont
 import random
 import asyncpg
+import functools
 
 class User(commands.Cog):
 	"""Some user accessories"""
@@ -53,33 +54,9 @@ class User(commands.Cog):
 		embed.set_image(url=member.avatar_url)
 		await ctx.send(embed=embed)
 	
-	@commands.command(aliases=["rank"])
-	async def profile(self, ctx):
-		"""Nice profile card. Shows level, xp, rank and status"""
-		await self.ucmd("profile")
-		res = await self.client.pgdb.fetch(f"SELECT * FROM levels WHERE guildid = $1 ORDER BY exp DESC", ctx.guild.id)
-		pos = 0;
-		xp = 0;
-		level = 0;
-		
-		for result in res:
-			pos+=1
-			if result['userid'] == ctx.author.id:
-				xp = result['exp']
-				level = result['level']
-				break;
-			else:
-				pass
-		
-		if level >0:
-			lnk = str(ctx.author.avatar_url_as(format="png"))
-			async with aiohttp.ClientSession() as s:
-				async with s.get(lnk) as r:
-					data = await r.read()
-			
-			imn = f"static/profile/{ctx.author.id}.png"
+	def generate_profile(self, data, imn,level, xp, pos,ctx):
 			with open(imn,'wb') as f:
-				f.write(data)
+					f.write(data)
 			
 			pro = Image.open(imn)
 			npro = pro.resize((180,180))
@@ -191,11 +168,44 @@ class User(commands.Cog):
 			ncn = f"static/img/{str(ctx.author.id)}{str(random.randint(1,100000))}.png"
 			
 			out.save(ncn)
-			file = discord.File(fp=ncn, filename="card.png")
+			return ncn
+	
+	@commands.command(aliases=["rank"])
+	async def profile(self, ctx):
+		"""Nice profile card. Shows level, xp, rank and status"""
+		await self.ucmd("profile")
+		res = await self.client.pgdb.fetch(f"SELECT * FROM levels WHERE guildid = $1 ORDER BY exp DESC", ctx.guild.id)
+		pos = 0;
+		xp = 0;
+		level = 0;
+		
+		for result in res:
+			pos+=1
+			if result['userid'] == ctx.author.id:
+				xp = result['exp']
+				level = result['level']
+				break;
+			else:
+				pass
+		
+		if level >0:
+			lnk = str(ctx.author.avatar_url_as(format="png"))
+			async with aiohttp.ClientSession() as s:
+				async with s.get(lnk) as r:
+					data = await r.read()
+			
+			imn = f"static/profile/{ctx.author.id}.png"
+			
+			# Running blocking stuff in a executor
+			thing = functools.partial(self.generate_profile, data, imn, level, xp, pos, ctx)
+			some_stuff = await self.client.loop.run_in_executor(None, thing)
+  	
+			
+			file = discord.File(fp=some_stuff, filename="card.png")
 			await ctx.send(file=file)
     
             # Removing files to save space
-			os.remove(ncn)
+			os.remove(some_stuff)
 		else:
 			await ctx.send("You are not ranked yet! Send some messages.")
   

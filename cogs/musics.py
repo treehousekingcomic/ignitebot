@@ -327,7 +327,7 @@ class PaginatorSource(menus.ListPageSource):
 
 
 class Musics(commands.Cog, name="Music"):
-    """Music Cog."""
+    """Listen to musics. (On development, May not be stable)."""
 
     def __init__(self, bot: commands.Bot):
         self.bot = bot
@@ -418,8 +418,8 @@ class Musics(commands.Cog, name="Music"):
 
         if ctx.command.name == 'connect' and not player.context:
             return
-        elif self.is_privileged(ctx):
-            return
+        #elif self.is_privileged(ctx):
+#            return
 
         if not player.channel_id:
             return
@@ -444,34 +444,7 @@ class Musics(commands.Cog, name="Music"):
                 required = 2
 
         return required
-
-    def is_privileged(self, ctx: commands.Context):
-        """Check whether the user is an Admin or DJ."""
-        player: Player = self.bot.wavelink.get_player(guild_id=ctx.guild.id, cls=Player, context=ctx)
         
-        #return True
-#        
-#        for r in ctx.guild.roles:
-#        	if r.name == "Dj":
-#        		role = r
-#        	elif r.name == "DJ":
-#        		role = r
-#        	elif r.name == "Musician":
-#        		role = r
-#        	else:
-#        		role = None
-#        	if role is not None:
-#        		for cr in ctx.author.roles:
-#        			if cr == role:
-#        				priv = True
-#        				break
-#        			else:
-#        				priv = False
-#        	else:
-#        		priv = False
-        
-        #return player.dj == ctx.author or (priv or ctx.author.guild_permissions.manage_guild)
-
     @commands.command(aliases=["join"])
     async def connect(self, ctx: commands.Context, *, channel: discord.VoiceChannel = None):
         """Connect to a voice channel."""
@@ -482,14 +455,13 @@ class Musics(commands.Cog, name="Music"):
 
         channel = getattr(ctx.author.voice, 'channel', channel)
         if channel is None:
-            await ctx.send("You must be in a voice channel first.")
-            return
-
-        await player.connect(channel.id)
-        await ctx.send(f"Connected to `{channel.name}` and binded to `{ctx.channel.name}`")
+            return await ctx.send("You must be in a voice channel first.")
+        else:
+            await player.connect(channel.id)
+            await ctx.send(f"Connected to `{channel.name}` and binded to `{ctx.channel.name}`")
 
     @commands.command()
-    async def play(self, ctx: commands.Context, *, query: str):
+    async def play(self, ctx: commands.Context, *, query: str=None):
         """Play or queue a song with the given query."""
         player: Player = self.bot.wavelink.get_player(guild_id=ctx.guild.id, cls=Player, context=ctx)
 
@@ -497,32 +469,42 @@ class Musics(commands.Cog, name="Music"):
             await ctx.invoke(self.connect)
             await asyncio.sleep(1)
         
-        await ctx.send(f"🔍 Searching for `{query}`")
-        query = query.strip('<>')
-        if not URL_REG.match(query):
-            query = f'ytsearch:{query}'
+        if player.is_paused and query is None:
+            try:
+                return await player.set_pause(False)
+            except:
+                return
+        elif not player.is_paused and query is None:
+        	pass
+        	#return await ctx.send("Please enter a song name to play!")
+            	
+        if player.is_connected and query is not None:
+            await ctx.send(f"🔍 Searching for `{query}`")
+            query = query.strip('<>')
+            if not URL_REG.match(query):
+                query = f'ytsearch:{query}'
 
-        tracks = await self.bot.wavelink.get_tracks(query)
-        if not tracks:
-            return await ctx.send('🚫 No songs were found with that query. Please try again.', delete_after=15)
+            tracks = await self.bot.wavelink.get_tracks(query)
+            if not tracks:
+                return await ctx.send('🚫 No songs were found with that query. Please try again.', delete_after=15)
 
-        if isinstance(tracks, wavelink.TrackPlaylist):
-            for track in tracks.tracks:
-                track = Track(track.id, track.info, requester=ctx.author)
+            if isinstance(tracks, wavelink.TrackPlaylist):
+                for track in tracks.tracks:
+                    track = Track(track.id, track.info, requester=ctx.author)
+                    await player.queue.put(track)
+
+                await ctx.send(f'🎶 Playing {tracks.data["playlistInfo"]["name"]}'
+                           f' with {len(tracks.tracks)} songs to the queue.\n')
+            else:
+                track = Track(tracks[0].id, tracks[0].info, requester=ctx.author)
+                await ctx.send(f'\n🎧 Added {track.title} to the Queue\n', delete_after=15)
                 await player.queue.put(track)
 
-            await ctx.send(f'🎶 Playing {tracks.data["playlistInfo"]["name"]}'
-                           f' with {len(tracks.tracks)} songs to the queue.\n')
-        else:
-            track = Track(tracks[0].id, tracks[0].info, requester=ctx.author)
-            await ctx.send(f'\n🎧 Added {track.title} to the Queue\n', delete_after=15)
-            await player.queue.put(track)
-
-        if not player.is_playing:
-            await player.do_next()
+            if not player.is_playing:
+                await player.do_next()
     
     @commands.command()
-    @commands.check_any(commands.has_any_role("DJ", "Dj", "dj"), commands.has_permissions(administrator=True))
+    @commands.check_any(commands.has_any_role("DJ", "Dj", "dj"), commands.has_permissions(administrator=True), commands.is_owner())
     async def pause(self, ctx: commands.Context):
         """Pause the currently playing song."""
         player: Player = self.bot.wavelink.get_player(guild_id=ctx.guild.id, cls=Player, context=ctx)
@@ -530,7 +512,6 @@ class Musics(commands.Cog, name="Music"):
         if player.is_paused or not player.is_connected:
             return
 
-        #if self.is_privileged(ctx):
         try:
             await ctx.send('▶ Player paused.', delete_after=10)
             player.pause_votes.clear()
@@ -538,26 +519,68 @@ class Musics(commands.Cog, name="Music"):
             return await player.set_pause(True)
         except:
         	return
-
-        required = self.required(ctx)
-        player.pause_votes.add(ctx.author)
-
-        if len(player.pause_votes) >= required:
-            await ctx.send('Vote to pause passed. Pausing player.', delete_after=10)
-            player.pause_votes.clear()
-            await player.set_pause(True)
-        else:
-            await ctx.send(f'{ctx.author.mention} has voted to pause the player.', delete_after=15)
     
-    @pause.error
+    @commands.command()
+    @commands.check_any(commands.has_any_role("DJ", "Dj", "dj"), commands.has_permissions(administrator=True), commands.is_owner())
+    async def seek(self, ctx: commands.Context, duration:int):
+        """Seek the currently playing song."""
+        player: Player = self.bot.wavelink.get_player(guild_id=ctx.guild.id, cls=Player, context=ctx)
+
+        if player.is_paused or not player.is_connected:
+            return
+        
+        track = player.current
+        length = track.length
+        cp = player.position
+        if (cp + (duration * 1000)) > length:
+        	await ctx.send(f"This song is not that long to seek {duration} seconds. If you want to skip this song use the `skip` command.")
+        	return
+        elif (cp + (duration * 1000)) <0:
+        	await ctx.send("Cant seek {duration} seconds.")
+        	return
+        else:
+        	pass
+        try:
+        	await player.seek(player.position + (duration * 1000))
+        	await ctx.send(f"Song seeked {duration} seconds. If you want to start from begining use `restart` command.")
+        except:
+        	return
+
+    @seek.error
     async def on_error(self, ctx, error):
     	if isinstance(error, commands.MissingAnyRole):
-    		await ctx.send("You must have the `DJ` role to change equalizer.")
+    		await ctx.send("You must have the `DJ` role to seek the player.")
     	if isinstance(error, commands.MissingPermissions):
-    		pass
-    		
+    		await ctx.send("You must have the `DJ` role to seek the player.")
+    
     @commands.command()
-    @commands.check_any(commands.has_any_role("DJ", "Dj", "dj"), commands.has_permissions(administrator=True))
+    @commands.check_any(commands.has_any_role("DJ", "Dj", "dj"), commands.has_permissions(administrator=True), commands.is_owner())
+    async def restart(self, ctx: commands.Context):
+        """Restart the currently playing song."""
+        player: Player = self.bot.wavelink.get_player(guild_id=ctx.guild.id, cls=Player, context=ctx)
+
+        if player.is_paused or not player.is_connected:
+            return
+
+        try:
+        	if player.is_playing:
+        		await player.seek(0)
+        		await ctx.send("Restarted current song.")
+        	else:
+        		await ctx.send("No song is playing.")
+        except:
+        	return
+
+    @restart.error
+    async def on_error(self, ctx, error):
+    	if isinstance(error, commands.MissingAnyRole):
+    		await ctx.send("You must have the `DJ` role to restart song.")
+    	if isinstance(error, commands.MissingPermissions):
+    		await ctx.send("You must have the `DJ` role to reatart song.")
+    		
+    
+    @commands.command()
+    @commands.check_any(commands.has_any_role("DJ", "Dj", "dj"), commands.has_permissions(administrator=True), commands.is_owner())
     async def resume(self, ctx: commands.Context):
         """Resume a currently paused player."""
         player: Player = self.bot.wavelink.get_player(guild_id=ctx.guild.id, cls=Player, context=ctx)
@@ -565,7 +588,6 @@ class Musics(commands.Cog, name="Music"):
         if not player.is_paused or not player.is_connected:
             return
 
-        #if self.is_privileged(ctx):
         try:
             await ctx.send('⏸ Player resumed.', delete_after=10)
             player.resume_votes.clear()
@@ -574,25 +596,15 @@ class Musics(commands.Cog, name="Music"):
         except:
         	return
 
-        required = self.required(ctx)
-        player.resume_votes.add(ctx.author)
-
-        if len(player.resume_votes) >= required:
-            await ctx.send('Vote to resume passed. Resuming player.', delete_after=10)
-            player.resume_votes.clear()
-            await player.set_pause(False)
-        else:
-            await ctx.send(f'{ctx.author.mention} has voted to resume the player.', delete_after=15)
-
     @resume.error
     async def on_error(self, ctx, error):
     	if isinstance(error, commands.MissingAnyRole):
-    		await ctx.send("You must have the `DJ` role to change equalizer.")
+    		await ctx.send("You must have the `DJ` role to resume the player.")
     	if isinstance(error, commands.MissingPermissions):
-    		pass
+    		await ctx.send("You must have the `DJ` role to resume the player.")
     		
     @commands.command()
-    @commands.check_any(commands.has_any_role("DJ", "Dj", "dj"), commands.has_permissions(administrator=True))
+    @commands.check_any(commands.has_any_role("DJ", "Dj", "dj"), commands.has_permissions(administrator=True), commands.is_owner())
     async def skip(self, ctx: commands.Context):
         """Skip the currently playing song."""
         player: Player = self.bot.wavelink.get_player(guild_id=ctx.guild.id, cls=Player, context=ctx)
@@ -600,7 +612,6 @@ class Musics(commands.Cog, name="Music"):
         if not player.is_connected:
             return
 
-        #if self.is_privileged(ctx):
         try:
             await ctx.send('⏭ Skipped current song.', delete_after=10)
             player.skip_votes.clear()
@@ -608,32 +619,16 @@ class Musics(commands.Cog, name="Music"):
             return await player.stop()
         except:
         	return
-
-        if ctx.author == player.current.requester:
-            await ctx.send('⏭ Skipped current song.', delete_after=10)
-            player.skip_votes.clear()
-
-            return await player.stop()
-
-        required = self.required(ctx)
-        player.skip_votes.add(ctx.author)
-
-        if len(player.skip_votes) >= required:
-            await ctx.send('Vote to skip passed. Skipping song.', delete_after=10)
-            player.skip_votes.clear()
-            await player.stop()
-        else:
-            await ctx.send(f'{ctx.author.mention} has voted to skip the song.', delete_after=15)
-    
+     
     @skip.error
     async def on_error(self, ctx, error):
     	if isinstance(error, commands.MissingAnyRole):
-    		await ctx.send("You must have the `DJ` role to change equalizer.")
+    		await ctx.send("You must have the `DJ` role to skip song.")
     	if isinstance(error, commands.MissingPermissions):
-    		pass
+    		await ctx.send("You must have the `DJ` role to skip song.")
     
     @commands.command(aliases=["dc", "disconnect"])
-    @commands.check_any(commands.has_any_role("DJ", "Dj", "dj"), commands.has_permissions(administrator=True))
+    @commands.check_any(commands.has_any_role("DJ", "Dj", "dj"), commands.has_permissions(administrator=True), commands.is_owner())
     async def stop(self, ctx: commands.Context):
         """Stop the player and clear all internal states."""
         player: Player = self.bot.wavelink.get_player(guild_id=ctx.guild.id, cls=Player, context=ctx)
@@ -641,40 +636,27 @@ class Musics(commands.Cog, name="Music"):
         if not player.is_connected:
             return
 
-        #if self.is_privileged(ctx):
         try:
             await ctx.send('⏹ Player stopped.', delete_after=10)
             return await player.teardown()
         except:
         	return
 
-        required = self.required(ctx)
-        player.stop_votes.add(ctx.author)
-
-        if len(player.stop_votes) >= required:
-            await ctx.send('Vote to stop passed. Stopping the player.', delete_after=10)
-            await player.teardown()
-        else:
-            await ctx.send(f'{ctx.author.mention} has voted to stop the player.', delete_after=15)
-
     @stop.error
     async def on_error(self, ctx, error):
     	if isinstance(error, commands.MissingAnyRole):
-    		await ctx.send("You must have the `DJ` role to change equalizer.")
+    		await ctx.send("You must have the `DJ` role to stop the player.")
     	if isinstance(error, commands.MissingPermissions):
-    		pass
+    		await ctx.send("You must have the `DJ` role to stop the player.")
     		
     @commands.command(aliases=['vol'])
-    @commands.check_any(commands.has_any_role("DJ", "Dj", "dj"), commands.has_permissions(administrator=True))
+    @commands.check_any(commands.has_any_role("DJ", "Dj", "dj"), commands.has_permissions(administrator=True), commands.is_owner())
     async def volume(self, ctx: commands.Context, *, vol: int):
         """Change the players volume, between 1 and 100."""
         player: Player = self.bot.wavelink.get_player(guild_id=ctx.guild.id, cls=Player, context=ctx)
 
         if not player.is_connected:
             return
-
-        #if not self.is_privileged(ctx):
-            #return await ctx.send('You must have manage server permission or DJ role to change volume.')
 
         if not 0 < vol < 101:
             return await ctx.send('Please enter a value between 1 and 100.')
@@ -685,12 +667,12 @@ class Musics(commands.Cog, name="Music"):
     @volume.error
     async def on_error(self, ctx, error):
     	if isinstance(error, commands.MissingAnyRole):
-    		await ctx.send("You must have the `DJ` role to change equalizer.")
+    		await ctx.send("You must have the `DJ` role to change volume")
     	if isinstance(error, commands.MissingPermissions):
-    		pass
+    		await ctx.send("You must have the `DJ` role to change volume")
 
     @commands.command(aliases=['mix'])
-    @commands.check_any(commands.has_any_role("DJ", "Dj", "dj"), commands.has_permissions(administrator=True))
+    @commands.check_any(commands.has_any_role("DJ", "Dj", "dj"), commands.has_permissions(administrator=True), commands.is_owner())
     async def shuffle(self, ctx: commands.Context):
         """Shuffle the players queue."""
         player: Player = self.bot.wavelink.get_player(guild_id=ctx.guild.id, cls=Player, context=ctx)
@@ -701,32 +683,22 @@ class Musics(commands.Cog, name="Music"):
         if player.queue.qsize() < 3:
             return await ctx.send('Add more songs to the queue before shuffling.', delete_after=15)
 
-        #if self.is_privileged(ctx):
         try:
             await ctx.send('🔀 Songs shuffled. ', delete_after=10)
             player.shuffle_votes.clear()
             return random.shuffle(player.queue._queue)
         except:
         	return
-        required = self.required(ctx)
-        player.shuffle_votes.add(ctx.author)
-
-        if len(player.shuffle_votes) >= required:
-            await ctx.send('Vote to shuffle passed. Shuffling the playlist.', delete_after=10)
-            player.shuffle_votes.clear()
-            random.shuffle(player.queue._queue)
-        else:
-            await ctx.send(f'{ctx.author.mention} has voted to shuffle the playlist.', delete_after=15)
-
+      
     @shuffle.error
     async def on_error(self, ctx, error):
     	if isinstance(error, commands.MissingAnyRole):
-    		await ctx.send("You must have the `DJ` role to change equalizer.")
+    		await ctx.send("You must have the `DJ` role to shuffle the playlist")
     	if isinstance(error, commands.MissingPermissions):
-    		pass
+    		await ctx.send("You must have the `DJ` role to shuffle the playlist")
     		
     @commands.command(hidden=True)
-    @commands.check_any(commands.has_any_role("DJ", "Dj", "dj"), commands.has_permissions(administrator=True))
+    @commands.check_any(commands.has_any_role("DJ", "Dj", "dj"), commands.has_permissions(administrator=True), commands.is_owner())
     async def vol_up(self, ctx: commands.Context):
         """Command used for volume up button."""
         player: Player = self.bot.wavelink.get_player(guild_id=ctx.guild.id, cls=Player, context=ctx)
@@ -745,12 +717,12 @@ class Musics(commands.Cog, name="Music"):
     @vol_up.error
     async def on_error(self, ctx, error):
     	if isinstance(error, commands.MissingAnyRole):
-    		await ctx.send("You must have the `DJ` role to change equalizer.")
+    		await ctx.send("You must have the `DJ` role to change volume.")
     	if isinstance(error, commands.MissingPermissions):
-    		pass
+    		await ctx.send("You must have the `DJ` role to change volume.")
     		
     @commands.command(hidden=True)
-    @commands.check_any(commands.has_any_role("DJ", "Dj", "dj"), commands.has_permissions(administrator=True))
+    @commands.check_any(commands.has_any_role("DJ", "Dj", "dj"), commands.has_permissions(administrator=True), commands.is_owner())
     async def vol_down(self, ctx: commands.Context):
         """Command used for volume down button."""
         player: Player = self.bot.wavelink.get_player(guild_id=ctx.guild.id, cls=Player, context=ctx)
@@ -769,21 +741,18 @@ class Musics(commands.Cog, name="Music"):
     @vol_down.error
     async def on_error(self, ctx, error):
     	if isinstance(error, commands.MissingAnyRole):
-    		await ctx.send("You must have the `DJ` role to change equalizer.")
+    		await ctx.send("You must have the `DJ` role to change volume.")
     	if isinstance(error, commands.MissingPermissions):
-    		pass
+    		await ctx.send("You must have the `DJ` role to change volume.")
     
     @commands.command(aliases=['eq'])
-    @commands.check_any(commands.has_any_role("DJ", "Dj", "dj"), commands.has_permissions(administrator=True))
+    @commands.check_any(commands.has_any_role("DJ", "Dj", "dj"), commands.has_permissions(administrator=True), commands.is_owner())
     async def equalizer(self, ctx: commands.Context, *, equalizer: str):
         """Change the players equalizer."""
         player: Player = self.bot.wavelink.get_player(guild_id=ctx.guild.id, cls=Player, context=ctx)
 
         if not player.is_connected:
             return
-
-        #if not self.is_privileged(ctx):
-            #return await ctx.send('You must have manage server or DJ role to change equalizer.')
 
         eqs = {'flat': wavelink.Equalizer.flat(),
                'boost': wavelink.Equalizer.boost(),
@@ -804,7 +773,7 @@ class Musics(commands.Cog, name="Music"):
     	if isinstance(error, commands.MissingAnyRole):
     		await ctx.send("You must have the `DJ` role to change equalizer.")
     	if isinstance(error, commands.MissingPermissions):
-    		pass
+    		await ctx.send("You must have the `DJ` role to change equalizer.")
 
     @commands.command(aliases=['que'])
     async def queue(self, ctx: commands.Context):
@@ -832,40 +801,6 @@ class Musics(commands.Cog, name="Music"):
             return
 
         await player.invoke_controller()
-
-    #@commands.command(aliases=['swap'])
-#    async def swap_dj(self, ctx: commands.Context, *, member: discord.Member = None):
-#        """Swap the current DJ to another member in the voice channel."""
-#        player: Player = self.bot.wavelink.get_player(guild_id=ctx.guild.id, cls=Player, context=ctx)
-
-#        if not player.is_connected:
-#            return
-
-#        if not self.is_privileged(ctx):
-#            return await ctx.send('You must have manage server or DJ role to swap dj.', delete_after=15)
-
-#        members = self.bot.get_channel(int(player.channel_id)).members
-
-#        if member and member not in members:
-#            return await ctx.send(f'{member} is not currently in voice, so can not be a DJ.', delete_after=15)
-
-#        if member and member == player.dj:
-#            return await ctx.send('Cannot swap DJ to the current DJ... :)', delete_after=15)
-
-#        if len(members) <= 2:
-#            return await ctx.send('No more members to swap to.', delete_after=15)
-
-#        if member:
-#            player.dj = member
-#            return await ctx.send(f'{member.mention} is now the DJ.')
-
-#        for m in members:
-#            if m == player.dj or m.bot:
-#                continue
-#            else:
-#                player.dj = m
-#                return await ctx.send(f'{member.mention} is now the DJ.')
-
 
 def setup(bot: commands.Bot):
     bot.add_cog(Musics(bot))

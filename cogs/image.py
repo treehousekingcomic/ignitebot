@@ -8,6 +8,7 @@ import math
 import asyncio
 from PIL import Image, ImageChops, ImageFilter, ImageDraw, ImageFont
 from colorthief import ColorThief
+import functools
 
 
 class ImageEdit(commands.Cog, name="Image"):
@@ -35,6 +36,16 @@ class ImageEdit(commands.Cog, name="Image"):
 	async def grn(self, id):
 		return f"static/filter/{id}{random.randint(1000,9999)}.png"
 	
+	def get_stars(self, fp):
+		im1 = Image.open(fp)
+		im2 = Image.open("static/profile/stars.png")
+		im2 = im2.resize(im1.size)
+		
+		out = ImageChops.add(im1,im2,1,0)
+		out.save(fp)
+		
+		return fp
+	
 	@commands.command()
 	@commands.cooldown(1,10, commands.BucketType.user)
 	async def stars(self, ctx):
@@ -45,36 +56,15 @@ class ImageEdit(commands.Cog, name="Image"):
 		
 		await self.dl_img(link, fp)
 		
-		im1 = Image.open(fp)
-		im2 = Image.open("static/profile/stars.png")
-		im2 = im2.resize(im1.size)
-		
-		out = ImageChops.add(im1,im2,1,0)
-		out.save(fp)
-		file = discord.File(fp=fp, filename="stars.png")
+		# Running blocking stuff in a executor
+		thing = functools.partial(self.get_stars, fp)
+		some_stuff = await self.client.loop.run_in_executor(None, thing)
+  	
+		file = discord.File(fp=some_stuff, filename="stars.png")
 		await ctx.send(file=file)
 		os.remove(fp)
 	
-	@commands.command()
-	@commands.cooldown(1, 15, commands.BucketType.user)
-	async def lovers(self, ctx, p1:discord.Member=None, p2:discord.Member=None):
-		"""Make a couple photo"""
-		await self.ucmd("lovers")
-		if p2 is None:
-			if p1 is None:
-				await ctx.send("Please mention atleast one person!")
-			else:
-				girl = str(p1.avatar_url)
-				boy = str(ctx.author.avatar_url)
-		else:
-			boy = str(p1.avatar_url)
-			girl = str(p2.avatar_url)
-  	
-		img1 = await self.grn(ctx.author.id)
-		img2 = await self.grn(ctx.author.id)
-		
-		await self.dl_img(boy, img1)
-		await self.dl_img(girl, img2)
+	def get_lovers(self, img1, img2):
 		
 		frame = Image.open("static/profile/love.png")
 		frame = frame.convert("RGBA")
@@ -101,30 +91,42 @@ class ImageEdit(commands.Cog, name="Image"):
 		blank.paste(pic2, (650,278))
 		out = Image.alpha_composite(blank, frame)
 		out.save(img1)
-  	
-		file = discord.File(fp=img1, filename="lovers.png")
-		await ctx.send(file=file)
-		os.remove(img1)
 		os.remove(img2)
+		
+		return img1
+		
 	
 	@commands.command()
-	@commands.cooldown(1,10, commands.BucketType.user)
-	async def frame(self, ctx, mem:typing.Union[discord.Member, str]=None):
-		"""Add your photo in a frame. Or mention someone for his photo."""
-		await self.ucmd("frame")
-		imn = f"static/filter/{ctx.author.id}{random.randint(1000,99999)}.png"
-		if mem is None:
-			link = str(ctx.author.avatar_url)
-		else:
-			if type(mem) == str:
-				link = mem
+	@commands.cooldown(1, 15, commands.BucketType.user)
+	async def lovers(self, ctx, p1:discord.Member=None, p2:discord.Member=None):
+		"""Make a couple photo"""
+		await self.ucmd("lovers")
+		if p2 is None:
+			if p1 is None:
+				await ctx.send("Please mention atleast one person!")
 			else:
-				link = str(mem.avatar_url)
- 
-		async with aiohttp.ClientSession() as s:
-			async with s.get(link) as r:
-				data = await r.read()
-
+				girl = str(p1.avatar_url)
+				boy = str(ctx.author.avatar_url)
+		else:
+			boy = str(p1.avatar_url)
+			girl = str(p2.avatar_url)
+  	
+		img1 = f"static/filter/{id}{random.randint(1000,9999)}.png"
+		img2 = f"static/filter/{id}{random.randint(1000,9999)}.png"
+		
+		await self.dl_img(boy, img1)
+		await self.dl_img(girl, img2)
+		
+		# Running blocking stuff in a executor
+		thing = functools.partial(self.get_lovers, img1, img2)
+		some_stuff = await self.client.loop.run_in_executor(None, thing)
+  	
+  	
+		file = discord.File(fp=some_stuff, filename="lovers.png")
+		await ctx.send(file=file)
+		os.remove(some_stuff)
+	
+	def get_frame(self, imn, data):
 		with open(imn, "wb") as f:
 			f.write(data)
   	
@@ -144,109 +146,37 @@ class ImageEdit(commands.Cog, name="Image"):
 		out = Image.alpha_composite(background, out)
 		out = out.resize((600,600))
 		out.save(imn)
+		
+		return imn
+	
+	@commands.command()
+	@commands.cooldown(1,10, commands.BucketType.user)
+	async def frame(self, ctx, mem:typing.Union[discord.Member, str]=None):
+		"""Add your photo in a frame. Or mention someone for his photo."""
+		await self.ucmd("frame")
+		imn = f"static/filter/{ctx.author.id}{random.randint(1000,99999)}.png"
+		if mem is None:
+			link = str(ctx.author.avatar_url)
+		else:
+			if type(mem) == str:
+				link = mem
+			else:
+				link = str(mem.avatar_url)
+ 
+		async with aiohttp.ClientSession() as s:
+			async with s.get(link) as r:
+				data = await r.read()
+		
+		# Running blocking stuff in a executor
+		thing = functools.partial(self.get_frame, imn, data)
+		some_stuff = await self.client.loop.run_in_executor(None, thing)
   	
-		file = discord.File(fp=imn, filename="frame.png")
+		file = discord.File(fp=some_stuff, filename="frame.png")
 		await ctx.send(file=file)
   	
 		os.remove(imn)
 	
-	@commands.command()
-	@commands.cooldown(1,10, commands.BucketType.user)
-	async def edit(self, ctx, *, actions:str=""):
-		"""Edit photo. Available actions : `TV`, `TP`, `FH`, `FV`, `R45` you can use any number in place of 45.  """
-		await self.ucmd("Edit")
-		
-		if len(ctx.message.attachments) == 0:
-			link = str(ctx.author.avatar_url)
-		else:
-			link = str(ctx.message.attachments[0].url)
-  	
-		img = f"static/filter/{ctx.author.id}{random.randint(1000,9999)}.png"
-  	
-		async with aiohttp.ClientSession() as s:
-			async with s.get(link) as r:
-				data = await r.read()
-		
-		with open(img, 'wb') as f:
-			f.write(data)
-		
-		pic = Image.open(img)
-		pic = pic.convert("RGBA")
-		
-		valid = ["FV", "FH", "TV", "TP"]
-		ac = actions.split(" ")
-		do = []
-		for a in ac:
-			if a in valid:
-				do.append(a)
-			elif a.startswith("R"):
-				try:
-					float(a[1:])
-					do.append(a)
-				except:
-					pass
-		if len(do) > 5:
-			do = do[0:5]
-			limiting = "(Max 5 operation is allowed)"
-		else:
-			limiting = ""
-		
-		msg = f"Editing photo {limiting}\n"
-		
-		m = await ctx.send(msg)
-		for a in do:
-			if a == "FH":
-				pic = pic.transpose(Image.FLIP_LEFT_RIGHT)
-				msg += "FLIPPING Left To Right\n"
-				asyncio.sleep(0.5)
-				await m.edit(content= msg)
-			if a == "FV":
-				pic = pic.transpose(Image.FLIP_TOP_BOTTOM)
-				msg += "FLIPPING Top To Bottom\n"
-				asyncio.sleep(0.5)
-				await m.edit(content= msg)
-			if a == "TP":
-				pic = pic.transpose(Image.TRANSPOSE)
-				msg += "Transposing\n"
-				asyncio.sleep(0.5)
-				await m.edit(content= msg)
-			if a == "TV":
-				pic = pic.transpose(Image.TRANSVERSE)
-				msg += "Transversing\n"
-				asyncio.sleep(0.5)
-				await m.edit(content= msg)
-			if a.startswith("R"):
-				amt = float(a[1:])
-				pic = pic.rotate(amt, expand=True)
-				asyncio.sleep(0.5)
-				msg += f"ROTATING {amt} Degree\n"
-				await m.edit(content= msg)
-		
-		blank = Image.new("RGBA", pic.size, (255,255,255,0))
-		blank.paste(pic, (0,0))
-  	
-		blank.save(img)
-		msg += "Done..."
-		await m.edit(content=msg)
-		file = discord.File(fp=img, filename="edit.png")
-  	#await m.delete()
-		await ctx.send(file=file)
-		await m.delete()
-		os.remove(img)
-	
-	@commands.command()
-	@commands.cooldown(1,15, commands.BucketType.user)
-	async def getcolors(self, ctx, mem:discord.Member=None):
-		"""Get colors from a photo with color value"""
-		await self.ucmd("getcolors")
-		if mem is None:
-			mem = ctx.author 
-		link = str(mem.avatar_url)
-		img = f"static/filter/{ctx.author.id}{random.randint(1000,9999)}.png"
-  	
-		async with aiohttp.ClientSession() as s:
-			async with s.get(link) as r:
-				data = await r.read()
+	def get_colors(self, img, data):
 		with open(img, 'wb') as f:
 			f.write(data)
 		
@@ -270,7 +200,26 @@ class ImageEdit(commands.Cog, name="Image"):
 		holder.paste(blank, (0, 0))
 		
 		holder.save(img)
-		file = discord.File(img, "colors.png")
+		return img
+	
+	@commands.command()
+	@commands.cooldown(1,15, commands.BucketType.user)
+	async def getcolors(self, ctx, mem:discord.Member=None):
+		"""Get colors from a photo with color value"""
+		await self.ucmd("getcolors")
+		if mem is None:
+			mem = ctx.author 
+		link = str(mem.avatar_url)
+		img = f"static/filter/{ctx.author.id}{random.randint(1000,9999)}.png"
+  	
+		async with aiohttp.ClientSession() as s:
+			async with s.get(link) as r:
+				data = await r.read()
+		
+		thing = functools.partial(self.get_colors, img, data)
+		some_stuff = await self.client.loop.run_in_executor(None, thing)
+		
+		file = discord.File(some_stuff , "colors.png")
 		await ctx.send(file=file)
 		os.remove(img)
 

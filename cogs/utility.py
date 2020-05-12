@@ -4,6 +4,7 @@ import aiohttp
 import os
 import qrcode
 import random
+import functools
 
 class Utility(commands.Cog):
 	"""Some utility"""
@@ -18,7 +19,12 @@ class Utility(commands.Cog):
 			await self.client.pgdb.execute("UPDATE cmduse SET uses = $1 WHERE name = $2", uses, data['name'])
 		else:
 			await self.client.pgdb.execute("INSERT INTO cmduse(name, uses) VALUES($1, $2)", cmd, 1)
+	
+	def get_qr(self, text, fname):
+		qr = qrcode.make(text)
+		qr.save(f"static/qr/{fname}.png")
 		
+	
 	@commands.command()
 	@commands.cooldown(5, 600, commands.BucketType.user)
 	async def genqr(self, ctx, *,text):
@@ -30,14 +36,15 @@ class Utility(commands.Cog):
 				text = text.name
 			except:
 				text = "None"
-			
-		qr = qrcode.make(text)
-		
+
 		fname = "qr"+ str(random.randint(1000,20000))
-		qr.save(f"static/qr/{fname}.png")
+		
+		# Running blocking stuff in a executor
+		thing = functools.partial(self.get_qr, text, fname)
+		some_stuff = await self.client.loop.run_in_executor(None, thing)
 		
 		file = discord.File(fp=f"static/qr/{fname}.png", filename="qr.png")
-    
+		
 		await ctx.send(file=file)
 		try:
 			os.remove(f"static/qr/{fname}.png")
