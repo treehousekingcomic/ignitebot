@@ -78,21 +78,7 @@ class Fun(commands.Cog):
 				
 		await ctx.send(f"Hey `{data['data']['names']}` \n>> {data['data']['score']} 💘\n\n{data['data']['message']}")
       
-	@commands.command(aliases=['trans'])
-	@commands.cooldown(1, 5, commands.BucketType.user)
-	async def translate(self, ctx,fromlang,tolang,*,sentence:str):
-		"""Translate a word or sentence"""
-		await self.ucmd("translate")
 		
-		try:
-			async with aiohttp.ClientSession() as s:
-				async with s.get(f"https://viratrends.com/botscripts/wb_translate.php?zin={sentence}&fromlang={fromlang.lower()}&tolang={tolang.lower()}") as r:
-					data = await r.json()
-
-			await ctx.send(f"Original : {sentence} \nTranslated `{fromlang} to {tolang}` : {data[0]['text']}")
-		except:
-			await ctx.send(f"Something went wrong!")
-	
 	@commands.command(aliases=["pq"])
 	@commands.cooldown(1,3,commands.BucketType.user)
 	async def programmingquotes(self, ctx):

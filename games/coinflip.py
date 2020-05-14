@@ -215,7 +215,68 @@ class Games(commands.Cog):
 				
 				await self.update_cash(ctx.author.id, -bet)
 		
-			
-    
+	@commands.command()
+	@commands.cooldown(1, 30, commands.BucketType.user)
+	async def drop(self, ctx, amount:int):
+		"""Drop your cash. Someone else will pick it up."""
+		floor = await self.client.pgdb.fetchrow("SELECT * FROM floor WHERE channel = $1", ctx.channel.id)
+		if not floor:
+			await self.client.pgdb.execute("INSERT INTO floor(cash, channel) VALUES($1, $2)", 0, ctx.channel.id)
+		
+		cash = await self.get_cash(ctx.author.id)
+		floor = await self.client.pgdb.fetchrow("SELECT * FROM floor WHERE channel = $1", ctx.channel.id)
+		
+		floor_cash = floor['cash']
+		
+		if amount < 0:
+			amount = amount * (-1)
+			if amount > cash:
+				pass
+			else:
+				await self.client.pgdb.execute("UPDATE floor SET cash = $1 WHERE channel = $2", amount + floor_cash, ctx.channel.id)
+				return await ctx.send(f"Negetive amount cant be dropped. But thanks for dropping {amount} icash :D")
+				await self.update_cash(ctx.author.id, -amount)
+		
+		if amount > cash:
+			return await ctx.send(f"You dont have {amount} icash to drop.")
+		
+		await self.update_cash(ctx.author.id, -amount)
+		await self.client.pgdb.execute("UPDATE floor SET cash = $1 WHERE channel = $2", amount + floor_cash, ctx.channel.id)
+		await ctx.send(f"**{ctx.author.name}** dropped {amount} icash. Pick it up!", delete_after=5)
+	
+	@commands.command()
+	@commands.cooldown(1,30, commands.BucketType.user)
+	async def pickup(self, ctx, amount:int):
+		floor = await self.client.pgdb.fetchrow("SELECT * FROM floor WHERE channel = $1", ctx.channel.id)
+		if not floor:
+			await self.client.pgdb.execute("INSERT INTO floor(cash, channel) VALUES($1, $2)", 0, ctx.channel.id)
+		
+		cash = await self.get_cash(ctx.author.id)
+		floor = await self.client.pgdb.fetchrow("SELECT * FROM floor WHERE channel = $1", ctx.channel.id)
+		
+		floor_cash = floor['cash']
+		
+		if amount < 0:
+			amount = amount * (-1)
+			if amount > cash:
+				pass
+			else:
+				await self.client.pgdb.execute("UPDATE floor SET cash = $1 WHERE channel = $2", amount + floor_cash, ctx.channel.id)
+				return await ctx.send(f"Negetive amount cant be picked up. But thanks for dropping {amount} icash :D")
+		
+		if amount > cash:
+			return await ctx.send("You cant pickup more than what you have.")
+		
+		if amount > floor_cash and amount <= cash:
+			await self.client.pgdb.execute("UPDATE floor SET cash = $1 WHERE channel = $2", amount + floor_cash, ctx.channel.id)
+			return await ctx.send(f"Not enough icash on the floor. But thanks for dropping {amount} icash! :) ")
+			await self.update_cash(ctx.author.id, -amount)
+		
+		if amount > floor_cash:
+			return await ctx.send(f"Not enough icash on the floor.")
+		if amount <= floor_cash:
+			await self.client.pgdb.execute("UPDATE floor SET cash = $1 WHERE channel = $2", floor_cash - amount, ctx.channel.id)
+			await self.update_cash(ctx.author.id, amount)
+			return await ctx.send(f"**{ctx.author}** picked {amount} icash from the floor.")
 def setup(client):
 	client.add_cog(Games(client))

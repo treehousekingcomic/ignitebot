@@ -415,3 +415,124 @@ java.lang.IllegalArgumentException: UT000068: Servlet path match failed
 2020-05-14 07:30:50.583  INFO 4939 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
 2020-05-14 07:32:10.086  INFO 4939 --- [XNIO-1 task-10] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:48218
 2020-05-14 07:32:10.101  INFO 4939 --- [XNIO-1 task-10] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:48218
+2020-05-14 07:37:05.863 ERROR 4939 --- [XNIO-1 task-11] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /198.108.66.212:42374
+2020-05-14 07:38:57.948  WARN 4939 --- [XNIO-1 task-12] l.s.config.RequestAuthorizationFilter    : Authorization missing for 62.171.152.36 on GET /logs
+2020-05-14 07:38:58.241  WARN 4939 --- [XNIO-1 task-13] l.s.config.RequestAuthorizationFilter    : Authorization missing for 62.171.152.36 on GET /editConfig
+2020-05-14 07:39:36.052  INFO 4939 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:48076 -- CloseStatus[code=1006, reason=]
+2020-05-14 07:39:36.052  INFO 4939 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-05-14 07:39:36.070  INFO 4939 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:48176 -- CloseStatus[code=1006, reason=]
+2020-05-14 07:39:36.071  INFO 4939 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-05-14 07:39:36.071  INFO 4939 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:48204 -- CloseStatus[code=1006, reason=]
+2020-05-14 07:39:36.071  INFO 4939 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-05-14 07:39:36.071  INFO 4939 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:48218 -- CloseStatus[code=1006, reason=]
+2020-05-14 07:39:36.071  INFO 4939 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-05-14 07:39:36.079  INFO 4939 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:48190 -- CloseStatus[code=1006, reason=]
+2020-05-14 07:39:36.079  INFO 4939 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-05-14 07:39:36.086  INFO 4939 --- [Thread-1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2020-05-14 07:39:36.091  INFO 4939 --- [Thread-1] c.s.d.l.tools.GarbageCollectionMonitor   : GC monitoring disabled.
+2020-05-14 07:39:36.111  INFO 4939 --- [Thread-1] io.undertow.servlet                      : Destroying Spring FrameworkServlet 'dispatcherServlet'
+2020-05-14 07:44:40.214  INFO 1244 --- [main] lavalink.server.Launcher                 : 
+
+[32m       .  [31m _                  _ _       _    [32m__ _ _
+[32m      /\\ [31m| | __ ___   ____ _| (_)_ __ | | __[32m\ \ \ \
+[32m     ( ( )[31m| |/ _` \ \ / / _` | | | '_ \| |/ /[32m \ \ \ \
+[32m      \\/ [31m| | (_| |\ V / (_| | | | | | |   < [32m  ) ) ) )
+[32m       '  [31m|_|\__,_| \_/ \__,_|_|_|_| |_|_|\_\[32m / / / /
+[0m    =========================================[32m/_/_/_/[0m
+
+	Version:        3.3.1
+	Build:          997
+	Build time:     25.03.2020 12:30:43 UTC
+	Branch          master
+	Commit:         29f68ba
+	Commit time:    25.03.2020 12:28:48 UTC
+	JVM:            13.0.1
+	Lavaplayer      1.3.38
+
+2020-05-14 07:44:40.589  INFO 1244 --- [main] lavalink.server.Launcher                 : Starting Launcher on shahriyar with PID 1244 (/root/Bots/ignite/Lavalink.jar started by root in /root/Bots/ignite)
+2020-05-14 07:44:40.596  INFO 1244 --- [main] lavalink.server.Launcher                 : No active profile set, falling back to default profiles: default
+2020-05-14 07:44:41.030  WARN 1244 --- [background-preinit] o.s.h.c.j.Jackson2ObjectMapperBuilder    : For Jackson Kotlin classes support please add "com.fasterxml.jackson.module:jackson-module-kotlin" to the classpath
+2020-05-14 07:44:44.011  WARN 1244 --- [main] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2020-05-14 07:44:44.072  INFO 1244 --- [main] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
+2020-05-14 07:44:44.080  INFO 1244 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 3307 ms
+2020-05-14 07:44:44.917  WARN 1244 --- [main] l.server.config.SentryConfiguration      : Turning off sentry
+2020-05-14 07:44:44.934  INFO 1244 --- [main] l.s.c.AudioSendFactoryConfiguration      : OS: Linux, Arch: amd64
+2020-05-14 07:44:44.935  INFO 1244 --- [main] l.s.c.AudioSendFactoryConfiguration      : JDA-NAS supported system detected. Enabled native audio sending.
+2020-05-14 07:44:44.935  INFO 1244 --- [main] l.s.c.AudioSendFactoryConfiguration      : Setting buffer to 400ms
+2020-05-14 07:44:44.936  INFO 1244 --- [main] l.s.c.AudioSendFactoryConfiguration      : Setting playlist load limit to 6
+2020-05-14 07:44:45.706  INFO 1244 --- [main] c.s.d.l.tools.GarbageCollectionMonitor   : GC monitoring enabled, reporting results every 2 minutes.
+2020-05-14 07:44:46.784  INFO 1244 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-05-14 07:44:47.604  INFO 1244 --- [main] org.xnio                                 : XNIO version 3.3.8.Final
+2020-05-14 07:44:47.627  INFO 1244 --- [main] org.xnio.nio                             : XNIO NIO Implementation Version 3.3.8.Final
+2020-05-14 07:44:47.793  INFO 1244 --- [main] o.s.b.w.e.u.UndertowServletWebServer     : Undertow started on port(s) 8080 (http) with context path ''
+2020-05-14 07:44:47.811  INFO 1244 --- [main] lavalink.server.Launcher                 : Started Launcher in 9.38 seconds (JVM running for 10.724)
+2020-05-14 07:45:22.900  INFO 1244 --- [XNIO-1 task-1] io.undertow.servlet                      : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-05-14 07:45:22.901  INFO 1244 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2020-05-14 07:45:22.935  INFO 1244 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 34 ms
+2020-05-14 07:45:23.042  INFO 1244 --- [XNIO-1 task-1] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:37534
+2020-05-14 07:45:23.478  INFO 1244 --- [XNIO-1 task-1] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:37534
+2020-05-14 07:55:15.465  WARN 1244 --- [XNIO-1 task-2] l.s.config.RequestAuthorizationFilter    : Authorization missing for 124.118.64.60 on GET /setup.cgi
+2020-05-14 08:15:48.716  INFO 1244 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "696962067332071454", "sessionId": "48bd70c21f6684c63a0278fa6fb0f17a", "event": {"token": "7686431ac0650f86", "guild_id": "696962067332071454", "endpoint": "japan593.discord.media:80"}}
+2020-05-14 08:15:48.882  INFO 1244 --- [parallel-1] com.jcabi.manifests.Manifests            : 73 attributes loaded from 84 stream(s) in 124ms, 73 saved, 1240 ignored: ["Ant-Version", "Archiver-Version", "Automatic-Module-Name", "Bnd-LastModified", "Build-Jdk", "Build-Jdk-Spec", "Build-Time", "Built-By", "Bundle-ActivationPolicy", "Bundle-Activator", "Bundle-Category", "Bundle-Description", "Bundle-DocURL", "Bundle-License", "Bundle-ManifestVersion", "Bundle-Name", "Bundle-NativeCode", "Bundle-RequiredExecutionEnvironment", "Bundle-SymbolicName", "Bundle-Vendor", "Bundle-Version", "Copyright", "Created-By", "Export-Package", "Extension-Name", "Git-Revision", "Implementation-Build", "Implementation-Build-Date", "Implementation-Title", "Implementation-URL", "Implementation-Vendor", "Implementation-Vendor-Id", "Implementation-Version", "Import-Package", "Include-Resource", "JCabi-Build", "JCabi-Date", "JCabi-Version", "Jar-Name", "Jar-Version", "Java-Vendor", "Java-Version", "Kotlin-Runtime-Component", "Kotlin-Version", "Log4jReleaseKey", "Log4jReleaseManager", "Log4jReleaseVersion", "Magma-Version", "Main-Class", "Manifest-Version", "Multi-Release", "Originally-Created-By", "Os-Arch", "Os-Name", "Os-Version", "Private-Package", "Provide-Capability", "Require-Bundle", "Require-Capability", "Scm-Connection", "Scm-Revision", "Scm-Url", "Specification-Title", "Specification-Vendor", "Specification-Version", "Spring-Boot-Classes", "Spring-Boot-Lib", "Spring-Boot-Version", "Start-Class", "Tool", "X-Compile-Source-JDK", "X-Compile-Target-JDK", "url"]
+2020-05-14 08:15:52.674  INFO 1244 --- [XNIO-1 task-3] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-05-14 08:15:54.255  INFO 1244 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Despacito
+2020-05-14 08:15:54.405  INFO 1244 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "696962067332071454", "track": "QAAAiwIAJ0x1aXMgRm9uc2kgLSBEZXNwYWNpdG8gZnQuIERhZGR5IFlhbmtlZQAKTHVpcyBGb25zaQAAAAAABE2QAAtrSlFQN2tpdzVGawABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PWtKUVA3a2l3NUZrAAd5b3V0dWJlAAAAAAAAAAA=", "noReplace": false, "startTime": "0"}
+2020-05-14 08:16:00.379  INFO 1244 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "696962067332071454"}
+2020-05-14 08:16:00.385  INFO 1244 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "696962067332071454"}
+2020-05-14 09:44:34.869 ERROR 1244 --- [XNIO-1 task-5] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /91.193.174.15:55644
+2020-05-14 11:22:58.263  WARN 1244 --- [XNIO-1 task-6] l.s.config.RequestAuthorizationFilter    : Authorization missing for 85.119.151.250 on POST /azenv.php
+2020-05-14 11:23:03.350 ERROR 1244 --- [XNIO-1 I/O-2] io.undertow.request                      : UT005071: Undertow request failed HttpServerExchange{ CONNECT check.best-proxies.ru:80}
+
+java.lang.IllegalArgumentException: UT000068: Servlet path match failed
+	at io.undertow.servlet.handlers.ServletPathMatchesData.getServletHandlerByPath(ServletPathMatchesData.java:83) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.servlet.handlers.ServletPathMatches.getServletHandlerByPath(ServletPathMatches.java:88) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.servlet.handlers.ServletInitialHandler.handleRequest(ServletInitialHandler.java:146) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.handlers.HttpContinueReadHandler.handleRequest(HttpContinueReadHandler.java:65) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.Connectors.executeRootHandler(Connectors.java:376) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.http.HttpReadListener.handleEventWithNoRunningRequest(HttpReadListener.java:255) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.http.HttpReadListener.handleEvent(HttpReadListener.java:136) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.http.HttpReadListener.handleEvent(HttpReadListener.java:59) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.conduits.ReadReadyHandler$ChannelListenerHandler.readReady(ReadReadyHandler.java:66) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.NioSocketConduit.handleReady(NioSocketConduit.java:88) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:561) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2020-05-14 11:45:49.023 ERROR 1244 --- [XNIO-1 task-7] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /139.162.111.98:47904
+2020-05-14 12:00:42.622 ERROR 1244 --- [XNIO-1 task-8] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /202.9.123.51:38793
+2020-05-14 12:13:45.009 ERROR 1244 --- [XNIO-1 task-9] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /62.4.14.198:52625
+2020-05-14 12:40:47.241 ERROR 1244 --- [XNIO-1 task-10] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /193.118.53.138:46296
+2020-05-14 13:43:35.154  INFO 1244 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "336642139381301249", "sessionId": "48bd70c21f6684c63a0278fa6fb0f17a", "event": {"token": "908f34b7062ffdb8", "guild_id": "336642139381301249", "endpoint": "us-central423.discord.media:80"}}
+2020-05-14 13:43:36.142  INFO 1244 --- [XNIO-1 task-11] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-05-14 13:43:37.214  INFO 1244 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track Alec Benjamin - Let Me Down Slowly (Lyrics)
+2020-05-14 13:43:37.229  INFO 1244 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "336642139381301249", "track": "QAAAlAIAK0FsZWMgQmVuamFtaW4gLSBMZXQgTWUgRG93biBTbG93bHkgKEx5cmljcykAD2EgcGFyYWRpc2UgYmlyZAAAAAAAApgQAAtqTE5ydm1YYm9qOAABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PWpMTnJ2bVhib2o4AAd5b3V0dWJlAAAAAAAAAAA=", "noReplace": false, "startTime": "0"}
+2020-05-14 13:51:27.468  INFO 1244 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "336642139381301249"}
+2020-05-14 13:51:27.470  INFO 1244 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "336642139381301249"}
+2020-05-14 14:46:17.775  INFO 1244 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "700374484955299900", "sessionId": "48bd70c21f6684c63a0278fa6fb0f17a", "event": {"token": "7d65aa915045e435", "guild_id": "700374484955299900", "endpoint": "india715.discord.media:80"}}
+2020-05-14 14:46:18.711  INFO 1244 --- [XNIO-1 task-13] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-05-14 14:46:19.661  INFO 1244 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Deapacito
+2020-05-14 14:46:19.830  INFO 1244 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "700374484955299900", "track": "QAAAiwIAJ0x1aXMgRm9uc2kgLSBEZXNwYWNpdG8gZnQuIERhZGR5IFlhbmtlZQAKTHVpcyBGb25zaQAAAAAABE2QAAtrSlFQN2tpdzVGawABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PWtKUVA3a2l3NUZrAAd5b3V0dWJlAAAAAAAAAAA=", "noReplace": false, "startTime": "0"}
+2020-05-14 14:46:45.929  INFO 1244 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "700374484955299900"}
+2020-05-14 14:47:13.480  INFO 1244 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "700374484955299900"}
+2020-05-14 14:47:13.481  INFO 1244 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "700374484955299900"}
+2020-05-14 14:51:45.987  INFO 1244 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "700374484955299900"}
+2020-05-14 14:51:45.991  INFO 1244 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "700374484955299900"}
+2020-05-14 15:04:52.703 ERROR 1244 --- [XNIO-1 task-15] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /60.190.248.11:19975
+2020-05-14 15:06:31.920 ERROR 1244 --- [XNIO-1 task-16] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /60.191.20.213:49102
+2020-05-14 15:20:15.898 ERROR 1244 --- [XNIO-1 task-1] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /74.82.47.4:41698
+2020-05-14 15:22:19.893  WARN 1244 --- [XNIO-1 task-2] l.s.config.RequestAuthorizationFilter    : Authorization missing for 85.119.151.253 on POST /azenv.php
+2020-05-14 15:22:24.965 ERROR 1244 --- [XNIO-1 I/O-2] io.undertow.request                      : UT005071: Undertow request failed HttpServerExchange{ CONNECT check.best-proxies.ru:80}
+
+java.lang.IllegalArgumentException: UT000068: Servlet path match failed
+	at io.undertow.servlet.handlers.ServletPathMatchesData.getServletHandlerByPath(ServletPathMatchesData.java:83) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.servlet.handlers.ServletPathMatches.getServletHandlerByPath(ServletPathMatches.java:88) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.servlet.handlers.ServletInitialHandler.handleRequest(ServletInitialHandler.java:146) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.handlers.HttpContinueReadHandler.handleRequest(HttpContinueReadHandler.java:65) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.Connectors.executeRootHandler(Connectors.java:376) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.http.HttpReadListener.handleEventWithNoRunningRequest(HttpReadListener.java:255) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.http.HttpReadListener.handleEvent(HttpReadListener.java:136) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.http.HttpReadListener.handleEvent(HttpReadListener.java:59) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.conduits.ReadReadyHandler$ChannelListenerHandler.readReady(ReadReadyHandler.java:66) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.NioSocketConduit.handleReady(NioSocketConduit.java:88) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:561) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+

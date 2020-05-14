@@ -39,7 +39,7 @@ class Announce(commands.Cog, name="Message"):
                     guild = "**" + ctx.guild.name + "**"
                     msg = msg.replace('{user}', user)
                     msg = msg.replace('{server}', guild)
-                    msg = msg.replace('{server.member_count}', str(ctx.guild.member_count))
+                    msg = msg.replace('{server.members}', str(ctx.guild.member_count))
                     await cu.send(msg + f"\nSent by **{ctx.author}** From **{ctx.guild.name}**")
                     await ctx.send(f"Message sent to - **{user}**")
                 except:
