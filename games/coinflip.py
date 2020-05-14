@@ -107,6 +107,7 @@ class Games(commands.Cog):
 				await self.update_cash(ctx.author.id, -(bet))
 	
 	@commands.command(aliases=["s", "slot"])
+	@commands.cooldown(1,10, commands.BucketType.user)
 	async def slots(self, ctx, bet:int=1):
 		"""Slots Machine. Try your luck"""
 		await self.check_user(ctx.author.id)

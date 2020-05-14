@@ -1,33 +1,3 @@
-"""The MIT License (MIT)
-
-Copyright (c) 2019-2020 PythonistaGuild
-
-Permission is hereby granted, free of charge, to any person obtaining a
-copy of this software and associated documentation files (the "Software"),
-to deal in the Software without restriction, including without limitation
-the rights to use, copy, modify, merge, publish, distribute, sublicense,
-and/or sell copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following conditions:
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-DEALINGS IN THE SOFTWARE.
-
--------------------------------------------------------------------------------
-This example uses the following whihch must be installed prior to running:
-
-    - Discord.py version >= 1.3.1 (pip install -U discord.py)
-    - Wavelink version >= 0.5.1 (pip install -U wavelink)
-    - menus version >= 1.0.0-a (pip install -U git+https://github.com/Rapptz/discord-ext-menus.git)
-    - Python 3.7+
---------------------------------------------------------------------------------
-"""
 import asyncio
 import async_timeout
 import copy
@@ -418,8 +388,6 @@ class Musics(commands.Cog, name="Music"):
 
         if ctx.command.name == 'connect' and not player.context:
             return
-        #elif self.is_privileged(ctx):
-#            return
 
         if not player.channel_id:
             return
@@ -432,19 +400,8 @@ class Musics(commands.Cog, name="Music"):
             if ctx.author not in channel.members:
                 await ctx.send(f'{ctx.author.mention}, you must be in `{channel.name}` to use voice commands.')
                 raise IncorrectChannelError
-
-    def required(self, ctx: commands.Context):
-        """Method which returns required votes based on amount of members in a channel."""
-        player: Player = self.bot.wavelink.get_player(guild_id=ctx.guild.id, cls=Player, context=ctx)
-        channel = self.bot.get_channel(int(player.channel_id))
-        required = math.ceil((len(channel.members) - 1) / 2.5)
-
-        if ctx.command.name == 'stop':
-            if len(channel.members) - 1 == 2:
-                required = 2
-
-        return required
         
+    	
     @commands.command(aliases=["join"])
     async def connect(self, ctx: commands.Context, *, channel: discord.VoiceChannel = None):
         """Connect to a voice channel."""
@@ -801,6 +758,155 @@ class Musics(commands.Cog, name="Music"):
             return
 
         await player.invoke_controller()
-
+    
+    @commands.group(invoke_without_command=True)
+    async def playlist(self, ctx, playlist:str=None):
+    	"""Create playlist for your server. Add songs in playlist and play whenever you want"""
+    	if playlist is None:
+	    	lists = await self.bot.pgdb.fetch("SELECT * FROM playlist WHERE guild = $1" , ctx.guild.id)
+	    	if not lists:
+	    		return await ctx.send("There are no playlist for this server")
+	    	msg = ""
+	    	count = 0
+	    	for list in lists:
+	    		count +=1
+	    		msg +=str(count) + ". " + list["name"]
+	    		songs = await self.bot.pgdb.fetch("SELECT * FROM songs WHERE playlist = $1 and guild = $2" , list["name"], ctx.guild.id)
+	    		if not songs:
+	    			msg += "(0 songs) \n"
+	    		else:
+	    			msg += f"({len(songs)} songs) \n"
+	    			
+	    	msg += "\nUse `playlist <playlist_name>` To play songs of a playlist"
+	    	embed = discord.Embed(color=ctx.author.color, description=msg, title="Playlists")
+	    	await ctx.send(embed=embed)
+    	else:
+	    	list = await self.bot.pgdb.fetchrow("SELECT * FROM playlist WHERE name = $1 and guild = $2", playlist, ctx.guild.id)
+	    	if not list:
+	    		return await ctx.send(f"A playlist with name `{playlist}` is not available.")
+	    	
+	    	songs = await self.bot.pgdb.fetch("SELECT * FROM songs WHERE playlist = $1 and guild = $2", list['name'] , ctx.guild.id)
+	    	if not songs:
+	    		return await ctx.send("There are no song in this playlist. Add some :)")
+	    	
+	    	player: Player = self.bot.wavelink.get_player(guild_id=ctx.guild.id, cls=Player, context=ctx)
+	    	
+	    	if not player.is_connected:
+	    		await ctx.invoke(self.connect)
+	    		await asyncio.sleep(1)
+	    	
+	    	for song in songs:
+	    		url = song['url']
+	    		tracks = await self.bot.wavelink.get_tracks(url)
+	    		got = Track(tracks[0].id, tracks[0].info, requester=ctx.author)
+	    		await player.queue.put(got)
+	    	
+	    	if not player.is_playing:
+	                await player.do_next()
+   
+    @playlist.command()
+    @commands.has_permissions(administrator=True)
+    async def create(self, ctx, name:str=None):
+    	if name is None:
+    		return await ctx.send("Playlist name is required.")
+    	data = await self.bot.pgdb.fetchrow("SELECT * FROM playlist WHERE name=$1 and guild=$2", name, ctx.guild.id)
+    	
+    	if data:
+    		return await ctx.send("A playlist with this name already exists.")
+    	
+    	if len(name) > 20:
+    		return await ctx.send("Playlist name cant be bigger than 20 characters.")
+    	
+    	await self.bot.pgdb.execute("INSERT INTO playlist(name, guild) VALUES($1, $2)", name.lower(), ctx.guild.id)
+    	await ctx.send(f"Playlist created. `{name}`  Add some songs there to play.")
+    
+    @playlist.command()
+    @commands.has_permissions(administrator=True)
+    async def addsong(self, ctx, url:str=None, playlist:str=None):
+    	if playlist is None:
+    		return await ctx.send("Please specify a playlist name you created.")
+    	
+    	if url is None:
+    		return await ctx.send("No url specified!")
+    	
+    	list = await self.bot.pgdb.fetchrow("SELECT * FROM playlist WHERE name = $1 and guild = $2", playlist, ctx.guild.id)
+    	if not list:
+    		return await ctx.send(f"A playlist with name `{playlist}` is not available.")
+    	
+    	tracks = await self.bot.wavelink.get_tracks(url)
+    	if not tracks:
+    		return await ctx.send("No song found with this url!")
+    	
+    	try:
+    		if len(tracks.tracks) > 1:
+    			return await ctx.send("Playlists are not allowed to to add in playlist.")
+    	except:
+    		pass
+    	
+    	track = Track(tracks[0].id, tracks[0].info, requester=ctx.author)
+    	song = await self.bot.pgdb.fetchrow("SELECT * FROM songs WHERE url = $1 and playlist = $2 and guild = $3", track.uri, playlist, ctx.guild.id)
+    	if song:
+    		return await ctx.send(f"This url is already added in the `{playlist}` playlist.")
+    	
+    	await self.bot.pgdb.execute("INSERT INTO songs(url, playlist, guild, name) VALUES($1, $2, $3, $4)", track.uri, playlist, ctx.guild.id, track.title)
+    	await ctx.send(f"Song added to playlist. \n ▪︎ {track.title}")
+    
+    @playlist.command()
+    async def info(self, ctx, playlist:str):
+    	list = await self.bot.pgdb.fetchrow("SELECT * FROM playlist WHERE name = $1 and guild = $2", playlist, ctx.guild.id)
+    	if not list:
+    		return await ctx.send(f"A playlist with name `{playlist}` is not available.")
+    	
+    	songs = await self.bot.pgdb.fetch("SELECT * FROM songs WHERE playlist = $1 and guild = $2", list['name'] , ctx.guild.id)
+    	if not songs:
+    		return await ctx.send("There are no song in this playlist. Add some :)")
+    	else:
+    		msg = ""
+    		count = 0
+    		for song in songs:
+    			count +=1
+    			msg += str(count) + ". " + song['name'] + "\n"
+    		
+    		embed = discord.Embed(color=ctx.author.color, description=msg, title=list['name'])
+    		await ctx.send(embed=embed)
+    
+    @playlist.command()
+    @commands.has_permissions(administrator=True)
+    async def deletesong(self, ctx, index:int=None, playlist:str=None):
+    	if playlist is None:
+    		return await ctx.send("Please specify a playlist from where you want to delete.")
+    	
+    	list = await self.bot.pgdb.fetchrow("SELECT * FROM playlist WHERE name = $1 and guild = $2", playlist, ctx.guild.id)
+    	if not list:
+    		return await ctx.send(f"A playlist with name `{playlist}` is not available.")
+    	
+    	songs = await self.bot.pgdb.fetch("SELECT * FROM songs WHERE playlist = $1 and guild = $2", list['name'] , ctx.guild.id)
+    	if not songs:
+    		return await ctx.send("There are no song in this playlist.")
+    	
+    	id = songs[index -1]['id']
+    	if not id:
+    		return await ctx.send("Make sure you have given correct index.")
+    	try:
+    		await self.bot.pgdb.execute("DELETE FROM songs WHERE id = $1", id)
+    		await ctx.send("Song deleted from playlist.")
+    	except:
+    		await ctx.send("Make sure you have given correct index.")
+    
+    @playlist.command()
+    @commands.has_permissions(administrator=True)
+    async def delete(self, ctx, playlist:str=None):
+    	list = await self.bot.pgdb.fetchrow("SELECT * FROM playlist WHERE name = $1 and guild = $2", playlist, ctx.guild.id)
+    	if not list:
+    		return await ctx.send(f"A playlist with name `{playlist}` is not available.")
+    	
+    	try:
+    		await self.bot.pgdb.execute("DELETE FROM playlist WHERE name = $1 and guild = $2", playlist.lower(), ctx.guild.id)
+    		await self.bot.pgdb.execute("DELETE FROM songs WHERE playlist = $1 and guild = $2", playlist.lower(), ctx.guild.id)
+    		
+    		await ctx.send("Playlist deleted")
+    	except:
+    		pass
+    	
 def setup(bot: commands.Bot):
     bot.add_cog(Musics(bot))

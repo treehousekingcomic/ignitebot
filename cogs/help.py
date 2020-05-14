@@ -171,7 +171,7 @@ class Help(commands.Cog, name="Help"):
 								for scmd in sub_cmds:
 									pr = ""
 									for p in scmd.clean_params:
-										pr = "<" + p + "> "
+										pr += "<" + p + "> "
 									desc += "`" + cmd.name + " " + scmd.name + " " + pr + "`\n"
 								
 						except:
