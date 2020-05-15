@@ -119,6 +119,40 @@ class Player(wavelink.Player):
 
         channel = self.bot.get_channel(int(self.channel_id))
         qsize = self.queue.qsize()
+        
+#        done = "█"
+#        rema = "▒"
+#        
+#        
+#        end = track.length
+#        pos = self.position
+#        
+#        print(end, pos)
+#        
+#        
+#        current_percent = math.floor((pos / end) * 100)
+#        total_bar = 20
+#        current_bar = math.floor((current_percent/20)*4)
+#        
+#        remaining_bar = total_bar - current_bar
+#        print(current_bar)
+#        print(remaining_bar)
+#        
+#        suffix = ""
+#        prefix = ""
+#        
+#        while current_bar >0:
+#        	suffix += done
+#        	current_bar -=1
+#        print(suffix)
+#        
+#        while remaining_bar >0:
+#        	prefix += rema
+#        	remaining_bar -=1
+#        print(prefix)
+#        
+#        prog = str(suffix + prefix)
+#        print(prog)
 
         embed = discord.Embed(title=f'Music', colour=0xebb145)
         embed.description = f'Now Playing:\n**`{track.title}`** [{str(datetime.timedelta(milliseconds=int(track.length)))}] \n\n'
@@ -128,7 +162,7 @@ class Player(wavelink.Player):
         #embed.add_field(name='Queue Length', value=str(qsize))
         embed.add_field(name='Volume', value=f'**`{self.volume}%`**')
         embed.add_field(name='Requested By', value=track.requester.mention)
-        #embed.add_field(name='DJ', value=self.dj.mention)
+        #embed.add_field(name='Progress', value=prog)
         #embed.add_field(name='Video URL', value=f'[Click Here!]({track.uri})')
         embed.set_footer(text=f"Remaining {str(qsize)} songs")
 
