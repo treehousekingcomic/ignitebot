@@ -1,4 +1,5 @@
 import discord
+import humanize
 from discord.ext import commands
 import aiohttp
 import random
@@ -9,6 +10,7 @@ import asyncio
 from PIL import Image, ImageChops, ImageFilter, ImageDraw, ImageFont
 from colorthief import ColorThief
 import functools
+import qrcode
 
 
 class ImageEdit(commands.Cog, name="Image"):
@@ -36,6 +38,55 @@ class ImageEdit(commands.Cog, name="Image"):
 	async def grn(self, id):
 		return f"static/filter/{id}{random.randint(1000,9999)}.png"
 	
+	def get_card(self, fp, ctx):
+		qrname = "static/qr/" + str(random.randint(9999,99999)) + ".png"
+		imn = fp
+		pp = Image.open(imn)
+		pp = pp.convert("RGBA")
+		pp = pp.resize((620,620))
+		
+		card = Image.open("static/profile/dcard.png")
+		card = card.convert("RGBA")
+		font = ImageFont.truetype("static/profile/cbri.ttf", 70)
+		
+		
+		card.paste(pp, (43, 378))
+		
+		text = ""
+		text += f"Name : {str(ctx.author)} \nAccount created : {humanize.naturaltime(ctx.author.created_at)}"
+		qr = qrcode.make(text)
+		qr.save(qrname)
+		
+		qr = Image.open(qrname)
+		qr = qr.resize((400,400))
+		card.paste(qr, ((1950,650)))
+		
+		os.remove(qrname)
+		
+		draw = ImageDraw.Draw(card)
+		draw.text((754, 430), ctx.author.name, (0,0,0,0), font=font )
+		draw.text((1480, 430), str(ctx.author.discriminator), (0,0,0,0), font=font )
+		draw.text((754, 650), str(ctx.author.id), (0,0,0,0), font=font )
+		
+		card.save(imn)
+		return imn
+	
+	@commands.command()
+	@commands.cooldown(1, 10, commands.BucketType.user)
+	async def card(self, ctx):
+		fp = await self.grn(ctx.author.id)
+		link = str(ctx.author.avatar_url)
+		await self.dl_img(link, fp)
+		
+		
+		thing = functools.partial(self.get_card, fp, ctx)
+		some_stuff = await self.client.loop.run_in_executor(None, thing)
+		
+		file = discord.File(fp=some_stuff, filename="idcard.png")
+		await ctx.send(file=file)
+		
+		os.remove(some_stuff)
+		
 	def get_stars(self, fp):
 		im1 = Image.open(fp)
 		im2 = Image.open("static/profile/stars.png")

@@ -23,18 +23,44 @@ class ServerInfo(commands.Cog, name="Server"):
 			await self.client.pgdb.execute("INSERT INTO cmduse(name, uses) VALUES($1, $2)", cmd, 1)
 	
 	@commands.command(aliases=['lb'])
-	async def leaderboard(self, ctx):
+	async def leaderboard(self, ctx, flag:str="server"):
 		"""Learderboard of your server according to their XP"""
 		await self.ucmd("leaderboard")
-		
-		data = await self.client.pgdb.fetch("SELECT * FROM levels WHERE guildid = $1 ORDER BY exp DESC LIMIT 10", ctx.guild.id)
+		if flag == "server":
+			members = ctx.guild.members
+			lb = ctx.guild.name
+			
+			data = await self.client.pgdb.fetch("SELECT * FROM levels WHERE guildid = $1 ORDER BY exp DESC LIMIT 10", ctx.guild.id)
+		elif flag == "global":
+			members = self.client.users
+			lb = "Global"
+			data = await self.client.pgdb.fetch("SELECT * FROM levels ORDER BY exp DESC LIMIT 10")
+		else:
+			flag = "server"
+			members = ctx.guild.members
+			lb = ctx.guild.name
+			data = await self.client.pgdb.fetch("SELECT * FROM levels WHERE guildid = $1 ORDER BY exp DESC LIMIT 10", ctx.guild.id)
+			
 		
 		msg = ""
 		count = 0
 		
 		for row in data:
 			try:
-				member = ctx.guild.get_member(row['userid'])
+				if flag == "server":
+					member = ctx.guild.get_member(row['userid'])
+					dd = await self.client.pgdb.fetchrow("SELECT * FROM levels WHERE guildid = $1 and userid =$2 ORDER BY exp DESC LIMIT 10", ctx.guild.id, member.id)
+					xp = dd['exp']
+					level = dd['level']
+				else:
+					member = self.client.get_user(row['userid'])
+					
+					dd = await self.client.pgdb.fetch("SELECT * FROM levels WHERE userid= $1", member.id)
+					xp = 0
+					level = 0
+					for d in dd:
+						xp += d['exp']
+						level += d['level']
 				if member.bot != True:
 					count += 1
 				
@@ -51,12 +77,12 @@ class ServerInfo(commands.Cog, name="Server"):
 					txt = count
 				else:
 					txt = pre
-				msg += f"{txt}. **{str(member)}** `Level {row['level']} - Xp {row['exp']}`\n"
+				msg += f"{txt}. **{str(member)}** `Level {level} - Xp {xp}`\n"
 			except:
 				pass
 
 		embed = discord.Embed(colour=ctx.author.color, description=msg, timestamp=ctx.message.created_at)
-		embed.set_author(name=f"{ctx.guild.name} - Leaderboard", icon_url=ctx.guild.icon_url)
+		embed.set_author(name=f"{lb} - Leaderboard", icon_url=ctx.guild.icon_url)
 		await ctx.send(embed=embed)
 	
 	@commands.command(aliases=['serverstatus', 'sinfo', 'si'])

@@ -269,8 +269,8 @@ class Games(commands.Cog):
 		
 		if amount > floor_cash and amount <= cash:
 			await self.client.pgdb.execute("UPDATE floor SET cash = $1 WHERE channel = $2", amount + floor_cash, ctx.channel.id)
-			return await ctx.send(f"Not enough icash on the floor. But thanks for dropping {amount} icash! :) ")
 			await self.update_cash(ctx.author.id, -amount)
+			return await ctx.send(f"Not enough icash on the floor. But thanks for dropping {amount} icash! :) ")
 		
 		if amount > floor_cash:
 			return await ctx.send(f"Not enough icash on the floor.")

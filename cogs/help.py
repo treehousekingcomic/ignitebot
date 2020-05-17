@@ -23,6 +23,7 @@ class Help(commands.Cog, name="Help"):
 	async def help(self, ctx, cog=None):
 		"""Shows help mesaage."""
 		await self.ucmd("help")
+		prefix = ctx.prefix
 		sg = self.client.get_guild(700374484955299900)
 		
 		nextbtn = discord.utils.get(sg.emojis, name="ignext")
@@ -62,7 +63,7 @@ class Help(commands.Cog, name="Help"):
 							doc = cog.__doc__
 					
 						desc += "**__" +cog.qualified_name + "__**" + "\n`" + doc + "`\n"
-				desc = f"Type `help <category>` to get help on a cetegory. \n\n" + desc
+				desc = f"Type `{prefix}help <category>` to get help on a cetegory. \n\n" + desc
 				embed = discord.Embed(
 					description=desc,
 					color=ctx.author.color,
@@ -153,7 +154,7 @@ class Help(commands.Cog, name="Help"):
 								params.append(p)
 							for p in params:
 								pr += " <" + p + ">"
-							desc += "**Syntax** : `" + cmd.name + pr + "`\n"
+							desc += "**Syntax** : `" + prefix + cmd.name + pr + "`\n"
 							
 						aliases = cmd.aliases
 					
@@ -172,7 +173,7 @@ class Help(commands.Cog, name="Help"):
 									pr = ""
 									for p in scmd.clean_params:
 										pr += "<" + p + "> "
-									desc += "`" + cmd.name + " " + scmd.name + " " + pr + "`\n"
+									desc += "`" + prefix + cmd.name + " " + scmd.name + " " + pr + "`\n"
 								
 						except:
 							pass
@@ -187,7 +188,7 @@ class Help(commands.Cog, name="Help"):
 						
 						await ctx.send(embed=embed)
 					else:
-						await ctx.send("This command id hidden.")
+						await ctx.send(f"No command found with the name `{cog}`.")
 				else:
 					await ctx.send(f"No command found with the name `{cog}`.")
 				

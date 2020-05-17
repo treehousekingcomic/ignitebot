@@ -161,7 +161,7 @@ class Player(wavelink.Player):
         #embed.add_field(name='Duration', value=str(datetime.timedelta(milliseconds=int(track.length))))
         #embed.add_field(name='Queue Length', value=str(qsize))
         embed.add_field(name='Volume', value=f'**`{self.volume}%`**')
-        embed.add_field(name='Requested By', value=track.requester.mention)
+        embed.add_field(name='Requested By', value=str(track.requester))
         #embed.add_field(name='Progress', value=prog)
         #embed.add_field(name='Video URL', value=f'[Click Here!]({track.uri})')
         embed.set_footer(text=f"Remaining {str(qsize)} songs")
@@ -941,6 +941,43 @@ class Musics(commands.Cog, name="Music"):
     		await ctx.send("Playlist deleted")
     	except:
     		pass
+    
+    @commands.command()
+    @commands.cooldown(1, 10, commands.BucketType.channel)
+    async def progress(self, ctx):
+	    	done = "█"
+	    	rema = "▒"
+	    	
+	    	player: Player = self.bot.wavelink.get_player(guild_id=ctx.guild.id, cls=Player, context=ctx)
+	    	track = player.current
+	    	
+	    	end = track.length
+	    	pos = player.position
+	    	
+	    	current_percent = math.floor((pos / end) * 100)
+	    	total_bar = 20
+	    	current_bar = math.floor((current_percent/20)*4)
+	    	
+	    	remaining_bar = total_bar - current_bar
+	    	print(current_bar)
+	    	print(remaining_bar)
+	    	suffix = ""
+	    	
+	    	prefix = ""
+	    	
+	    	while current_bar >0:
+	    		suffix += done
+	    		current_bar -=1
+	    	
+	    	while remaining_bar >0:
+	    		prefix += rema
+	    		remaining_bar -=1
+	    	
+	    	prog = str(suffix + prefix + "\n" +str(datetime.timedelta(milliseconds=int(player.position))).split(".")[0] + " ••<>•• " + str(datetime.timedelta(milliseconds=int(track.length))))
+    	
+ 
+    		await ctx.send(prog, delete_after=5)
+    		await ctx.message.delete()
     	
 def setup(bot: commands.Bot):
     bot.add_cog(Musics(bot))
