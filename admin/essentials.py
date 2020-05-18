@@ -4,6 +4,8 @@ import os
 from discord.ext import tasks, commands
 import traceback
 import asyncio
+import traceback
+import sys
 
 class Essentials(commands.Cog):
 	def __init__(self, client):
@@ -69,16 +71,23 @@ class Essentials(commands.Cog):
 
 	@commands.Cog.listener()
 	async def on_command_error(self, ctx, error):
+		sg = self.client.get_guild(700374484955299900)
+		chan = discord.utils.get(sg.text_channels, id=711777804412387369)
+		
 		if hasattr(ctx.command, "on_error"):
 				return
 				
 		if isinstance(error, commands.BotMissingPermissions):
 			await ctx.send("⛔ | I cant do this without permission!")
-		if isinstance(error, commands.BadArgument):
+		elif isinstance(error, commands.BadArgument):
 			await ctx.send('🚫 | Bad Argument. Try Again.')
-		if isinstance(error, commands.MissingPermissions):
+		elif isinstance(error, commands.MissingPermissions):
 			await ctx.send('🙄 | You dont have permission to do this.')
-		if isinstance(error, commands.CommandOnCooldown):
+		elif isinstance(error, commands.NotOwner):
+			pass
+		elif isinstance(error, commands.CommandNotFound):
+			return
+		elif isinstance(error, commands.CommandOnCooldown):
 			#print(error.cooldown)
 			if hasattr(ctx.command, "on_error"):
 				return
@@ -92,10 +101,12 @@ class Essentials(commands.Cog):
 			
 			msg = await ctx.send(f"🕝 | Cooldown! wait {tt}!")
 			if error.retry_after > 60:
-				await asyncio.sleep(15)
+				await asyncio.sleep(5)
 			else:
 				await asyncio.sleep(error.retry_after)
 			await msg.delete()
+		else:
+			pass
 
 
 	@commands.Cog.listener()
@@ -130,7 +141,9 @@ class Essentials(commands.Cog):
 				self.client.load_extension(f'{folder}.{extension}')
 				await ctx.send(f"Extension {extension.title()} Loaded successfully")
 			except Exception as e:
-				await ctx.send(e)
+				exc_type, exc_value, exc_tb = sys.exc_info()
+				exc_content = traceback.format_exception(exc_type, exc_value, exc_tb)
+				await ctx.send(f"```{exc_content}```")
 
 	@commands.command(hidden=True)
 	@commands.is_owner()
@@ -139,7 +152,9 @@ class Essentials(commands.Cog):
 				self.client.unload_extension(f'{folder}.{extension}')
 				await ctx.send(f"Extension {extension.title()} Unloaded successfully")
 			except Exception as e:
-				await ctx.send(e)
+				exc_type, exc_value, exc_tb = sys.exc_info()
+				exc_content = traceback.format_exception(exc_type, exc_value, exc_tb)
+				await ctx.send(f"```{exc_content}```")
 				
 	@commands.command(hidden=True)
 	@commands.is_owner()
@@ -149,7 +164,10 @@ class Essentials(commands.Cog):
 				self.client.reload_extension(f"{folder}.{extension}")
 				await ctx.send(f"Extension {extension.title()} Reloaded successfully")
 			except Exception as e:
-				await ctx.send(e)
+				exc_type, exc_value, exc_tb = sys.exc_info()
+				exc_content = traceback.format_exception(exc_type, exc_value, exc_tb)
+				await ctx.send(f"```{exc_content}```")
+	
 				
 def setup(client):
 	client.add_cog(Essentials(client))

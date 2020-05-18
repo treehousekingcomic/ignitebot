@@ -39,8 +39,11 @@ class Level(commands.Cog):
     
 	@commands.Cog.listener()
 	async def on_message(self, message):
-		data = await self.client.pgdb.fetchrow("SELECT * FROM levels WHERE userid = $1 AND guildid = $2", message.author.id, message.guild.id)
-	
+		try:
+			data = await self.client.pgdb.fetchrow("SELECT * FROM levels WHERE userid = $1 AND guildid = $2", message.author.id, message.guild.id)
+		except:
+			return
+
 		if data:
 			exp = data['exp']
 			level = data['level']

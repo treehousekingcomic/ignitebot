@@ -1,5 +1,4 @@
 import discord
-import humanize
 from discord.ext import commands
 import aiohttp
 import random
@@ -10,7 +9,6 @@ import asyncio
 from PIL import Image, ImageChops, ImageFilter, ImageDraw, ImageFont
 from colorthief import ColorThief
 import functools
-import qrcode
 
 
 class ImageEdit(commands.Cog, name="Image"):
@@ -38,64 +36,17 @@ class ImageEdit(commands.Cog, name="Image"):
 	async def grn(self, id):
 		return f"static/filter/{id}{random.randint(1000,9999)}.png"
 	
-	def get_card(self, fp, ctx):
-		qrname = "static/qr/" + str(random.randint(9999,99999)) + ".png"
-		imn = fp
-		pp = Image.open(imn)
-		pp = pp.convert("RGBA")
-		pp = pp.resize((620,620))
-		
-		card = Image.open("static/profile/dcard.png")
-		card = card.convert("RGBA")
-		font = ImageFont.truetype("static/profile/cbri.ttf", 70)
-		
-		
-		card.paste(pp, (43, 378))
-		
-		text = ""
-		text += f"Name : {str(ctx.author)} \nAccount created : {humanize.naturaltime(ctx.author.created_at)}"
-		qr = qrcode.make(text)
-		qr.save(qrname)
-		
-		qr = Image.open(qrname)
-		qr = qr.resize((400,400))
-		card.paste(qr, ((1950,650)))
-		
-		os.remove(qrname)
-		
-		draw = ImageDraw.Draw(card)
-		draw.text((754, 430), ctx.author.name, (0,0,0,0), font=font )
-		draw.text((1480, 430), str(ctx.author.discriminator), (0,0,0,0), font=font )
-		draw.text((754, 650), str(ctx.author.id), (0,0,0,0), font=font )
-		
-		card.save(imn)
-		return imn
-	
-	@commands.command()
-	@commands.cooldown(1, 10, commands.BucketType.user)
-	async def card(self, ctx):
-		fp = await self.grn(ctx.author.id)
-		link = str(ctx.author.avatar_url)
-		await self.dl_img(link, fp)
-		
-		
-		thing = functools.partial(self.get_card, fp, ctx)
-		some_stuff = await self.client.loop.run_in_executor(None, thing)
-		
-		file = discord.File(fp=some_stuff, filename="idcard.png")
-		await ctx.send(file=file)
-		
-		os.remove(some_stuff)
-		
 	def get_stars(self, fp):
 		im1 = Image.open(fp)
 		im2 = Image.open("static/profile/stars.png")
 		im2 = im2.resize(im1.size)
-		
-		out = ImageChops.add(im1,im2,1,0)
-		out.save(fp)
-		
-		return fp
+		try:
+			out = ImageChops.add(im1,im2,1,0)
+			out.save(fp)
+			return fp
+		except:
+			os.remove(fp)
+			return Flase
 	
 	@commands.command()
 	@commands.cooldown(1,10, commands.BucketType.user)
@@ -111,17 +62,23 @@ class ImageEdit(commands.Cog, name="Image"):
 		thing = functools.partial(self.get_stars, fp)
 		some_stuff = await self.client.loop.run_in_executor(None, thing)
   	
-		file = discord.File(fp=some_stuff, filename="stars.png")
-		await ctx.send(file=file)
-		os.remove(fp)
+		if some_stuff:
+			file = discord.File(fp=some_stuff, filename="stars.png")
+			await ctx.send(file=file)
+			os.remove(fp)
+		else:
+			await ctx.send("Something went wrong with your image!")
 	
 	def get_lovers(self, img1, img2):
 		
 		frame = Image.open("static/profile/love.png")
 		frame = frame.convert("RGBA")
 		
-		pic = Image.open(img1)
-		pic2 = Image.open(img2)
+		try:
+			pic = Image.open(img1)
+			pic2 = Image.open(img2)
+		except:
+			return False
 		
 		pic = pic.convert("RGBA")
 		pic2 = pic2.convert("RGBA")
@@ -173,15 +130,22 @@ class ImageEdit(commands.Cog, name="Image"):
 		some_stuff = await self.client.loop.run_in_executor(None, thing)
   	
   	
-		file = discord.File(fp=some_stuff, filename="lovers.png")
-		await ctx.send(file=file)
-		os.remove(some_stuff)
+		if some_stuff:
+			file = discord.File(fp=some_stuff, filename="lovers.png")
+			await ctx.send(file=file)
+			os.remove(some_stuff)
+		else:
+			await ctx.send("Something went wrong with your images!")
 	
 	def get_frame(self, imn, data):
 		with open(imn, "wb") as f:
 			f.write(data)
   	
-		pic = Image.open(imn)
+		try:
+			pic = Image.open(imn)
+		except:
+			os.remove(imn)
+			return False
 		pic = pic.convert("RGBA")
 		frame = Image.open("static/profile/frame.png")
 		frame = frame.convert("RGBA")
@@ -222,10 +186,14 @@ class ImageEdit(commands.Cog, name="Image"):
 		thing = functools.partial(self.get_frame, imn, data)
 		some_stuff = await self.client.loop.run_in_executor(None, thing)
   	
-		file = discord.File(fp=some_stuff, filename="frame.png")
-		await ctx.send(file=file)
+		if some_stuff:
+			file = discord.File(fp=some_stuff, filename="frame.png")
+			await ctx.send(file=file)
   	
-		os.remove(imn)
+			os.remove(imn)
+		else:
+			await ctx.send("Something went wrong with your image!")
+		
 	
 	def get_colors(self, img, data):
 		with open(img, 'wb') as f:
