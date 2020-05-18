@@ -119,51 +119,13 @@ class Player(wavelink.Player):
 
         channel = self.bot.get_channel(int(self.channel_id))
         qsize = self.queue.qsize()
-        
-#        done = "█"
-#        rema = "▒"
-#        
-#        
-#        end = track.length
-#        pos = self.position
-#        
-#        print(end, pos)
-#        
-#        
-#        current_percent = math.floor((pos / end) * 100)
-#        total_bar = 20
-#        current_bar = math.floor((current_percent/20)*4)
-#        
-#        remaining_bar = total_bar - current_bar
-#        print(current_bar)
-#        print(remaining_bar)
-#        
-#        suffix = ""
-#        prefix = ""
-#        
-#        while current_bar >0:
-#        	suffix += done
-#        	current_bar -=1
-#        print(suffix)
-#        
-#        while remaining_bar >0:
-#        	prefix += rema
-#        	remaining_bar -=1
-#        print(prefix)
-#        
-#        prog = str(suffix + prefix)
-#        print(prog)
 
         embed = discord.Embed(title=f'Music', colour=0xebb145)
         embed.description = f'Now Playing:\n**`{track.title}`** [{str(datetime.timedelta(milliseconds=int(track.length)))}] \n\n'
         embed.set_thumbnail(url=track.thumb)
 
-        #embed.add_field(name='Duration', value=str(datetime.timedelta(milliseconds=int(track.length))))
-        #embed.add_field(name='Queue Length', value=str(qsize))
         embed.add_field(name='Volume', value=f'**`{self.volume}%`**')
         embed.add_field(name='Requested By', value=str(track.requester))
-        #embed.add_field(name='Progress', value=prog)
-        #embed.add_field(name='Video URL', value=f'[Click Here!]({track.uri})')
         embed.set_footer(text=f"Remaining {str(qsize)} songs")
 
         return embed
@@ -902,6 +864,8 @@ class Musics(commands.Cog, name="Music"):
     	
     	if url is None:
     		return await ctx.send("No url specified!")
+    	
+    	url = url.strip("<>")
     	
     	list = await self.bot.pgdb.fetchrow("SELECT * FROM playlist WHERE name = $1 and guild = $2", playlist, ctx.guild.id)
     	if not list:
