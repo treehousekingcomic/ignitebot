@@ -495,6 +495,46 @@ class Musics(commands.Cog, name="Music"):
                 await player.do_next()
     
     @commands.command()
+    @commands.cooldown(1, 10, commands.BucketType.user)
+    async def search(self, ctx, *,query:str=None):
+    	"""Search for songs."""
+    	if query is None:
+    		return await ctx.send("Query is required")
+    	
+    	query = query.strip('<>')
+    	if not URL_REG.match(query):
+    		q = f'ytsearch:{query}'
+    
+    	tracks = await self.bot.wavelink.get_tracks(q)
+    	if isinstance(tracks, wavelink.TrackPlaylist):
+    		count = 0
+    		msg = ""
+    		for track in tracks.tracks:
+    			count +=1
+    			nc = f"{count}. [{track.title}]({track.uri}) \n"
+    			if len(msg + nc) > 2000:
+    				break
+    			else:
+    				msg += nc
+    		
+    		embed = discord.Embed(color=ctx.author.color, description=msg, title="**" + query + "** search results")
+    		await ctx.send(embed=embed)	
+    	else:
+    		if tracks is None:
+    			return await ctx.send("Nothing found try again!")
+    		count = 0
+    		msg = ""
+    		for track in tracks:
+    			count +=1
+    			nc = f"{count}. [{track.title}]({track.uri}) \n"
+    			if len(msg + nc) > 2000:
+    				break
+    			else:
+    				msg += nc
+    		embed = discord.Embed(color=ctx.author.color, description=msg, title="**" + query + "** search results")
+    		await ctx.send(embed=embed)
+    
+    @commands.command()
     @commands.check_any(commands.has_any_role("DJ", "Dj", "dj"), commands.has_permissions(administrator=True), commands.is_owner())
     async def pause(self, ctx: commands.Context):
         """Pause the currently playing song."""

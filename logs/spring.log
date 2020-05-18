@@ -26,3 +26,52 @@ java.lang.IllegalArgumentException: UT000068: Servlet path match failed
 	at org.xnio.nio.WorkerThread.run(WorkerThread.java:561) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
 
 2020-05-18 03:32:51.689 ERROR 30477 --- [XNIO-1 task-2] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /180.244.235.13:30885
+2020-05-18 04:47:45.026 ERROR 30477 --- [XNIO-1 task-3] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /93.171.243.231:48562
+2020-05-18 04:50:17.032  INFO 30477 --- [XNIO-1 task-4] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:54590
+2020-05-18 04:50:17.097  INFO 30477 --- [XNIO-1 task-4] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:54590
+2020-05-18 04:50:24.345  INFO 30477 --- [XNIO-1 task-5] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-05-18 04:50:25.246  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: despacito
+2020-05-18 04:51:34.080  INFO 30477 --- [XNIO-1 task-7] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-05-18 04:51:34.463  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Clean Alan Walker Songs
+2020-05-18 05:02:34.410  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "700374484955299900"}
+2020-05-18 05:02:34.410  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "700374484955299900"}
+2020-05-18 05:02:34.414  INFO 30477 --- [XNIO-1 task-9] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:54636
+2020-05-18 05:02:34.442  INFO 30477 --- [XNIO-1 task-9] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:54636
+2020-05-18 05:02:40.900  INFO 30477 --- [XNIO-1 task-10] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-05-18 05:02:41.624  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: despacito
+2020-05-18 05:02:54.147  INFO 30477 --- [XNIO-1 task-12] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-05-18 05:02:55.101  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: despacito
+2020-05-18 05:03:43.647  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "700374484955299900"}
+2020-05-18 05:03:43.648  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "700374484955299900"}
+2020-05-18 05:03:43.652  INFO 30477 --- [XNIO-1 task-14] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:54648
+2020-05-18 05:03:43.659  INFO 30477 --- [XNIO-1 task-14] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:54648
+2020-05-18 05:03:53.232  INFO 30477 --- [XNIO-1 task-15] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-05-18 05:03:53.994  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : No matches found
+2020-05-18 05:04:13.608  INFO 30477 --- [XNIO-1 task-1] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-05-18 05:04:14.300  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Despacito
+2020-05-18 05:04:23.637  INFO 30477 --- [XNIO-1 task-3] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-05-18 05:04:24.619  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Despacito
+2020-05-18 05:07:20.555  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "700374484955299900"}
+2020-05-18 05:07:20.556  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "700374484955299900"}
+2020-05-18 05:07:20.557  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "696962067332071454"}
+2020-05-18 05:07:20.558  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "696962067332071454"}
+2020-05-18 05:07:20.564  INFO 30477 --- [XNIO-1 task-5] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:54664
+2020-05-18 05:07:20.597  INFO 30477 --- [XNIO-1 task-5] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:54664
+2020-05-18 05:07:26.953  INFO 30477 --- [XNIO-1 task-6] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-05-18 05:07:27.866  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Perfect
+2020-05-18 05:08:49.548  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "700374484955299900"}
+2020-05-18 05:08:49.549  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "700374484955299900"}
+2020-05-18 05:08:49.559  INFO 30477 --- [XNIO-1 task-8] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:54676
+2020-05-18 05:08:49.586  INFO 30477 --- [XNIO-1 task-8] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:54676
+2020-05-18 05:09:37.511  INFO 30477 --- [XNIO-1 task-9] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:54680
+2020-05-18 05:09:37.555  INFO 30477 --- [XNIO-1 task-9] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:54680
+2020-05-18 05:09:57.769  INFO 30477 --- [XNIO-1 task-10] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-05-18 05:09:58.560  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: despcio
+2020-05-18 05:10:09.526  INFO 30477 --- [XNIO-1 task-12] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-05-18 05:10:10.437  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Despacito
+2020-05-18 05:11:51.475  INFO 30477 --- [XNIO-1 task-14] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-05-18 05:11:52.016  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: sh sj
+2020-05-18 05:13:56.755  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "700374484955299900"}
+2020-05-18 05:13:56.757  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "700374484955299900"}
+2020-05-18 05:13:56.765  INFO 30477 --- [XNIO-1 task-16] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:54704
+2020-05-18 05:13:56.792  INFO 30477 --- [XNIO-1 task-16] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:54704
