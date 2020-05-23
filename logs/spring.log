@@ -1,15 +1,8 @@
-2020-05-18 00:10:00.131  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "657066018337718333", "sessionId": "a67057f178f56674cdf90461f10dea01", "event": {"token": "2e81ea30f8883d9d", "guild_id": "657066018337718333", "endpoint": "brazil518.discord.media:80"}}
-2020-05-18 00:10:01.208  INFO 30477 --- [XNIO-1 task-10] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-18 00:10:01.742  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: hombres g chica cocodrilo
-2020-05-18 00:10:01.880  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "657066018337718333", "track": "QAAArgIASUhvbWJyZXMgRyAtIEVsIEF0YXF1ZSBEZSBMYXMgQ2hpY2FzIENvY29kcmlsbyAoVmlkZW8gT2ZpY2lhbCkgVmlkZW9NdXNpYy4AC1ZpZGVvTXVzaWMuAAAAAAACt1AAC2Fzc0FVcEdXS2RFAAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9YXNzQVVwR1dLZEUAB3lvdXR1YmUAAAAAAAAAAA==", "noReplace": false, "startTime": "0"}
-2020-05-18 00:12:21.361  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "657066018337718333"}
-2020-05-18 00:12:21.362  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "657066018337718333"}
-2020-05-18 00:14:20.160 ERROR 30477 --- [XNIO-1 task-12] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /172.105.3.178:33080
-2020-05-18 00:38:14.039 ERROR 30477 --- [XNIO-1 task-14] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /190.122.147.242:45274
-2020-05-18 00:53:23.381 ERROR 30477 --- [XNIO-1 task-15] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /143.255.242.185:19786
-2020-05-18 02:49:05.877 ERROR 30477 --- [XNIO-1 task-16] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /188.166.59.16:46184
-2020-05-18 03:23:14.268  WARN 30477 --- [XNIO-1 task-1] l.s.config.RequestAuthorizationFilter    : Authorization missing for 109.234.153.132 on POST /azenv.php
-2020-05-18 03:23:19.324 ERROR 30477 --- [XNIO-1 I/O-1] io.undertow.request                      : UT005071: Undertow request failed HttpServerExchange{ CONNECT check.best-proxies.ru:80}
+2020-05-23 01:32:21.398 ERROR 30477 --- [XNIO-1 task-14] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /187.121.8.120:3654
+2020-05-23 01:50:21.982  WARN 30477 --- [XNIO-1 task-15] l.s.config.RequestAuthorizationFilter    : Authorization missing for 185.128.41.50 on GET /manager/html
+2020-05-23 02:00:23.620 ERROR 30477 --- [XNIO-1 task-1] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /5.202.40.44:35727
+2020-05-23 03:18:41.453  WARN 30477 --- [XNIO-1 task-16] l.s.config.RequestAuthorizationFilter    : Authorization missing for 5.178.86.74 on POST /azenv.php
+2020-05-23 03:18:46.510 ERROR 30477 --- [XNIO-1 I/O-1] io.undertow.request                      : UT005071: Undertow request failed HttpServerExchange{ CONNECT check.best-proxies.ru:80}
 
 java.lang.IllegalArgumentException: UT000068: Servlet path match failed
 	at io.undertow.servlet.handlers.ServletPathMatchesData.getServletHandlerByPath(ServletPathMatchesData.java:83) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
@@ -25,79 +18,14 @@ java.lang.IllegalArgumentException: UT000068: Servlet path match failed
 	at org.xnio.nio.NioSocketConduit.handleReady(NioSocketConduit.java:88) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
 	at org.xnio.nio.WorkerThread.run(WorkerThread.java:561) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
 
-2020-05-18 03:32:51.689 ERROR 30477 --- [XNIO-1 task-2] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /180.244.235.13:30885
-2020-05-18 04:47:45.026 ERROR 30477 --- [XNIO-1 task-3] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /93.171.243.231:48562
-2020-05-18 04:50:17.032  INFO 30477 --- [XNIO-1 task-4] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:54590
-2020-05-18 04:50:17.097  INFO 30477 --- [XNIO-1 task-4] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:54590
-2020-05-18 04:50:24.345  INFO 30477 --- [XNIO-1 task-5] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-18 04:50:25.246  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: despacito
-2020-05-18 04:51:34.080  INFO 30477 --- [XNIO-1 task-7] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-18 04:51:34.463  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Clean Alan Walker Songs
-2020-05-18 05:02:34.410  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "700374484955299900"}
-2020-05-18 05:02:34.410  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "700374484955299900"}
-2020-05-18 05:02:34.414  INFO 30477 --- [XNIO-1 task-9] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:54636
-2020-05-18 05:02:34.442  INFO 30477 --- [XNIO-1 task-9] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:54636
-2020-05-18 05:02:40.900  INFO 30477 --- [XNIO-1 task-10] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-18 05:02:41.624  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: despacito
-2020-05-18 05:02:54.147  INFO 30477 --- [XNIO-1 task-12] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-18 05:02:55.101  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: despacito
-2020-05-18 05:03:43.647  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "700374484955299900"}
-2020-05-18 05:03:43.648  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "700374484955299900"}
-2020-05-18 05:03:43.652  INFO 30477 --- [XNIO-1 task-14] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:54648
-2020-05-18 05:03:43.659  INFO 30477 --- [XNIO-1 task-14] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:54648
-2020-05-18 05:03:53.232  INFO 30477 --- [XNIO-1 task-15] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-18 05:03:53.994  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : No matches found
-2020-05-18 05:04:13.608  INFO 30477 --- [XNIO-1 task-1] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-18 05:04:14.300  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Despacito
-2020-05-18 05:04:23.637  INFO 30477 --- [XNIO-1 task-3] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-18 05:04:24.619  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Despacito
-2020-05-18 05:07:20.555  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "700374484955299900"}
-2020-05-18 05:07:20.556  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "700374484955299900"}
-2020-05-18 05:07:20.557  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "696962067332071454"}
-2020-05-18 05:07:20.558  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "696962067332071454"}
-2020-05-18 05:07:20.564  INFO 30477 --- [XNIO-1 task-5] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:54664
-2020-05-18 05:07:20.597  INFO 30477 --- [XNIO-1 task-5] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:54664
-2020-05-18 05:07:26.953  INFO 30477 --- [XNIO-1 task-6] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-18 05:07:27.866  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Perfect
-2020-05-18 05:08:49.548  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "700374484955299900"}
-2020-05-18 05:08:49.549  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "700374484955299900"}
-2020-05-18 05:08:49.559  INFO 30477 --- [XNIO-1 task-8] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:54676
-2020-05-18 05:08:49.586  INFO 30477 --- [XNIO-1 task-8] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:54676
-2020-05-18 05:09:37.511  INFO 30477 --- [XNIO-1 task-9] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:54680
-2020-05-18 05:09:37.555  INFO 30477 --- [XNIO-1 task-9] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:54680
-2020-05-18 05:09:57.769  INFO 30477 --- [XNIO-1 task-10] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-18 05:09:58.560  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: despcio
-2020-05-18 05:10:09.526  INFO 30477 --- [XNIO-1 task-12] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-18 05:10:10.437  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Despacito
-2020-05-18 05:11:51.475  INFO 30477 --- [XNIO-1 task-14] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-18 05:11:52.016  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: sh sj
-2020-05-18 05:13:56.755  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "700374484955299900"}
-2020-05-18 05:13:56.757  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "700374484955299900"}
-2020-05-18 05:13:56.765  INFO 30477 --- [XNIO-1 task-16] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:54704
-2020-05-18 05:13:56.792  INFO 30477 --- [XNIO-1 task-16] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:54704
-2020-05-18 05:17:43.640  INFO 30477 --- [XNIO-1 task-1] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-18 05:17:44.049  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Sjsks
-2020-05-18 05:18:02.370  INFO 30477 --- [XNIO-1 task-3] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-18 05:18:02.932  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Bhromor koio giya
-2020-05-18 05:22:58.322  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:47254 -- CloseStatus[code=1011, reason=]
-2020-05-18 05:22:58.322  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
-2020-05-18 05:33:37.258  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:54590 -- CloseStatus[code=1011, reason=]
-2020-05-18 05:33:37.258  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
-2020-05-18 05:34:54.555  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:54636 -- CloseStatus[code=1011, reason=]
-2020-05-18 05:34:54.555  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
-2020-05-18 05:36:03.796  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:54648 -- CloseStatus[code=1011, reason=]
-2020-05-18 05:36:03.797  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
-2020-05-18 05:39:40.708  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:54664 -- CloseStatus[code=1011, reason=]
-2020-05-18 05:39:40.709  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
-2020-05-18 05:42:09.718  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:54676 -- CloseStatus[code=1011, reason=]
-2020-05-18 05:42:09.721  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
-2020-05-18 05:44:57.683  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:54680 -- CloseStatus[code=1011, reason=]
-2020-05-18 05:44:57.684  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
-2020-05-18 06:28:01.027  WARN 30477 --- [XNIO-1 task-5] l.s.config.RequestAuthorizationFilter    : Authorization failed for 117.102.102.244 on POST /doLogin
-2020-05-18 06:28:31.855  WARN 30477 --- [XNIO-1 task-7] l.s.config.RequestAuthorizationFilter    : Authorization missing for 117.102.102.244 on GET /operator/basic.shtml
-2020-05-18 06:29:04.754  WARN 30477 --- [XNIO-1 task-8] l.s.config.RequestAuthorizationFilter    : Authorization failed for 117.102.102.244 on POST /doLogin
-2020-05-18 07:23:15.879  WARN 30477 --- [XNIO-1 task-10] l.s.config.RequestAuthorizationFilter    : Authorization missing for 109.234.153.134 on POST /azenv.php
-2020-05-18 07:23:20.958 ERROR 30477 --- [XNIO-1 I/O-1] io.undertow.request                      : UT005071: Undertow request failed HttpServerExchange{ CONNECT check.best-proxies.ru:80}
+2020-05-23 04:38:25.839 ERROR 30477 --- [XNIO-1 task-2] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /178.128.194.144:48206
+2020-05-23 04:47:33.872  WARN 30477 --- [XNIO-1 task-3] l.s.config.RequestAuthorizationFilter    : Authorization missing for 173.212.213.46 on GET /logs
+2020-05-23 04:47:34.181  WARN 30477 --- [XNIO-1 task-6] l.s.config.RequestAuthorizationFilter    : Authorization missing for 173.212.213.46 on GET /editConfig
+2020-05-23 04:51:13.397  WARN 30477 --- [XNIO-1 task-5] l.s.config.RequestAuthorizationFilter    : Authorization missing for 173.212.213.46 on GET /logs
+2020-05-23 04:51:13.695  WARN 30477 --- [XNIO-1 task-4] l.s.config.RequestAuthorizationFilter    : Authorization missing for 173.212.213.46 on GET /editConfig
+2020-05-23 05:40:48.763  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "700374484955299900", "sessionId": "6d5a40c30862976f4cfb2db94aee4629", "event": {"token": "e9592ce6363992ae", "guild_id": "700374484955299900", "endpoint": "us-central345.discord.media:80"}}
+2020-05-23 07:18:22.772  WARN 30477 --- [XNIO-1 task-7] l.s.config.RequestAuthorizationFilter    : Authorization missing for 5.178.86.76 on POST /azenv.php
+2020-05-23 07:18:27.850 ERROR 30477 --- [XNIO-1 I/O-1] io.undertow.request                      : UT005071: Undertow request failed HttpServerExchange{ CONNECT check.best-proxies.ru:80}
 
 java.lang.IllegalArgumentException: UT000068: Servlet path match failed
 	at io.undertow.servlet.handlers.ServletPathMatchesData.getServletHandlerByPath(ServletPathMatchesData.java:83) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
@@ -113,43 +41,62 @@ java.lang.IllegalArgumentException: UT000068: Servlet path match failed
 	at org.xnio.nio.NioSocketConduit.handleReady(NioSocketConduit.java:88) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
 	at org.xnio.nio.WorkerThread.run(WorkerThread.java:561) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
 
-2020-05-18 08:08:52.394 ERROR 30477 --- [XNIO-1 task-11] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /197.255.178.131:53595
-2020-05-18 08:16:16.525 ERROR 30477 --- [XNIO-1 task-12] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /46.248.32.87:58454
-2020-05-18 08:25:13.590  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "657066018337718333", "sessionId": "a67057f178f56674cdf90461f10dea01", "event": {"token": "e2996c2514eb335f", "guild_id": "657066018337718333", "endpoint": "brazil27.discord.media:80"}}
-2020-05-18 08:25:14.727  INFO 30477 --- [XNIO-1 task-13] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-18 08:25:15.363  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: xxxtentacion
-2020-05-18 08:25:15.471  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "657066018337718333", "track": "QAAApwIAQVhYWFRFTlRBQ0lPTiAtIFNjaG9vbCBTaG9vdGVycyAoT2ZmaWNpYWwgVmlkZW8pIChmZWF0LiBMaWwgV2F5bmUpAAxYWFhURU5UQUNJT04AAAAAAALK2AALNUJnTG9RMU5uSmMAAQAraHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj01QmdMb1ExTm5KYwAHeW91dHViZQAAAAAAAAAA", "noReplace": false, "startTime": "0"}
-2020-05-18 08:26:32.981  INFO 30477 --- [XNIO-1 task-15] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-18 08:26:33.465  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: xxxtentacion Moonlight
-2020-05-18 08:27:13.326  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "657066018337718333"}
-2020-05-18 08:27:13.328  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "657066018337718333", "track": "QAAAlQIAL1hYWFRFTlRBQ0lPTiAtIE1PT05MSUdIVCAoT0ZGSUNJQUwgTVVTSUMgVklERU8pAAxYWFhURU5UQUNJT04AAAAAAAIbEAALR1g4SGc2a1dRWUkAAQAraHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1HWDhIZzZrV1FZSQAHeW91dHViZQAAAAAAAAAA", "noReplace": false, "startTime": "0"}
-2020-05-18 08:28:00.337  INFO 30477 --- [XNIO-1 task-1] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-18 08:28:00.816  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: xxxtentacion Joselyn
-2020-05-18 08:29:30.786  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "657066018337718333", "track": "QAAAiwIAJVhYWFRFTlRBQ0lPTiAtIEpvY2VseW4gRmxvcmVzIChBdWRpbykADFhYWFRFTlRBQ0lPTgAAAAAAAdioAAtGQXVjVk5SeF9tVQABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PUZBdWNWTlJ4X21VAAd5b3V0dWJlAAAAAAAAAAA=", "noReplace": false, "startTime": "0"}
-2020-05-18 08:29:42.438  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "volume", "guildId": "657066018337718333", "volume": 100}
-2020-05-18 08:30:03.913  INFO 30477 --- [XNIO-1 task-3] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-18 08:30:04.495  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: get in the moon
-2020-05-18 08:31:31.065  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "657066018337718333", "track": "QAAAiwIAIktpbmEgLSBnZXQgeW91IHRoZSBtb29uIChmdC4gU25vdykAD3RoZSBib290bGVnIGJveQAAAAAAAvm4AAtXVHNtSWJOa3U1ZwABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PVdUc21JYk5rdTVnAAd5b3V0dWJlAAAAAAAAAAA=", "noReplace": false, "startTime": "0"}
-2020-05-18 08:34:03.052  INFO 30477 --- [XNIO-1 task-6] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-18 08:34:03.764  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Las Canciones Más Sad (Tristes)
-2020-05-18 08:34:45.699  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "657066018337718333", "track": "QAAAlAIAM0xhcyBDYW5jaW9uZXMgTWFzIFNhZCAoVHJpc3RlKSAoU2FkIE11c2ljIE1peCAyMDE5KQAHSy5JLlIuQQAAAAAAMwKYAAtLVk1Mc1ZsWGJRUQABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PUtWTUxzVmxYYlFRAAd5b3V0dWJlAAAAAAAAAAA=", "noReplace": false, "startTime": "0"}
-2020-05-18 08:46:50.726  INFO 30477 --- [XNIO-1 task-7] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-18 08:46:51.495  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Despacito
-2020-05-18 08:48:12.020  WARN 30477 --- [XNIO-1 task-8] l.s.config.RequestAuthorizationFilter    : Authorization missing for 162.243.144.56 on GET /manager/text/list
-2020-05-18 09:13:01.202  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "657066018337718333"}
-2020-05-18 09:13:01.204  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "657066018337718333"}
-2020-05-18 10:16:39.020 ERROR 30477 --- [XNIO-1 task-10] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /71.6.167.142:39834
-2020-05-18 11:00:16.719 ERROR 30477 --- [XNIO-1 task-11] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /186.159.6.114:40032
-2020-05-18 11:19:52.374  INFO 30477 --- [XNIO-1 task-12] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-18 11:19:53.035  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Ek Number
-2020-05-18 11:20:22.420  INFO 30477 --- [XNIO-1 task-14] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-18 11:20:23.179  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track Ek Number Official Video Song | Sanam Teri Kasam | Harshvardhan, Mawra | Himesh Reshammiya
-2020-05-18 11:20:54.894  INFO 30477 --- [XNIO-1 task-16] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-18 11:20:55.648  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track Ek Number Official Video Song | Sanam Teri Kasam | Harshvardhan, Mawra | Himesh Reshammiya
-2020-05-18 11:21:45.677  INFO 30477 --- [XNIO-1 task-2] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-18 11:21:46.428  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track Ek Number Official Video Song | Sanam Teri Kasam | Harshvardhan, Mawra | Himesh Reshammiya
-2020-05-18 11:23:35.876  WARN 30477 --- [XNIO-1 task-4] l.s.config.RequestAuthorizationFilter    : Authorization missing for 109.234.153.133 on POST /azenv.php
-2020-05-18 11:23:40.941 ERROR 30477 --- [XNIO-1 I/O-2] io.undertow.request                      : UT005071: Undertow request failed HttpServerExchange{ CONNECT check.best-proxies.ru:80}
+2020-05-23 09:06:29.823  INFO 30477 --- [XNIO-1 task-9] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-05-23 09:06:30.412  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 7jaws par ici
+2020-05-23 09:06:30.582  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "608009300064862224", "track": "QAAAiAIAKDcgSmF3cyBYIFNlZXp5IC0gUGFyIGljaSAoQ2xpcCBvZmZpY2llbCkABjcgSmF3cwAAAAAAA36IAAtWcFBqTF83SERxWQABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PVZwUGpMXzdIRHFZAAd5b3V0dWJlAAAAAAAAAAA=", "noReplace": false, "startTime": "0"}
+2020-05-23 09:06:31.354 ERROR 30477 --- [lava-daemon-pool-playback-1-thread-29] c.s.d.l.t.p.LocalAudioTrackExecutor      : Error in playback of VpPjL_7HDqY
+
+com.sedmelluq.discord.lavaplayer.tools.FriendlyException: Something broke when playing the track.
+	at com.sedmelluq.discord.lavaplayer.tools.ExceptionTools.wrapUnfriendlyExceptions(ExceptionTools.java:43) ~[lavaplayer-1.3.38.jar!/:na]
+	at com.sedmelluq.discord.lavaplayer.track.playback.LocalAudioTrackExecutor.execute(LocalAudioTrackExecutor.java:103) ~[lavaplayer-1.3.38.jar!/:na]
+	at com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager.lambda$executeTrack$1(DefaultAudioPlayerManager.java:349) ~[lavaplayer-1.3.38.jar!/:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:830) ~[na:na]
+Caused by: java.lang.NullPointerException: null
+	at java.base/java.net.URI$Parser.parse(URI.java:3127) ~[na:na]
+	at java.base/java.net.URI.<init>(URI.java:623) ~[na:na]
+	at com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeTrackFormat.getUrl(YoutubeTrackFormat.java:66) ~[lavaplayer-1.3.38.jar!/:na]
+	at com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeSignatureCipherManager.resolveFormatUrl(YoutubeSignatureCipherManager.java:97) ~[lavaplayer-1.3.38.jar!/:na]
+	at com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioTrack.loadBestFormatWithUrl(YoutubeAudioTrack.java:87) ~[lavaplayer-1.3.38.jar!/:na]
+	at com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioTrack.process(YoutubeAudioTrack.java:42) ~[lavaplayer-1.3.38.jar!/:na]
+	at com.sedmelluq.discord.lavaplayer.track.playback.LocalAudioTrackExecutor.execute(LocalAudioTrackExecutor.java:91) ~[lavaplayer-1.3.38.jar!/:na]
+	... 4 common frames omitted
+
+2020-05-23 09:06:35.696  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "608009300064862224"}
+2020-05-23 09:06:35.696  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "608009300064862224"}
+2020-05-23 09:06:41.104  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "608009300064862224", "sessionId": "6d5a40c30862976f4cfb2db94aee4629", "event": {"token": "a6459baa67998b81", "guild_id": "608009300064862224", "endpoint": "eu-central9881.discord.media:80"}}
+2020-05-23 09:06:42.152  INFO 30477 --- [XNIO-1 task-10] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-05-23 09:06:42.644  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 7jaws par ici
+2020-05-23 09:06:42.753  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "608009300064862224", "track": "QAAAiAIAKDcgSmF3cyBYIFNlZXp5IC0gUGFyIGljaSAoQ2xpcCBvZmZpY2llbCkABjcgSmF3cwAAAAAAA36IAAtWcFBqTF83SERxWQABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PVZwUGpMXzdIRHFZAAd5b3V0dWJlAAAAAAAAAAA=", "noReplace": false, "startTime": "0"}
+2020-05-23 09:06:59.378  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "700374484955299900"}
+2020-05-23 09:06:59.379  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "700374484955299900"}
+2020-05-23 09:07:59.466  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "seek", "guildId": "608009300064862224", "position": 86390.73876953125}
+2020-05-23 09:10:17.037  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "608009300064862224"}
+2020-05-23 09:10:17.039  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "608009300064862224"}
+2020-05-23 09:11:31.429  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "608009300064862224"}
+2020-05-23 09:11:31.430  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "608009300064862224"}
+2020-05-23 09:11:54.664  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "608009300064862224", "sessionId": "6d5a40c30862976f4cfb2db94aee4629", "event": {"token": "6ac1c9fe9603e4ea", "guild_id": "608009300064862224", "endpoint": "eu-central71.discord.media:80"}}
+2020-05-23 09:11:55.673  INFO 30477 --- [XNIO-1 task-12] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-05-23 09:11:56.175  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 7jaws bnb
+2020-05-23 09:11:56.258  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "608009300064862224", "track": "QAAAbAIADDcgSmF3cyAtIEJOQgAGNyBKYXdzAAAAAAADNFAAC1VKYVlYOWFmQVA0AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9VUphWVg5YWZBUDQAB3lvdXR1YmUAAAAAAAAAAA==", "noReplace": false, "startTime": "0"}
+2020-05-23 09:12:01.345  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "volume", "guildId": "608009300064862224", "volume": 90}
+2020-05-23 09:12:08.591  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "608009300064862224"}
+2020-05-23 09:12:08.593  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "608009300064862224"}
+2020-05-23 09:33:22.155  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "608009300064862224", "sessionId": "6d5a40c30862976f4cfb2db94aee4629", "event": {"token": "1e2293e7b4515c41", "guild_id": "608009300064862224", "endpoint": "eu-central71.discord.media:80"}}
+2020-05-23 09:33:23.195  INFO 30477 --- [XNIO-1 task-14] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-05-23 09:33:23.786  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: freestyle du sale
+2020-05-23 09:33:23.871  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "608009300064862224", "track": "QAAAfAIAG0xvcmVuem8gLSBGcmVlc3R5bGUgRHUgU2FsZQAHTG9yZW56bwAAAAAAAdyQAAtORzJJVU82YmliRQABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PU5HMklVTzZiaWJFAAd5b3V0dWJlAAAAAAAAAAA=", "noReplace": false, "startTime": "0"}
+2020-05-23 09:33:30.852  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "seek", "guildId": "608009300064862224", "position": 21899.609619140625}
+2020-05-23 09:34:04.989  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "seek", "guildId": "608009300064862224", "position": 56017.196044921875}
+2020-05-23 09:34:18.368  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "seek", "guildId": "608009300064862224", "position": 69396.48022460938}
+2020-05-23 09:34:21.041  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "seek", "guildId": "608009300064862224", "position": 0}
+2020-05-23 09:35:33.158  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "608009300064862224"}
+2020-05-23 09:35:33.159  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "608009300064862224"}
+2020-05-23 10:49:13.424 ERROR 30477 --- [XNIO-1 task-1] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /178.54.86.119:61579
+2020-05-23 11:17:40.009  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "657066018337718333", "sessionId": "6d5a40c30862976f4cfb2db94aee4629", "event": {"token": "f5f1f1ec64287150", "guild_id": "657066018337718333", "endpoint": "brazil972.discord.media:80"}}
+2020-05-23 11:17:52.678  WARN 30477 --- [XNIO-1 task-16] l.s.config.RequestAuthorizationFilter    : Authorization missing for 5.178.86.78 on POST /azenv.php
+2020-05-23 11:17:57.754 ERROR 30477 --- [XNIO-1 I/O-1] io.undertow.request                      : UT005071: Undertow request failed HttpServerExchange{ CONNECT check.best-proxies.ru:80}
 
 java.lang.IllegalArgumentException: UT000068: Servlet path match failed
 	at io.undertow.servlet.handlers.ServletPathMatchesData.getServletHandlerByPath(ServletPathMatchesData.java:83) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
@@ -165,23 +112,50 @@ java.lang.IllegalArgumentException: UT000068: Servlet path match failed
 	at org.xnio.nio.NioSocketConduit.handleReady(NioSocketConduit.java:88) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
 	at org.xnio.nio.WorkerThread.run(WorkerThread.java:561) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
 
-2020-05-18 11:31:18.754 ERROR 30477 --- [XNIO-1 task-6] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /103.212.90.66:40661
-2020-05-18 11:58:10.055  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "608009300064862224"}
-2020-05-18 11:58:10.056  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "608009300064862224"}
-2020-05-18 11:58:10.059  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "696962067332071454"}
-2020-05-18 11:58:10.067  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "696962067332071454"}
-2020-05-18 11:58:10.068  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "700374484955299900"}
-2020-05-18 11:58:10.068  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "700374484955299900"}
-2020-05-18 11:58:10.072  INFO 30477 --- [XNIO-1 task-5] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:55818
-2020-05-18 11:58:10.109  INFO 30477 --- [XNIO-1 task-5] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:55818
-2020-05-18 11:58:35.425  INFO 30477 --- [XNIO-1 task-7] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-18 11:58:36.101  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Teri mitti
-2020-05-18 11:58:58.301  INFO 30477 --- [XNIO-1 task-8] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-18 11:58:59.366  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track Teri Mitti - Kesari | Akshay Kumar & Parineeti Chopra | Arko | B Praak | Manoj Muntashir
-2020-05-18 11:59:17.686  INFO 30477 --- [XNIO-1 task-11] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-18 11:59:18.280  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Bhromor koio giya
-2020-05-18 11:59:40.227  INFO 30477 --- [XNIO-1 task-13] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-18 11:59:41.094  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track Bhromor ভ্রমর video Song | Praktan | Surojit | Prosenjit | Rituparna | Radha Raman
-2020-05-18 12:13:26.918 ERROR 30477 --- [XNIO-1 task-15] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /184.105.247.195:60288
-2020-05-18 12:25:18.566  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:54704 -- CloseStatus[code=1011, reason=]
-2020-05-18 12:25:18.566  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-05-23 11:18:40.555  INFO 30477 --- [XNIO-1 task-2] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-05-23 11:18:41.046  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: callejeros
+2020-05-23 11:18:41.174  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "657066018337718333", "track": "QAAAjgIAJkNhbGxlamVyb3MgLSBQcm9oaWJpZG8gKEVuIFZpdm8gT2JyYXMpAA5QZWxvTXVzaWNHcm91cAAAAAAAA7kgAAtKd2p2VC05Wno1OAABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PUp3anZULTlaejU4AAd5b3V0dWJlAAAAAAAAAAA=", "noReplace": false, "startTime": "0"}
+2020-05-23 11:20:14.616  INFO 30477 --- [XNIO-1 task-6] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-05-23 11:20:15.183  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: callejeros prohibido 30 minutos
+2020-05-23 11:22:45.317  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "657066018337718333", "track": "QAAAjgIAJkNhbGxlamVyb3MgLSBQcm9oaWJpZG8gKEVuIFZpdm8gT2JyYXMpAA5QZWxvTXVzaWNHcm91cAAAAAAAA7kgAAtKd2p2VC05Wno1OAABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PUp3anZULTlaejU4AAd5b3V0dWJlAAAAAAAAAAA=", "noReplace": false, "startTime": "0"}
+2020-05-23 11:28:13.259  INFO 30477 --- [XNIO-1 task-4] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-05-23 11:28:13.785  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: callejeros
+2020-05-23 11:28:13.886  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "657066018337718333", "track": "QAAAjgIAJkNhbGxlamVyb3MgLSBQcm9oaWJpZG8gKEVuIFZpdm8gT2JyYXMpAA5QZWxvTXVzaWNHcm91cAAAAAAAA7kgAAtKd2p2VC05Wno1OAABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PUp3anZULTlaejU4AAd5b3V0dWJlAAAAAAAAAAA=", "noReplace": false, "startTime": "0"}
+2020-05-23 11:29:37.819  INFO 30477 --- [XNIO-1 task-9] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-05-23 11:29:38.404  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: callejeros creo
+2020-05-23 11:32:18.165  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "657066018337718333", "track": "QAAAgQIAGUNhbGxlamVyb3MgLSBDcmVvIChMZXRyYSkADlBlbG9NdXNpY0dyb3VwAAAAAAAEWUgAC2V6bHB3Q0xnaUU4AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9ZXpscHdDTGdpRTgAB3lvdXR1YmUAAAAAAAAAAA==", "noReplace": false, "startTime": "0"}
+2020-05-23 11:32:20.368 ERROR 30477 --- [XNIO-1 task-10] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /82.160.24.54:60881
+2020-05-23 11:39:17.984  INFO 30477 --- [XNIO-1 task-11] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-05-23 11:39:18.703  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: legends never die
+2020-05-23 11:39:18.864  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "657066018337718333", "track": "QAAAyQIAXkxlZ2VuZHMgTmV2ZXIgRGllIChmdC4gQWdhaW5zdCBUaGUgQ3VycmVudCkgW09GRklDSUFMIEFVRElPXSB8IFdvcmxkcyAyMDE3IC0gTGVhZ3VlIG9mIExlZ2VuZHMAEUxlYWd1ZSBvZiBMZWdlbmRzAAAAAAADmeAACzRRNDZ4WXFVd1pRAAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9NFE0NnhZcVV3WlEAB3lvdXR1YmUAAAAAAAAAAA==", "noReplace": false, "startTime": "0"}
+2020-05-23 11:39:45.704  INFO 30477 --- [XNIO-1 task-13] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-05-23 11:39:46.473  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: pop stars k/da
+2020-05-23 11:43:14.080  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "657066018337718333", "track": "QAAAxwIAXEsvREEgLSBQT1AvU1RBUlMgKGZ0LiBNYWRpc29uIEJlZXIsIChHKUktRExFLCBKYWlyYSBCdXJucykgfCBNdXNpYyBWaWRlbyAtIExlYWd1ZSBvZiBMZWdlbmRzABFMZWFndWUgb2YgTGVnZW5kcwAAAAAAAxj4AAtVT3hrR0Q4cVJCNAABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PVVPeGtHRDhxUkI0AAd5b3V0dWJlAAAAAAAAAAA=", "noReplace": false, "startTime": "0"}
+2020-05-23 11:47:32.166  INFO 30477 --- [XNIO-1 task-15] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-05-23 11:47:32.752  INFO 30477 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: pop stars k/da 1 hora
+2020-05-23 11:47:32.907  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "657066018337718333", "track": "QAAAvwIAWUxlYWd1ZSBvZiBMZWdlbmRzIHwgSy9EQSAtIFBPUC9TVEFSUyAoZnQgTWFkaXNvbiBCZWVyLCAoRylJLURMRSwgSmFpcmEgQnVybnMp44CQMSBIT1VS44CRAAxUaGVNdXNpY0hvdXIAAAAAADbugAALbkVGclRpRFowYmcAAQAraHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1uRUZyVGlEWjBiZwAHeW91dHViZQAAAAAAAAAA", "noReplace": false, "startTime": "0"}
+2020-05-23 12:52:33.013  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "657066018337718333"}
+2020-05-23 12:52:33.018  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "657066018337718333"}
+2020-05-23 12:53:11.178 ERROR 30477 --- [XNIO-1 task-16] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /216.218.206.67:63104
+2020-05-23 13:36:26.422 ERROR 30477 --- [XNIO-1 task-2] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /78.184.64.122:37367
+2020-05-23 13:48:07.976 ERROR 30477 --- [XNIO-1 task-3] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /103.61.101.76:53922
+2020-05-23 14:36:42.373 ERROR 30477 --- [XNIO-1 task-6] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /85.49.122.121:57506
+2020-05-23 15:04:22.952 ERROR 30477 --- [XNIO-1 task-5] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /45.226.79.97:35288
+2020-05-23 15:09:00.892  WARN 30477 --- [XNIO-1 task-4] l.s.config.RequestAuthorizationFilter    : Authorization missing for 51.159.71.63 on GET /goform/AdvSetDns
+2020-05-23 15:16:29.420  WARN 30477 --- [XNIO-1 task-7] l.s.config.RequestAuthorizationFilter    : Authorization missing for 5.178.86.78 on POST /azenv.php
+2020-05-23 15:16:34.510 ERROR 30477 --- [XNIO-1 I/O-1] io.undertow.request                      : UT005071: Undertow request failed HttpServerExchange{ CONNECT check.best-proxies.ru:80}
+
+java.lang.IllegalArgumentException: UT000068: Servlet path match failed
+	at io.undertow.servlet.handlers.ServletPathMatchesData.getServletHandlerByPath(ServletPathMatchesData.java:83) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.servlet.handlers.ServletPathMatches.getServletHandlerByPath(ServletPathMatches.java:88) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.servlet.handlers.ServletInitialHandler.handleRequest(ServletInitialHandler.java:146) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.handlers.HttpContinueReadHandler.handleRequest(HttpContinueReadHandler.java:65) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.Connectors.executeRootHandler(Connectors.java:376) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.http.HttpReadListener.handleEventWithNoRunningRequest(HttpReadListener.java:255) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.http.HttpReadListener.handleEvent(HttpReadListener.java:136) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.http.HttpReadListener.handleEvent(HttpReadListener.java:59) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.conduits.ReadReadyHandler$ChannelListenerHandler.readReady(ReadReadyHandler.java:66) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.NioSocketConduit.handleReady(NioSocketConduit.java:88) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:561) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+

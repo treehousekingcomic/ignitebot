@@ -147,6 +147,63 @@ class SeverConfig(commands.Cog, name="Config"):
 			msg = "Wrong argument! So I decided to disable welcome message for now."
 		
 		await self.sem(ctx, "Welcome message config", msg )
+	
+	@commands.group(invoke_without_command=True)
+	async def blacklist(self, ctx):
+		"""Add member in blacklist to prevent him spamming your server. Similar to `mute` but by adding him in blacklist you are preventing him from leaving and rejoining to get rid of warning role."""
+		return await ctx.send("Add a member in your server blacklist to prevent him spamming your server. Make sure you setup warning role correctly")
+	
+	@blacklist.command()
+	@commands.has_permissions(manage_guild=True)
+	async def add(self, ctx, member:discord.Member, *, reason:str="None"):
+		wres = await self.client.pgdb.fetchrow("SELECT * FROM guilddata WHERE guildid = $1", ctx.guild.id)
+		blstatus = await self.client.pgdb.fetchrow("SELECT * FROM blacklist WHERE userid = $1 AND guildid = $2", member.id, ctx.guild.id)
+		
+		if blstatus:
+			return await ctx.send("This member is already in blacklist.")
+		
+		if len(reason) > 200:
+			return await ctx.send("Reason cant be bigger than 200 characters")
+		
+		for role in member.roles:
+			try:
+				await member.remove_roles(role)
+			except:
+				pass
+		
+		role = discord.utils.get(ctx.guild.roles, id=wres['wnr'])
+		if role:
+			try:
+				await member.add_roles(role)
+				await ctx.send(f"Successfully added {str(member)} in blacklist")
+				await self.client.pgdb.execute("INSERT INTO blacklist(userid, guildid, reason) VALUES($1, $2, $3)", member.id, ctx.guild.id, reason)
+			except commands.MissingPermissions:
+				return await ctx.send(f"Unable to add {str(member)} in blacklist. Make sure the warning role is lower than my top role. And I have `manage roles` permission. Its highly recommended to give me tue Administrator role and keep my role on top of other memebrs top role. so I can work smothly")
+		else:
+			return await ctx.send(f"Cant find a warning role. Make sure to add that. check `{ctx.prefix}help config` to see how you can add warning role. Then try again")
+	
+	@blacklist.command()
+	@commands.has_permissions(manage_guild=True)
+	async def remove(self, ctx, member:discord.Member):
+		wres = await self.client.pgdb.fetchrow("SELECT * FROM guilddata WHERE guildid = $1", ctx.guild.id)
+		blstatus = await self.client.pgdb.fetchrow("SELECT * FROM blacklist WHERE userid = $1 AND guildid = $2", member.id, ctx.guild.id)
+		
+		if not blstatus:
+			return await ctx.send("This member is not in blacklist.")
+		
+		role = discord.utils.get(ctx.guild.roles, id=wres['wnr'])
+		if role:
+			try:
+				await member.remove_roles(role)
+				await ctx.send(f"Successfully removed {str(member)} from blacklist")
+				await self.client.pgdb.execute("DELETE FROM blacklist WHERE userid = $1 AND guildid = $2", member.id, ctx.guild.id)
+			except commands.MissingPermissions:
+				return await ctx.send(f"Unable to add {str(member)} in blacklist. Make sure the warning role is lower than my top role. And I have `manage roles` permission. Its highly recommended to give me tue Administrator role and keep my role on top of other memebrs top role. so I can work smothly")
+		else:
+			return await ctx.send(f"Cant find a warning role. Make sure to add that. check `{ctx.prefix}help config` to see how you can add warning role. Then try again")
+	
+	
+	
 
 def setup(client):
 	client.add_cog(SeverConfig(client))

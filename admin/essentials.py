@@ -15,6 +15,14 @@ class Essentials(commands.Cog):
 	async def on_member_join(self, ctx):
 		
 		wres = await self.client.pgdb.fetchrow("SELECT * FROM guilddata WHERE guildid = $1", ctx.guild.id)
+		blstatus = await self.client.pgdb.fetchrow("SELECT * FROM blacklist WHERE userid = $1 AND guildid = $2", ctx.id, ctx.guild.id)
+		
+		if blstatus:
+			role = discord.utils.get(ctx.guild.roles, id=wres['wnr'])
+			if role is not None:
+				return await ctx.add_roles(role)
+			else:
+				pass
 		
 		if wres:
 			wlcmsg = wres['wlcmsg']
