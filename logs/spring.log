@@ -84,3 +84,21 @@ java.lang.IllegalArgumentException: UT000068: Servlet path match failed
 2020-05-24 14:31:59.975  WARN 30477 --- [XNIO-1 task-12] l.s.config.RequestAuthorizationFilter    : Authorization missing for 185.234.217.177 on GET /.vscode/sftp.json
 2020-05-24 14:32:00.180  WARN 30477 --- [XNIO-1 task-13] l.s.config.RequestAuthorizationFilter    : Authorization missing for 185.234.217.177 on GET /deployment-config.json
 2020-05-24 14:32:00.386  WARN 30477 --- [XNIO-1 task-14] l.s.config.RequestAuthorizationFilter    : Authorization missing for 185.234.217.177 on GET /ftpsync.settings
+2020-05-24 15:08:05.140 ERROR 30477 --- [XNIO-1 task-15] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /122.228.19.79:5851
+2020-05-24 15:15:23.412  WARN 30477 --- [XNIO-1 task-1] l.s.config.RequestAuthorizationFilter    : Authorization missing for 109.234.153.130 on POST /azenv.php
+2020-05-24 15:15:28.478 ERROR 30477 --- [XNIO-1 I/O-1] io.undertow.request                      : UT005071: Undertow request failed HttpServerExchange{ CONNECT check.best-proxies.ru:80}
+
+java.lang.IllegalArgumentException: UT000068: Servlet path match failed
+	at io.undertow.servlet.handlers.ServletPathMatchesData.getServletHandlerByPath(ServletPathMatchesData.java:83) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.servlet.handlers.ServletPathMatches.getServletHandlerByPath(ServletPathMatches.java:88) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.servlet.handlers.ServletInitialHandler.handleRequest(ServletInitialHandler.java:146) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.handlers.HttpContinueReadHandler.handleRequest(HttpContinueReadHandler.java:65) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.Connectors.executeRootHandler(Connectors.java:376) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.http.HttpReadListener.handleEventWithNoRunningRequest(HttpReadListener.java:255) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.http.HttpReadListener.handleEvent(HttpReadListener.java:136) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.http.HttpReadListener.handleEvent(HttpReadListener.java:59) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.conduits.ReadReadyHandler$ChannelListenerHandler.readReady(ReadReadyHandler.java:66) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.NioSocketConduit.handleReady(NioSocketConduit.java:88) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:561) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+

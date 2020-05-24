@@ -107,7 +107,8 @@ class MyHelpCommand(commands.HelpCommand):
 		embed = discord.Embed(
 			color = discord.Color.gold(),
 			timestamp = ctx.message.created_at,
-			description = f"Use {self.clean_prefix}help <command> to get help on a command. \n"
+			#description = f"Use {self.clean_prefix}help <command> to get help on a command. \n"
+			description = ""
 		)
 		
 		if await ctx.bot.is_owner(ctx.author):
@@ -124,7 +125,7 @@ class MyHelpCommand(commands.HelpCommand):
 			cog_help = "No description provided for this cog"
 				
 		embed.title = f"{cog.qualified_name}"
-		embed.description += f"{cog_help} \n\nCommands : \n"
+		embed.description += f"{cog_help}\nUse `{self.clean_prefix}help <command>` to get help on a command.\n\n**Commands :** \n"
 		
 		for command in shown_commands:
 			embed.description += f"▪︎{pre}{command.qualified_name} "
@@ -187,7 +188,7 @@ class MyHelpCommand(commands.HelpCommand):
 		else:
 			embed.description = f"No description provided."
 		
-		embed.description += f"\nUse `{pre}help {group.qualified_name} <sub_command>` to get help on a group command. \nSubcommands : \n"
+		embed.description += f"\nUse `{pre}help {group.qualified_name} <sub_command>` to get help on a group command. \n\n**Subcommands : **\n"
 		
 		for command in group.commands:
 			if command.signature:
