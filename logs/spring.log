@@ -73,3 +73,4 @@ java.lang.IllegalArgumentException: UT000068: Servlet path match failed
 2020-05-24 11:58:17.760  INFO 30477 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
 2020-05-24 11:58:43.256  INFO 30477 --- [XNIO-1 task-3] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:52204
 2020-05-24 11:58:43.323  INFO 30477 --- [XNIO-1 task-3] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:52204
+2020-05-24 12:22:34.960 ERROR 30477 --- [XNIO-1 task-6] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /85.234.143.114:52678

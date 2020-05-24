@@ -6,7 +6,7 @@ import time
 from discord.ext import commands
 import asyncpg
 
-class ReactionRole(commands.Cog):
+class ReactionRole(commands.Cog, name="Reactrole"):
   """Enable reaction role feature."""
   def __init__(self, client):
     self.client = client

@@ -12,7 +12,7 @@ dotenv.load_dotenv(dotenv_path=env_path)
 CBKEY=os.getenv("CBKEY")
 
 
-class CleverBot(commands.Cog):
+class CleverBot(commands.Cog, name="Cleverbot"):
 	"""Ask cleverbot question. Or start conversation."""
 	
 	def __init__(self, client):

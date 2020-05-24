@@ -102,6 +102,8 @@ class MyHelpCommand(commands.HelpCommand):
 	# Main Help
 	async def send_cog_help(self, cog):
 		ctx = self.context
+		pre = self.clean_prefix
+		
 		embed = discord.Embed(
 			color = discord.Color.gold(),
 			timestamp = ctx.message.created_at,
@@ -124,7 +126,14 @@ class MyHelpCommand(commands.HelpCommand):
 		embed.title = f"{cog.qualified_name}"
 		embed.description += f"{cog_help} \n\nCommands : \n"
 		
-		embed.description += " - ".join(command.qualified_name for command in shown_commands)
+		for command in shown_commands:
+			embed.description += f"▪︎{pre}{command.qualified_name} "
+			if command.signature:
+				embed.description += f"{command.signature} \n"
+			else:
+				embed.description += "\n"
+		
+		#embed.description += " - ".join(command.qualified_name for command in shown_commands)
 		
 		embed.set_thumbnail(url=ctx.bot.user.avatar_url)
 		await ctx.send(embed=embed)
