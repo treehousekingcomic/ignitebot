@@ -16,6 +16,12 @@ dotenv.load_dotenv(dotenv_path=env_path)
 
 TOKEN = os.getenv("TOKEN")
 
+
+os.environ["JISHAKU_NO_UNDERSCORE"] = "True"
+os.environ["JISHAKU_NO_DM_TRACEBACK"] = "True"
+os.environ["JISHAKU_HIDE"] = "True"
+
+
 async def create_db_pool():
 	client.pgdb = await asyncpg.create_pool(host="localhost", database="main", user="shah", password="shah")
 	
@@ -127,7 +133,7 @@ async def get_prefix(client, message):
 
 client = commands.AutoShardedBot(command_prefix=get_prefix)
 client.launch_time = datetime.utcnow()
-client.remove_command('help')
+#client.remove_command('help')
 
 async def is_prem(self,gld):
 		data = await client.pgdb.fetchrow(f"SELECT * FROM keys WHERE guildid = $1", gld)

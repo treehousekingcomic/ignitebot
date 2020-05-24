@@ -37,6 +37,7 @@ class SeverConfig(commands.Cog, name="Config"):
 	
 	@config.command()
 	async def joinchannel(self, ctx, channel:typing.Union[discord.TextChannel, str]):
+		"""Setup welcome/join channel"""
 		if type(channel) == discord.TextChannel:
 			data = channel.id
 			msg = channel.mention + " is set for welcome welcome channel."
@@ -52,6 +53,7 @@ class SeverConfig(commands.Cog, name="Config"):
 	
 	@config.command()
 	async def leavechannel(self, ctx, channel:typing.Union[discord.TextChannel, str]):
+		"""Setup leave/bye bye channel"""
 		if type(channel) == discord.TextChannel:
 			data = channel.id
 			msg = channel.mention + " is set for leave channel."
@@ -68,6 +70,7 @@ class SeverConfig(commands.Cog, name="Config"):
 
 	@config.command()
 	async def warningrole(self, ctx, role:typing.Union[discord.Role, str]):
+		"""Setup warning role."""
 		if type(role) == discord.Role:
 			data = role.id
 			if role.managed is False:
@@ -87,6 +90,7 @@ class SeverConfig(commands.Cog, name="Config"):
 	
 	@config.command()
 	async def leveluplog(self, ctx, channel:typing.Union[discord.TextChannel, str]):
+		"""Setup level up log channel"""
 		if type(channel) == discord.TextChannel:
 			data = channel.id
 			msg = channel.mention + " is set for level up log channel."
@@ -102,6 +106,7 @@ class SeverConfig(commands.Cog, name="Config"):
 
 	@config.command()
 	async def autorole(self, ctx, role:typing.Union[discord.Role, str]):
+		"""Add role to a member"""
 		if type(role) == discord.Role:
 			data = role.id
 			if role.managed is False:
@@ -121,6 +126,7 @@ class SeverConfig(commands.Cog, name="Config"):
 	
 	@config.command()
 	async def prefix(self, ctx, prefix:str):
+		"""Change prefix for your server"""
 		if type(prefix) == str:
 			data = prefix
 			msg = "`" + data + "` is the new pefix for this server."
@@ -132,6 +138,7 @@ class SeverConfig(commands.Cog, name="Config"):
 	
 	@config.command()
 	async def welcomemessage(self, ctx, *,message:str):
+		"""Setup a welcome message"""
 		if type(message) == str and message != 'disable':
 			data = message
 			msg = "Welcome message updated!"
@@ -156,6 +163,7 @@ class SeverConfig(commands.Cog, name="Config"):
 	@blacklist.command()
 	@commands.has_permissions(manage_guild=True)
 	async def add(self, ctx, member:discord.Member, *, reason:str="None"):
+		"""Add member in blacklist"""
 		wres = await self.client.pgdb.fetchrow("SELECT * FROM guilddata WHERE guildid = $1", ctx.guild.id)
 		blstatus = await self.client.pgdb.fetchrow("SELECT * FROM blacklist WHERE userid = $1 AND guildid = $2", member.id, ctx.guild.id)
 		
@@ -185,6 +193,7 @@ class SeverConfig(commands.Cog, name="Config"):
 	@blacklist.command()
 	@commands.has_permissions(manage_guild=True)
 	async def remove(self, ctx, member:discord.Member):
+		"""Remove member from blacklist"""
 		wres = await self.client.pgdb.fetchrow("SELECT * FROM guilddata WHERE guildid = $1", ctx.guild.id)
 		blstatus = await self.client.pgdb.fetchrow("SELECT * FROM blacklist WHERE userid = $1 AND guildid = $2", member.id, ctx.guild.id)
 		
@@ -201,9 +210,6 @@ class SeverConfig(commands.Cog, name="Config"):
 				return await ctx.send(f"Unable to add {str(member)} in blacklist. Make sure the warning role is lower than my top role. And I have `manage roles` permission. Its highly recommended to give me tue Administrator role and keep my role on top of other memebrs top role. so I can work smothly")
 		else:
 			return await ctx.send(f"Cant find a warning role. Make sure to add that. check `{ctx.prefix}help config` to see how you can add warning role. Then try again")
-	
-	
-	
 
 def setup(client):
 	client.add_cog(SeverConfig(client))

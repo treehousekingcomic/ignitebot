@@ -1,196 +1,205 @@
-import itertools
-import math
-from discord.ext import commands
 import discord
+import math
 import asyncio
+from discord.ext import commands
 
-class Help(commands.Cog, name="Help"):
-	"""Shows help for bot"""
-	def __init__(self, client):
-		self.client = client
-	
-	async def ucmd(self, cmd:str):
-		data = await self.client.pgdb.fetchrow("SELECT * FROM cmduse WHERE name = $1", cmd)
-  	
-		if data:
-			uses = data['uses'] + 1
-			await self.client.pgdb.execute("UPDATE cmduse SET uses = $1 WHERE name = $2", uses, data['name'])
-		else:
-			await self.client.pgdb.execute("INSERT INTO cmduse(name, uses) VALUES($1, $2)", cmd, 1)
-	
+class MyHelpCommand(commands.HelpCommand):
+	async def send_bot_help(self, mapping):
+		ctx = self.context
 		
-	@commands.command(aliases=['hlp'], hidden=True)
-	async def help(self, ctx, cog=None):
-		"""Shows help mesaage."""
-		await self.ucmd("help")
-		prefix = ctx.prefix
-		sg = self.client.get_guild(700374484955299900)
+		# Support Guild
+		sg = ctx.bot.get_guild(700374484955299900)
 		
+		# Emoji Buttons
 		nextbtn = discord.utils.get(sg.emojis, name="ignext")
 		prevbtn = discord.utils.get(sg.emojis, name="igprev")
-		skipf = discord.utils.get(sg.emojis, name="igskipf")
-		skipb = discord.utils.get(sg.emojis, name="igskipb")
-		beg = discord.utils.get(sg.emojis, name="igbeg")
-		end = discord.utils.get(sg.emojis, name="igend")
+		stopbtn = discord.utils.get(sg.emojis, name="igstop")
 		
-		valids = [nextbtn, prevbtn]
 		
-		if cog is None:
-			desc = ""
-			cogs = []
-			page = 0
-			
-			for cog in self.client.cogs:
+		valids = [nextbtn, prevbtn, stopbtn]
+		cogs = []
+		
+		for cog in ctx.bot.cogs.values():
+			if await ctx.bot.is_owner(ctx.author):
 				cogs.append(cog)
-			
-			pages = math.ceil(len(cogs)/5)
-			while True:
-				use = cogs[page * 5:(page*5) + 6]
-				for cog in use:
-					cog = self.client.get_cog(cog)
-					commands = cog.get_commands()
-					shown_commands = []
-					for command in commands:
-						if command.hidden:
-							pass
-						else:
-							shown_commands.append(command)
-				
-					if len(shown_commands) > 0:
-						if cog.__doc__ is None:
-							doc = "No description"
-						else:
-							doc = cog.__doc__
-					
-						desc += "**__" +cog.qualified_name + "__**" + "\n`" + doc + "`\n"
-				desc = f"Type `{prefix}help <category>` to get help on a cetegory. \n\n" + desc
-				embed = discord.Embed(
-					description=desc,
-					color=ctx.author.color,
-					title="Ignite Help",
-					timestamp=ctx.message.created_at
-				)
-				embed.set_thumbnail(url=self.client.user.avatar_url)
-				try:
-					await msg.edit(embed=embed)
-				except:
-					msg = await ctx.send(embed=embed)
-				
-				await msg.add_reaction(prevbtn)
-				await asyncio.sleep(0.1)
-				await msg.add_reaction(nextbtn)
-				
-				def check(r,u):
-				 	return (u.id == ctx.author.id) and ((r.message.id == msg.id) and r.emoji in valids)
-				 
-				try:
-					r, u = await self.client.wait_for("reaction_add", timeout=60, check=check)
-	
-					if r.emoji == nextbtn:
-						page +=1
-						if page > pages -1:
-							page = pages -1
-						desc = ""
-					elif r.emoji == prevbtn:
-						page -= 1
-						if page < 0:
-							page = 0
-						desc = ""
-
-					try:
-						await msg.remove_reaction(r.emoji, u)
-					except:
-						pass
-				except:
-					try:
-						await msg.clear_reactions()
-						break
-					except:
-						pass
-					break
-		else:
-			cogg = self.client.get_cog(cog)
-			if cogg is not None:
-				desc = ''
-				if cogg.__doc__ is not None:
-					desc = cogg.__doc__ + "\n\n"
-					
-				shown_commands = []
-				
-				for command in cogg.get_commands():
-					if command.hidden:
-						pass
-					else:
-						shown_commands.append(command.name)
-				
-				if len(shown_commands)>0:
-					cmds  = "Commands : `"+  ", ".join(shown_commands) + "`"
-					desc += cmds
-				
-					embed = discord.Embed(
-						title = cogg.qualified_name,
-						description = desc,
-						color = ctx.author.color,
-						timestamp = ctx.message.created_at
-					)
-					embed.set_thumbnail(url=self.client.user.avatar_url)
-					
-					await ctx.send(embed=embed)
-				else:
-					await ctx.send("This command category is not available")
 			else:
-				cmd = self.client.get_command(cog)
-				if cmd is not None:
-					if cmd.hidden is False:
-						desc = ""
-						try:
-							desc += cmd.help + "\n"
-						except:
-							desc += "No description provided.\n"
-						if len(cmd.clean_params) > 0:
-							params = []
-							pr = ""
-							for p in cmd.clean_params:
-								params.append(p)
-							for p in params:
-								pr += " <" + p + ">"
-							desc += "**Syntax** : `" + prefix + cmd.name + pr + "`\n"
-							
-						aliases = cmd.aliases
-					
-						if len(aliases) > 0:
-							desc += "**Aliases** : " + ", ".join(aliases) + "\n"
-						
-						sub_cmds = []
-						try:
-							if len(cmd.commands)>0:
-								for scmd in cmd.commands:
-									sub_cmds.append(scmd)
-
-							if len(sub_cmds ) > 0:
-								desc += "\n**Subcommands** : \n"
-								for scmd in sub_cmds:
-									pr = ""
-									for p in scmd.clean_params:
-										pr += "<" + p + "> "
-									desc += "`" + prefix + cmd.name + " " + scmd.name + " " + pr + "`\n"
-								
-						except:
-							pass
-						
-						embed = discord.Embed(
-							title = cmd.name,
-							description = desc,
-							color = ctx.author.color,
-							timestamp = ctx.message.created_at
-						)
-						embed.set_thumbnail(url=self.client.user.avatar_url)
-						
-						await ctx.send(embed=embed)
-					else:
-						await ctx.send(f"No command found with the name `{cog}`.")
+				cog_commands = [command for command in cog.get_commands() if command.hidden == False]
+				if len(cog_commands) >0:
+					cogs.append(cog)
+		
+		page = 0
+		per_page = 5
+		total_page = math.ceil(len(cogs) / per_page)
+		
+		while True:
+			embed = discord.Embed(
+				color = discord.Color.blurple(),
+				timestamp = ctx.message.created_at,
+				description = f"Use {self.clean_prefix}help <Category> to get help on a category\n"
+			)
+			now = cogs[page * per_page : page * per_page + per_page]
+			#print(now)
+			for cog in now:
+				if await ctx.bot.is_owner(ctx.author):
+					cog_commands = [command for command in cog.get_commands()]
 				else:
-					await ctx.send(f"No command found with the name `{cog}`.")
+					cog_commands = [command for command in cog.get_commands() if command.hidden == False]
 				
+				if len(cog_commands) > 0:
+					if cog.description:
+						cog_help = cog.description
+					else: 
+						cog_help = "No description provided"
+						
+					embed.description += f"**__{cog.qualified_name}__** \n`{cog_help}` \n"
+				
+			embed.set_thumbnail(url=ctx.bot.user.avatar_url)
+			try:
+				await msg.edit(embed=embed)
+			except:
+				msg = await ctx.send(embed=embed)
+				
+			await msg.add_reaction(prevbtn)
+			await asyncio.sleep(0.1)
+			await msg.add_reaction(stopbtn)
+			await asyncio.sleep(0.1)
+			await msg.add_reaction(nextbtn)
+				
+			def check(r,u):
+				return (u.id == ctx.author.id) and ((r.message.id == msg.id) and r.emoji in valids)
+				 
+			try:
+				r, u = await ctx.bot.wait_for("reaction_add", timeout=60, check=check)
+	
+				if r.emoji == nextbtn:
+					page +=1
+					if page > total_page -1:
+						page = total_page -1
+					desc = ""
+				elif r.emoji == prevbtn:
+					page -= 1
+					if page < 0:
+						page = 0
+					desc = ""
+				elif r.emoji == stopbtn:
+					try:
+						return await msg.delete()
+					except:
+						return
+
+				try:
+					await msg.remove_reaction(r.emoji, u)
+				except:
+					pass
+			except:
+				try:
+					await msg.clear_reactions()
+					break
+				except:
+					pass
+				break
+	
+	# Main Help
+	async def send_cog_help(self, cog):
+		ctx = self.context
+		embed = discord.Embed(
+			color = discord.Color.gold(),
+			timestamp = ctx.message.created_at,
+			description = f"Use {self.clean_prefix}help <command> to get help on a command. \n"
+		)
+		
+		if await ctx.bot.is_owner(ctx.author):
+				shown_commands = [command for command in cog.get_commands()]
+		else:
+			shown_commands = [command for command in cog.get_commands() if command.hidden == False]
+			
+		if len(shown_commands) == 0:
+			return await ctx.send("This cog has no command.")
+			
+		if cog.description:
+			cog_help = cog.description
+		else:
+			cog_help = "No description provided for this cog"
+				
+		embed.title = f"{cog.qualified_name}"
+		embed.description += f"{cog_help} \n\nCommands : \n"
+		
+		embed.description += " - ".join(command.qualified_name for command in shown_commands)
+		
+		embed.set_thumbnail(url=ctx.bot.user.avatar_url)
+		await ctx.send(embed=embed)
+	
+	# Command Help
+	async def send_command_help(self, command):
+		ctx = self.context
+		
+		embed = discord.Embed(
+			color = discord.Color.green(),
+			timestamp = ctx.message.created_at,
+			description = ""
+		)
+		
+		if command.hidden == True and await ctx.bot.is_owner(ctx.author) == False:
+			return await ctx.send("No command found.")
+		
+		msg = ""
+		if command.signature:
+			embed.title = f"{command.qualified_name} {command.signature} \n"
+		else:
+			embed.title = f"{command.qualified_name}\n"
+		
+		if command.help:
+			embed.description += f"{command.help}"
+		else:
+			embed.description += "No description provided\n"
+		
+		if len(command.aliases) > 0:
+			embed.description += "Aliases : " + ", ".join(command.aliases)
+		
+		embed.set_thumbnail(url=ctx.bot.user.avatar_url)
+		await ctx.send(embed=embed)
+	
+	# Group Help
+	async def send_group_help(self, group):
+		ctx = self.context
+		pre = self.clean_prefix
+		embed = discord.Embed(
+			color = discord.Color.blurple(),
+			timestamp = ctx.message.created_at
+		)
+		
+		if group.signature:
+			embed.title = f"{group.qualified_name} {group.signature}"
+		else:
+			embed.title = group.qualified_name + " - group"
+		
+		if group.help:
+			embed.description = group.help.split("\n")[0]
+		else:
+			embed.description = f"No description provided."
+		
+		embed.description += f"Use `{pre}help <group> <sub_command>` to get help on a group command. \nSubcommands : \n"
+		
+		for command in group.commands:
+			if command.signature:
+				command_help = f"▪︎{pre}{command.qualified_name} {command.signature} \n"
+			else:
+				command_help = f"▪︎{pre}{command.qualified_name} \n"
+			
+			embed.description += command_help
+		
+		embed.set_thumbnail(url=ctx.bot.user.avatar_url)
+		await ctx.send(embed=embed)
+
+class Help(commands.Cog):
+	def __init__(self, client):
+		self.client = client
+		self.client._original_help_command = client.help_command
+		client.help_command = MyHelpCommand()
+		client.help_command.cog = self
+	
+	def cog_unload(self):
+		self.client.help_command = self.client._original_help_command
+
 def setup(client):
-    client.add_cog(Help(client))
+	client.add_cog(Help(client))
