@@ -74,3 +74,13 @@ java.lang.IllegalArgumentException: UT000068: Servlet path match failed
 2020-05-24 11:58:43.256  INFO 30477 --- [XNIO-1 task-3] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:52204
 2020-05-24 11:58:43.323  INFO 30477 --- [XNIO-1 task-3] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:52204
 2020-05-24 12:22:34.960 ERROR 30477 --- [XNIO-1 task-6] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /85.234.143.114:52678
+2020-05-24 12:40:02.320 ERROR 30477 --- [XNIO-1 task-5] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /195.181.88.243:56437
+2020-05-24 14:31:58.736  WARN 30477 --- [XNIO-1 task-4] l.s.config.RequestAuthorizationFilter    : Authorization missing for 185.234.217.177 on GET /.git/config
+2020-05-24 14:31:58.942  WARN 30477 --- [XNIO-1 task-7] l.s.config.RequestAuthorizationFilter    : Authorization missing for 185.234.217.177 on GET /.env
+2020-05-24 14:31:59.150  WARN 30477 --- [XNIO-1 task-9] l.s.config.RequestAuthorizationFilter    : Authorization missing for 185.234.217.177 on GET /sftp-config.json
+2020-05-24 14:31:59.356  WARN 30477 --- [XNIO-1 task-8] l.s.config.RequestAuthorizationFilter    : Authorization missing for 185.234.217.177 on GET /.ftpconfig
+2020-05-24 14:31:59.563  WARN 30477 --- [XNIO-1 task-10] l.s.config.RequestAuthorizationFilter    : Authorization missing for 185.234.217.177 on GET /.remote-sync.json
+2020-05-24 14:31:59.769  WARN 30477 --- [XNIO-1 task-11] l.s.config.RequestAuthorizationFilter    : Authorization missing for 185.234.217.177 on GET /.vscode/ftp-sync.json
+2020-05-24 14:31:59.975  WARN 30477 --- [XNIO-1 task-12] l.s.config.RequestAuthorizationFilter    : Authorization missing for 185.234.217.177 on GET /.vscode/sftp.json
+2020-05-24 14:32:00.180  WARN 30477 --- [XNIO-1 task-13] l.s.config.RequestAuthorizationFilter    : Authorization missing for 185.234.217.177 on GET /deployment-config.json
+2020-05-24 14:32:00.386  WARN 30477 --- [XNIO-1 task-14] l.s.config.RequestAuthorizationFilter    : Authorization missing for 185.234.217.177 on GET /ftpsync.settings

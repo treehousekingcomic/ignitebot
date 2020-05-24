@@ -187,7 +187,7 @@ class MyHelpCommand(commands.HelpCommand):
 		else:
 			embed.description = f"No description provided."
 		
-		embed.description += f"Use `{pre}help <group> <sub_command>` to get help on a group command. \nSubcommands : \n"
+		embed.description += f"\nUse `{pre}help {group.qualified_name} <sub_command>` to get help on a group command. \nSubcommands : \n"
 		
 		for command in group.commands:
 			if command.signature:
