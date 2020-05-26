@@ -21,31 +21,32 @@ class Announce(commands.Cog, name="Message"):
     
     @commands.command()
     @commands.has_permissions(manage_guild=True)
-    async def msg(self, ctx, cu:typing.Union[discord.Member, discord.TextChannel, str], *, msg:str):
-        """Send message to a user or member"""
-        await self.ucmd("msg")
-        try:
-            if type(cu) == discord.Role:
+    async def msg(self, ctx, channel_or_member:typing.Union[discord.Member, discord.TextChannel, str], *, msg:str):
+            """Send message to a user or member"""
+            await self.ucmd("msg")
+            
+            if type( channel_or_member) == discord.Role:
               await ctx.send("Cant send msg to a role!")
-            if type(cu) == discord.TextChannel:
+              
+              
+            if type( channel_or_member) == discord.TextChannel:
                 try:
-                    await cu.send(msg)
+                    await  channel_or_member.send(msg)
                     await ctx.send("Message sent.")
                 except:
                     await ctx.send("Cant send message there! Give me premissions")
-            if type(cu) == discord.Member:
+                    
+            if type( channel_or_member) == discord.Member:
                 try:
-                    user = cu.mention
+                    user =  channel_or_member.mention
                     guild = "**" + ctx.guild.name + "**"
                     msg = msg.replace('{user}', user)
                     msg = msg.replace('{server}', guild)
                     msg = msg.replace('{server.members}', str(ctx.guild.member_count))
-                    await cu.send(msg + f"\nSent by **{ctx.author}** From **{ctx.guild.name}**")
+                    await  channel_or_member.send(msg + f"\nSent by **{ctx.author}** From **{ctx.guild.name}**")
                     await ctx.send(f"Message sent to - **{user}**")
                 except:
                     await ctx.send("I cant send message to the user!")
-        except:
-            await ctx.send("Something went wrong!")
     
 def setup(client):
     client.add_cog(Announce(client))

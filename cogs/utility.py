@@ -27,9 +27,12 @@ class Utility(commands.Cog):
 	
 	@commands.command()
 	@commands.cooldown(5, 600, commands.BucketType.user)
-	async def genqr(self, ctx, *,text):
+	async def genqr(self, ctx, *,text=None):
 		"""Generate qr code from a text."""
 		await self.ucmd("genqr")
+		
+		if text is None:
+			return await ctx.send("Text is required.")
 		
 		if type(text) != str:
 			try:
@@ -56,6 +59,9 @@ class Utility(commands.Cog):
 		"""Read qr code from a image."""
 		await self.ucmd("readqr")
 		at = ctx.message.attachments
+		
+		if len(at) < 1:
+			return await ctx.send("Please atach an qrcode image to decode.")
 		lnk = at[0].url
     
 		async with aiohttp.ClientSession() as s:

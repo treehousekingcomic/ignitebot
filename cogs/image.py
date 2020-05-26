@@ -106,8 +106,11 @@ class ImageEdit(commands.Cog, name="Image"):
 	
 	@commands.command()
 	@commands.cooldown(1, 15, commands.BucketType.user)
-	async def lovers(self, ctx, p1:discord.Member=None, p2:discord.Member=None):
+	async def lovers(self, ctx, boy:discord.Member=None, girl:discord.Member=None):
 		"""Make a couple photo"""
+		p1 = boy
+		p2 = girl
+		
 		await self.ucmd("lovers")
 		if p2 is None:
 			if p1 is None:
@@ -166,9 +169,12 @@ class ImageEdit(commands.Cog, name="Image"):
 	
 	@commands.command()
 	@commands.cooldown(1,10, commands.BucketType.user)
-	async def frame(self, ctx, mem:typing.Union[discord.Member, str]=None):
+	async def frame(self, ctx, member:typing.Union[discord.Member, str]=None):
 		"""Add your photo in a frame. Or mention someone for his photo."""
 		await self.ucmd("frame")
+		
+		mem = member
+		
 		imn = f"static/filter/{ctx.author.id}{random.randint(1000,99999)}.png"
 		if mem is None:
 			link = str(ctx.author.avatar_url)
@@ -180,7 +186,10 @@ class ImageEdit(commands.Cog, name="Image"):
  
 		async with aiohttp.ClientSession() as s:
 			async with s.get(link) as r:
-				data = await r.read()
+				try:
+					data = await r.read()
+				except:
+					return await ctx.send("Please send a valid link.")
 		
 		# Running blocking stuff in a executor
 		thing = functools.partial(self.get_frame, imn, data)
@@ -223,9 +232,12 @@ class ImageEdit(commands.Cog, name="Image"):
 	
 	@commands.command()
 	@commands.cooldown(1,15, commands.BucketType.user)
-	async def getcolors(self, ctx, mem:discord.Member=None):
+	async def getcolors(self, ctx, member:discord.Member=None):
 		"""Get colors from a photo with color value"""
 		await self.ucmd("getcolors")
+		
+		mem = member
+		
 		if mem is None:
 			mem = ctx.author 
 		link = str(mem.avatar_url)
