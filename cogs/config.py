@@ -28,16 +28,20 @@ class SeverConfig(commands.Cog, name="Config"):
 		
 		await ctx.send(embed=embed)
 
-	@commands.group()
+	@commands.group(invoke_without_command = True)
 	@commands.has_permissions(administrator=True)
 	async def config(self, ctx):
 		"""Edit server configuration"""
 		await self.ucmd("config")
-		msg = ""
+		return await ctx.send(f"Do `{ctx.prefix}help config` to see available commands.")
 	
 	@config.command()
-	async def joinchannel(self, ctx, channel:typing.Union[discord.TextChannel, str]):
+	async def joinchannel(self, ctx, channel:typing.Union[discord.TextChannel, str]=None):
 		"""Setup welcome/join channel"""
+		
+		if channel is None:
+			return await ctx.send("Please mention a text-channel")
+		
 		if type(channel) == discord.TextChannel:
 			data = channel.id
 			msg = channel.mention + " is set for welcome welcome channel."
@@ -45,15 +49,18 @@ class SeverConfig(commands.Cog, name="Config"):
 			data = 0
 			msg = "Welcome channel disabled."
 		else:
-			data = 0
-			msg = "Wrong argument! So I decided to disable join channel for now."
+			return await ctx.send("Wrong argument! Please mention a text channel where I can send messsge.")
 		
 		await self.client.pgdb.execute("UPDATE guilddata SET wci= $1 WHERE guildid=$2", data, ctx.guild.id)
 		await self.sem(ctx, "Join channel config", msg )
 	
 	@config.command()
-	async def leavechannel(self, ctx, channel:typing.Union[discord.TextChannel, str]):
+	async def leavechannel(self, ctx, channel:typing.Union[discord.TextChannel, str]=None ):
 		"""Setup leave/bye bye channel"""
+		
+		if channel is None:
+			return await ctx.send("Please mention a channel.")
+		
 		if type(channel) == discord.TextChannel:
 			data = channel.id
 			msg = channel.mention + " is set for leave channel."
@@ -62,15 +69,19 @@ class SeverConfig(commands.Cog, name="Config"):
 			msg = "Leave channel disabled."
 		else:
 			data = 0
-			msg = "Wrong argument! So I decided to disable leave channel for now."
+			return await ctx.send("Wrong argument! Please mention a text channel where I can send message")
 		
 		await self.client.pgdb.execute("UPDATE guilddata SET bci= $1 WHERE guildid=$2", data, ctx.guild.id)
 		await self.sem(ctx, "Leave channel config", msg )
 	
 
 	@config.command()
-	async def warningrole(self, ctx, role:typing.Union[discord.Role, str]):
+	async def warningrole(self, ctx, role:typing.Union[discord.Role, str]=None ):
 		"""Setup warning role."""
+		
+		if role is None:
+			return await ctx.send("Please mention a role.")
+		
 		if type(role) == discord.Role:
 			data = role.id
 			if role.managed is False:
@@ -83,14 +94,18 @@ class SeverConfig(commands.Cog, name="Config"):
 			msg = "Warning role removed"
 		else:
 			data = 0
-			msg = "Wrong argument! So I decided to remove warning role for now."
+			return await ctx.send("Wrong argument! Please mention a role lower than me. If the role is higher than me then drag my role up.")
 		
 		await self.client.pgdb.execute("UPDATE guilddata SET wnr= $1 WHERE guildid=$2", data, ctx.guild.id)
 		await self.sem(ctx, "Warning role config", msg )
 	
 	@config.command()
-	async def leveluplog(self, ctx, channel:typing.Union[discord.TextChannel, str]):
+	async def leveluplog(self, ctx, channel:typing.Union[discord.TextChannel, str]=None ):
 		"""Setup level up log channel"""
+		
+		if channel is None:
+			return await ctx.send("Please mention a channel")
+		
 		if type(channel) == discord.TextChannel:
 			data = channel.id
 			msg = channel.mention + " is set for level up log channel."
@@ -99,14 +114,18 @@ class SeverConfig(commands.Cog, name="Config"):
 			msg = "Level up log disabled."
 		else:
 			data = 0
-			msg = "Wrong argument! So I decided to disable level up log for now."
+			return await ctx.send("Wrong argument! Please mention a text channel where I can send message")
 		
 		await self.client.pgdb.execute("UPDATE guilddata SET lvlid= $1 WHERE guildid=$2", data, ctx.guild.id)
 		await self.sem(ctx, "Level Up log config", msg )
 
 	@config.command()
-	async def autorole(self, ctx, role:typing.Union[discord.Role, str]):
+	async def autorole(self, ctx, role:typing.Union[discord.Role, str]=None ):
 		"""Add role to a member"""
+		
+		if role is None:
+			return await ctx.send("Role is required.")
+		
 		if type(role) == discord.Role:
 			data = role.id
 			if role.managed is False:
@@ -119,14 +138,20 @@ class SeverConfig(commands.Cog, name="Config"):
 			msg = "Auto role disabled"
 		else:
 			data = 0
-			msg = "Wrong argument! So I decided to disable Auto role for now."
+			return await ctx.send("Wrong argument! Please mention a role that you want to assign to new members.")
 		
 		await self.client.pgdb.execute("UPDATE guilddata SET wr= $1 WHERE guildid=$2", data, ctx.guild.id)
 		await self.sem(ctx, "Auto role config", msg )
 	
 	@config.command()
-	async def prefix(self, ctx, prefix:str):
+	async def prefix(self, ctx, prefix:str=None ):
 		"""Change prefix for your server"""
+		
+		if prefix is None:
+			return await ctx.send("New prefix is required.")
+		
+		if type(prefix) == int:
+			prefix = str(prefix)
 		if type(prefix) == str:
 			data = prefix
 			msg = "`" + data + "` is the new pefix for this server."
@@ -137,8 +162,12 @@ class SeverConfig(commands.Cog, name="Config"):
 		await self.sem(ctx, "Prefix config", msg )
 	
 	@config.command()
-	async def welcomemessage(self, ctx, *,message:str):
+	async def welcomemessage(self, ctx, *,message:str=None):
 		"""Setup a welcome message"""
+		
+		if message is None:
+			return await ctx.send("Message is required.")
+		
 		if type(message) == str and message != 'disable':
 			data = message
 			msg = "Welcome message updated!"
@@ -148,10 +177,7 @@ class SeverConfig(commands.Cog, name="Config"):
 			data = ""
 			msg = "Welcome message disabled."
 			
-			await self.client.pgdb.execute(f"UPDATE guilddata SET wlcmsg='Null' WHERE guildid= $1", ctx.guild.id)
-		else:
-			data = ""
-			msg = "Wrong argument! So I decided to disable welcome message for now."
+		await self.client.pgdb.execute(f"UPDATE guilddata SET wlcmsg='Null' WHERE guildid= $1", ctx.guild.id)
 		
 		await self.sem(ctx, "Welcome message config", msg )
 	
@@ -162,8 +188,12 @@ class SeverConfig(commands.Cog, name="Config"):
 	
 	@blacklist.command()
 	@commands.has_permissions(manage_guild=True)
-	async def add(self, ctx, member:discord.Member, *, reason:str="None"):
+	async def add(self, ctx, member:discord.Member=None, *, reason:str="None"):
 		"""Add member in blacklist"""
+		
+		if member is None:
+			return await ctx.send("Please mention a member.")
+		
 		wres = await self.client.pgdb.fetchrow("SELECT * FROM guilddata WHERE guildid = $1", ctx.guild.id)
 		blstatus = await self.client.pgdb.fetchrow("SELECT * FROM blacklist WHERE userid = $1 AND guildid = $2", member.id, ctx.guild.id)
 		
@@ -180,20 +210,28 @@ class SeverConfig(commands.Cog, name="Config"):
 				pass
 		
 		role = discord.utils.get(ctx.guild.roles, id=wres['wnr'])
+		
+		if role is None:
+			return await ctx.send(f"Cant find a warning role. Make sure to add that. check `{ctx.prefix}help config` to see how you can add warning role. Then try again")
+		
 		if role:
 			try:
 				await member.add_roles(role)
 				await ctx.send(f"Successfully added {str(member)} in blacklist")
 				await self.client.pgdb.execute("INSERT INTO blacklist(userid, guildid, reason) VALUES($1, $2, $3)", member.id, ctx.guild.id, reason)
 			except commands.MissingPermissions:
-				return await ctx.send(f"Unable to add {str(member)} in blacklist. Make sure the warning role is lower than my top role. And I have `manage roles` permission. Its highly recommended to give me tue Administrator role and keep my role on top of other memebrs top role. so I can work smothly")
+				return await ctx.send(f"Unable to add {str(member)} in blacklist. Make sure the warning role is lower than my top role. And I have `manage roles` permission. Its highly recommended to give me the Administrator permission and keep my role on top of other memebrs top role. so I can work smothly")
 		else:
 			return await ctx.send(f"Cant find a warning role. Make sure to add that. check `{ctx.prefix}help config` to see how you can add warning role. Then try again")
 	
 	@blacklist.command()
 	@commands.has_permissions(manage_guild=True)
-	async def remove(self, ctx, member:discord.Member):
+	async def remove(self, ctx, member:discord.Member=None):
 		"""Remove member from blacklist"""
+		
+		if member is None:
+			return await ctx.send("Please mention a member.")
+		
 		wres = await self.client.pgdb.fetchrow("SELECT * FROM guilddata WHERE guildid = $1", ctx.guild.id)
 		blstatus = await self.client.pgdb.fetchrow("SELECT * FROM blacklist WHERE userid = $1 AND guildid = $2", member.id, ctx.guild.id)
 		
@@ -201,15 +239,19 @@ class SeverConfig(commands.Cog, name="Config"):
 			return await ctx.send("This member is not in blacklist.")
 		
 		role = discord.utils.get(ctx.guild.roles, id=wres['wnr'])
+		
+		if role is None:
+			return await ctx.send(f"Cant find a warning role. Make sure to add that. check `{ctx.prefix}help config` to see how you can add warning role. Then try again")
+		
 		if role:
 			try:
 				await member.remove_roles(role)
 				await ctx.send(f"Successfully removed {str(member)} from blacklist")
 				await self.client.pgdb.execute("DELETE FROM blacklist WHERE userid = $1 AND guildid = $2", member.id, ctx.guild.id)
 			except commands.MissingPermissions:
-				return await ctx.send(f"Unable to add {str(member)} in blacklist. Make sure the warning role is lower than my top role. And I have `manage roles` permission. Its highly recommended to give me tue Administrator role and keep my role on top of other memebrs top role. so I can work smothly")
+				return await ctx.send(f"Unable to add {str(member)} in blacklist. Make sure the warning role is lower than my top role. And I have `manage roles` permission. Its highly recommended to give me the Administrator permission and keep my role on top of other memebrs top role. so I can work smothly")
 		else:
-			return await ctx.send(f"Cant find a warning role. Make sure to add that. check `{ctx.prefix}help config` to see how you can add warning role. Then try again")
+			return await ctx.send(f"I was unable to remove this member from blacklist. Make sure i have `Manage roles` permission and my top role is higher than his role.")
 
 def setup(client):
 	client.add_cog(SeverConfig(client))
