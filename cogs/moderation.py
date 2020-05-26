@@ -20,8 +20,10 @@ class Moderation(commands.Cog):
     @commands.command()
     @commands.has_permissions(kick_members=True)
     @commands.bot_has_permissions(kick_members=True)
-    async def kick(self, ctx, member:discord.Member, * , reason='Unspecified'):
+    async def kick(self, ctx, member:discord.Member=None, * , reason='Unspecified'):
         """Kicks someone. Requires kick members permission."""
+        if member is None:
+        	return await ctx.send("Please mention a member to kick.")
         await self.ucmd("kick")
         try:
             await member.kick(reason=reason)
@@ -33,8 +35,10 @@ class Moderation(commands.Cog):
     @commands.command()
     @commands.has_permissions(ban_members=True)
     @commands.bot_has_permissions(ban_members=True)
-    async def ban(self, ctx, member:discord.Member, * , reason='Unspecified'):
+    async def ban(self, ctx, member:discord.Member=None, * , reason='Unspecified'):
         """Bans someone. Requires ban members permission"""
+        if member is None:
+        	return await ctx.send("Please mention a member to ban.")
         await self.ucmd("ban")
         try:
         	await member.ban(reason=reason)
@@ -46,18 +50,30 @@ class Moderation(commands.Cog):
     @commands.has_permissions(manage_roles=True)
     async def mute(self, ctx, member:discord.Member = None, *, reason='Unspecified'):
         """Mute someone. Requires manage roles permission. Also setup warning role first in server config."""
+        
+        if member is None:
+        	return await ctx.send("Please mention a member to mute.")
+        
         await self.ucmd("mute")
         #await self.client.pgdb.execute("INSERT INTO guilddata(guildid, prefix) VALUES(696962067332071454, '..')")
         res =await self.client.pgdb.fetchrow("SELECT * FROM guilddata WHERE guildid= $1", ctx.guild.id)
         wnr = res['wnr']
+        
         if member != None:
             embed = discord.Embed(colour=ctx.author.color,description=f"{member.name} muted for {reason}")
             embed.set_author(name=f"{member.name}", icon_url=member.avatar_url)
             embed.set_thumbnail(url=member.avatar_url)
             role = get(ctx.guild.roles, id=wnr)
+            
+            if role is None:
+            	return await ctx.send(f"Warning role not configured. Do `{ctx.prefix}config warningrole @role` to make a role warning role. Most probabely its the `Muted` role.")
+            
             if role is not None:
-            	await member.add_roles(role)
-            	await ctx.send(embed=embed)
+            	try:
+            		await member.add_roles(role)
+            		await ctx.send(embed=embed)
+            	except:
+            		return await ctx.send(f"Cannot unmute {str(member)}. I'am missing permissions.")
             else:
             	await ctx.send("Please setup a warning role! See `help config`")
 
@@ -65,6 +81,10 @@ class Moderation(commands.Cog):
     @commands.has_permissions(manage_roles=True)
     async def unmute(self, ctx, member:discord.Member = None):
         """Unmutes a muted member"""
+        
+        if member is None:
+        	return await ctx.send("Please mention a muted member to unmute.")
+        
         await self.ucmd("unmute")
         res =await self.client.pgdb.fetchrow("SELECT * FROM guilddata WHERE guildid= $1", ctx.guild.id)
         wnr = res['wnr']
@@ -73,6 +93,10 @@ class Moderation(commands.Cog):
             embed.set_author(name=f"{member.name}", icon_url=member.avatar_url)
             embed.set_thumbnail(url=member.avatar_url)
             role = get(ctx.guild.roles, id=wnr)
+            
+            if role is None:
+            	return await ctx.send(f"Warning role not configured. Do `{ctx.prefix}config warningrole @role` to make a role warning role. Most probabely its the `Muted` role.")
+            
             can = False
             for r in member.roles:
             	if r == role:
@@ -83,7 +107,7 @@ class Moderation(commands.Cog):
             		await member.remove_roles(role)
             		await ctx.send(embed=embed)
             	except:
-            		pass
+            		return await ctx.send(f"Cannot unmute {str(member)}. I'am missing permissions.")
             else:
             	await ctx.send("Already unmuted")
             	
@@ -91,6 +115,17 @@ class Moderation(commands.Cog):
     @commands.has_permissions(manage_roles=True)
     async def addrole(self, ctx, member:discord.Member,  role:discord.Role):
         """Give someone a role."""
+        
+        if role is None and member is None:
+        	return await ctx.send("Please mention a member and a role")
+        
+        if role is None:
+        	return await ctx.send("Please mention a role.")
+        
+        if member is None:
+        	return await ctx.send("Please mention a member to remove role.")
+        	
+        
         await self.ucmd("addrole")
         already = False
         for mrole in member.roles:
@@ -114,8 +149,18 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
-    async def removerole(self, ctx, member:discord.Member,  role:discord.Role):
+    async def removerole(self, ctx, member:discord.Member=None,  role:discord.Role=None):
         """Remove a role from someone"""
+        
+        if role is None and member is None:
+        	return await ctx.send("Please mention a member and a role")
+        
+        if role is None:
+        	return await ctx.send("Please mention a role.")
+        
+        if member is None:
+        	return await ctx.send("Please mention a member to remove role.")
+        	
         await self.ucmd("removerole")
         already = False
         for mrole in member.roles:
