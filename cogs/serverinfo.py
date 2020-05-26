@@ -7,6 +7,7 @@ import random
 import asyncpg
 from PIL import Image, ImageDraw
 import math
+from datetime import datetime, timedelta
 
 class ServerInfo(commands.Cog, name="Server"):
 	"""Get server information."""
@@ -200,6 +201,74 @@ class ServerInfo(commands.Cog, name="Server"):
 			await ctx.send("Rank card background restored to default!")
 		except:
 			await ctx.send("You dont have custom rank card background!")
-
+	
+	@commands.group(invoke_without_command=True)
+	async def premium(self, ctx):
+		result = await self.client.pgdb.fetchrow("SELECT * FROM keys WHERE guildid = $1", ctx.guild.id)
+		if result:
+			return await ctx.send("This server enjoying Ignite Premium. 🎉")
+		else:
+			return await ctx.send("This server is not subscribed to premium. Join the official server to get premium.")
+	
+	@premium.command()
+	async def status(self, ctx):
+		"""Check duration/status of membership"""
+		result = await self.client.pgdb.fetchrow("SELECT * FROM keys WHERE guildid = $1", ctx.guild.id)
+		
+		if result:
+			valid_till = result['valid_till']
+			delta = valid_till - datetime.now() 
+			
+			dur = ""
+			days = delta.days
+			seconds = delta.seconds
+			
+			if days > 365:
+				year = days//365
+				if year > 1:
+					dur += f"{year} years "
+				else:
+					dur += f"{year} year "
+				
+				days = days%365
+				
+			
+			if days > 30:
+				month = days//30
+				
+				if month > 1:
+					dur += f"{month} months "
+				else:
+					dur += f"{month} month "
+				days = days%30
+				if days > 1:
+					dur += f"{days} days "
+				else:
+					dur += f"{days} day "
+					
+			if days < 30 and days > 1:
+				dur += f"{days} days "
+				
+			if seconds > 3600:
+				hour = seconds//3600
+				
+				if hour > 1:
+					dur += f"{hour} hours "
+				else:
+					dur += f"{hour} hour "
+				
+				seconds = seconds%3600
+			
+			if seconds > 60:
+				minute = seconds//60
+				dur += f"{minute} minutes "
+				
+				seconds = seconds%60
+			
+			if seconds > 0:
+				dur += f"{seconds} seconds"
+				
+			await ctx.send(f"Premium membership of this server will expire in **{dur}**")
+		
 def setup(client):
     client.add_cog(ServerInfo(client))
