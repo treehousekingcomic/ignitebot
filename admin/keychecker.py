@@ -13,26 +13,34 @@ class KeyCheck(commands.Cog):
     async def doit(self):
     	print("Checking for expired keys")
     	res = await self.client.pgdb.fetch("SELECT * FROM keys")
-    	#print(res)
+    	
     	for result in res:
-    		#print(result)
-    		todate = result['expire']
-    		#print(expiry_date)
+    		todate = result['valid_till']
+    		
     		
     		today = datetime.today()
     		
     		
-    		if today.date() >= todate:
-    			#print("Broken key")
+    		if today >= todate:
+    			print("Broken key")
     			key = result['key']
+    			
     			await self.client.pgdb.fetchrow(f"DELETE FROM keys WHERE key=$1", key)
  
-    			guild = self.client.get_guild(result['guildid'])
-    			await guild.owner.send("Your key is expired and all your tags paused!")
+    			try:
+    				guild = self.client.get_guild(result['guildid'])
+    			except:
+    				pass
+    			
+    			if guild is not None:
+    				try:
+    					await guild.owner.send("Your key is expired. Buy a new one to continue premium membership.")
+    				except:
+    					pass
     		else:
-    			pass
+    			print("Key is not borken")
 
-    @tasks.loop(minutes=10)
+    @tasks.loop(seconds=10)
     async def check_exp(self):
         await self.doit()
         
