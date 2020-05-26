@@ -65,7 +65,9 @@ class Info(commands.Cog):
 		des += "**Users** : " + str(len(self.client.users)) +"\n"
     
 		des += "**Started** : " + humanize.naturaltime(self.client.launch_time)
-		des += f"\n\n*This bot has `{len(af)+1}` files containing `{line}` lines of code and `{str(cmds)}` commands!*"
+		des += f"\n\n*This bot has `{len(af)+1}` files containing `{line}` lines of code and `{str(cmds)}` commands!* \n\n"
+		
+		des += f"[Join Support Server](https://discord.gg/7SaE8v2)"
 		#des += "[![Discord Bots](https://top.gg/api/widget/696975708907503636.svg)](https://top.gg/bot/696975708907503636)"
 		embed = discord.Embed(color=ctx.author.color, description=des, title=self.client.user.name, timestamp=ctx.message.created_at)
 		embed.set_thumbnail(url=self.client.user.avatar_url)
