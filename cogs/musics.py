@@ -116,17 +116,23 @@ class Player(wavelink.Player):
         track = self.current
         if not track:
             return
-
+            
+        status = ""
+        if self.is_paused:
+        	status = "Paused"
+        else:
+        	status = "Playing"
+        	
         channel = self.bot.get_channel(int(self.channel_id))
         qsize = self.queue.qsize()
 
-        embed = discord.Embed(title=f'Music', colour=0xebb145)
+        embed = discord.Embed(title=f'Music | {status}', colour=0xebb145)
         embed.description = f'Now Playing:\n**`{track.title}`** [{str(datetime.timedelta(milliseconds=int(track.length)))}] \n\n'
         embed.set_thumbnail(url=track.thumb)
 
-        embed.add_field(name='Volume', value=f'**`{self.volume}%`**')
+        #embed.add_field(name='Volume', value=f'**`{self.volume}%`**')
         embed.add_field(name='Requested By', value=str(track.requester))
-        embed.set_footer(text=f"Remaining {str(qsize)} songs")
+        embed.set_footer(text=f"Volume : {self.volume}% | Remaining {str(qsize)} songs")
 
         return embed
 
@@ -516,8 +522,9 @@ class Musics(commands.Cog, name="Music"):
         		return await ctx.send(f"**{ctx.author.name}** you need `DJ` role to do this action.")
         try:
             await ctx.send('▶ Player paused.')
-
-            return await player.set_pause(True)
+            
+            await player.set_pause(True)
+            await player.invoke_controller()
         except Exception as e:
         	return await ctx.send(e)
     
@@ -606,8 +613,9 @@ class Musics(commands.Cog, name="Music"):
 
         try:
             await ctx.send('⏸ Player resumed.')
-
-            return await player.set_pause(False)
+            
+            await player.set_pause(False)
+            await player.invoke_controller()
         except:
         	return
 
@@ -687,6 +695,7 @@ class Musics(commands.Cog, name="Music"):
             return await ctx.send('Please enter a value between 1 and 100.')
 
         await player.set_volume(vol)
+        await player.invoke_controller()
         await ctx.send(f'Set the volume to **{vol}**%')
     
     @commands.command(aliases=['mix'])
@@ -744,6 +753,7 @@ class Musics(commands.Cog, name="Music"):
             await ctx.send('Maximum volume reached')
 
         await player.set_volume(vol)
+        await player.invoke_controller()
 
     @commands.command(hidden=True)
     #@commands.check_any(commands.has_any_role("DJ", "Dj", "dj"), commands.has_permissions(administrator=True), commands.is_owner())
@@ -771,6 +781,7 @@ class Musics(commands.Cog, name="Music"):
             await ctx.send('Player is currently muted')
 
         await player.set_volume(vol)
+        await player.invoke_controller()
 
     @commands.command(aliases=['eq'])
     #@commands.check_any(commands.has_any_role("DJ", "Dj", "dj"), commands.has_permissions(administrator=True), commands.is_owner())
