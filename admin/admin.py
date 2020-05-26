@@ -25,13 +25,18 @@ class Admin(commands.Cog):
     	else:
     		return True
     
-    async def do_reg(self, key:str, guildid:int):
+    async def do_reg(self, key:str, guildid:int, delta=None ):
     	try:
     		try:
     			await self.client.pgdb.execute("DELETE FROM keys WHERE guildid = $1", guildid)
     		except:
     			pass
-    		await self.client.pgdb.execute(f"UPDATE keys SET guildid= $1 WHERE key= $2 ", guildid, key)
+    		if delta:
+    			res = await self.client.pgdb.fetchrow("SELECT * FROM keys WHERE key = $1", key)
+    			valid_till = res['valid_till'] + delta
+    			await self.client.pgdb.execute(f"UPDATE keys SET guildid= $1, valid_till = $2 WHERE key= $3", guildid, valid_till, key)
+    		else:
+    			await self.client.pgdb.execute(f"UPDATE keys SET guildid= $1 WHERE key= $2", guildid, key)
     		return True
     	except:
     		return False
@@ -73,17 +78,27 @@ class Admin(commands.Cog):
     @commands.has_permissions(administrator=True)
     async def register(self, ctx, key:str):
     	isavailable = await self.check_avail(key)
+    	res = await self.client.pgdb.fetchrow("SELECT * FROM keys WHERE guildid = $1", ctx.guild.id)
     	
     	if isavailable:
     		isused = await self.chek_used(key)
     		if isused:
     			await ctx.send("Key is already in use")
     		else:
-    			suc = await self.do_reg(key, ctx.guild.id)
-    			if suc:
-    				await ctx.send("You are now a premium user! You can now create unlimited tags!\n\n**Note : **After premium subscription finished all your tags will be paused! Be sure to buy one before finished")
+    			if res:
+    				valid_till = res['valid_till']
+    				delta = valid_till - datetime.datetime.now()
     			else:
-    				await ctx.send("Something went wrong")
+    				delta = None
+    			suc = await self.do_reg(key, ctx.guild.id, delta)
+    			if suc:
+    				if delta:
+    					msg = "This server's premium membership extended 🎉"
+    				else:
+    					msg = "This sever is now premium  🎉"
+    				await ctx.send(msg)
+    			else:
+    				await ctx.send("Something went wrong.")
     	else:
     		await ctx.send("Key is wrong")
     
