@@ -22,7 +22,7 @@ class KeyCheck(commands.Cog):
     		
     		
     		if today >= todate:
-    			print("Broken key")
+    			#print("Broken key")
     			key = result['key']
     			
     			await self.client.pgdb.fetchrow(f"DELETE FROM keys WHERE key=$1", key)
@@ -38,9 +38,10 @@ class KeyCheck(commands.Cog):
     				except:
     					pass
     		else:
-    			print("Key is not borken")
+    			pass
+    			#print("Key is not borken")
 
-    @tasks.loop(seconds=10)
+    @tasks.loop(minutes=1)
     async def check_exp(self):
         await self.doit()
         
