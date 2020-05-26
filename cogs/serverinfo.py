@@ -204,13 +204,14 @@ class ServerInfo(commands.Cog, name="Server"):
 	
 	@commands.group(invoke_without_command=True)
 	async def premium(self, ctx):
+		"""Check if server is premium or not"""
 		result = await self.client.pgdb.fetchrow("SELECT * FROM keys WHERE guildid = $1", ctx.guild.id)
 		if result:
 			return await ctx.send("This server enjoying Ignite Premium. 🎉")
 		else:
 			return await ctx.send("This server is not subscribed to premium. Join the official server to get premium.")
 	
-	@premium.command()
+	@premium.command(aliases=['stats', 'duration'])
 	async def status(self, ctx):
 		"""Check duration/status of membership"""
 		result = await self.client.pgdb.fetchrow("SELECT * FROM keys WHERE guildid = $1", ctx.guild.id)
