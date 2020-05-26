@@ -47,7 +47,7 @@ class Admin(commands.Cog):
     @commands.is_owner()
     async def generate(self, ctx, xtime:int = 30, dmy:str = "D"):
     		key = await self.generate_key()
-    		todays_date = datetime.datetime.today()
+    		todays_date = datetime.datetime.now()
 
     		if dmy == "D":
     			expire_date = todays_date + datetime.timedelta(days=xtime)
@@ -64,7 +64,7 @@ class Admin(commands.Cog):
     		if dmy == "h":
     			expire_date = todays_date + datetime.timedelta(hours=xtime)  
     		
-    		await self.client.pgdb.execute("INSERT INTO keys(key, guildid, created, expire) VALUES($1, $2, $3, $4)" , key, 0, todays_date, expire_date)
+    		await self.client.pgdb.execute("INSERT INTO keys(key, guildid, created_at, valid_till) VALUES($1, $2, $3, $4)" , key, 0, todays_date, expire_date)
     		
     		await ctx.send(f"Key Generated : `{key}` for {xtime}{dmy}")
     		await ctx.send(f"```{key}```")
@@ -99,6 +99,7 @@ class Admin(commands.Cog):
     		await ctx.send(msg)
     	else:
     		await ctx.send("No data to show!")
+    		
     @commands.command(hidden=True)
     @commands.is_owner()
     async def upload(self, ctx ,fname):
@@ -132,6 +133,7 @@ class Admin(commands.Cog):
     	link = "https://github.com/shahprog/ignitebot"
     	sg = self.client.get_guild(700374484955299900)
     	members = sg.members
+    	
     	if ctx.author in members:
     		embed = discord.Embed(title="Source Code", description=f"This is my source code in case if you wonder how i made this bot. Not for just copy pasting, just for getting help.\n \n[Source Code here]({link})")
     		embed.set_thumbnail(url=self.client.user.avatar_url)
