@@ -59,8 +59,27 @@ class Monitor(commands.Cog):
 						await self.client.pgdb.execute("DELETE FROM monitor WHERE target = $1 and mentor = $2", row['target'], row['mentor'])
 						
 	
-	@commands.group()
-	async def monitor(self, ctx, user: discord.Member=None):
+	@commands.group(invoke_without_command=True)
+	async def monitor(self, ctx):
+		"""Monitor a member"""
+		await ctx.send(f"Do `{ctx.prefix}help monitor` to get help")
+	
+	@monitor.command()
+	async def dl(self, ctx, user:discord.Member=None):
+		"""Remove monitor."""
+		if user is None:
+			return await ctx.send("Please speficy an user.")
+		
+		data = await self.client.pgdb.fetchrow("SELECT * FROM monitor WHERE target = $1 and mentor = $2", user.id, ctx.author.id)
+		
+		if data is None:
+			return await ctx.send("You are not monitoring this user")
+		
+		await self.client.pgdb.execute("DELETE FROM monitor WHERE target =$1 and mentor =$2", data['target'], data['mentor'])
+		await ctx.send("Monitor removed.")
+	
+	@monitor.command()
+	async def add(self, ctx, user:discord.Member=None):
 		"""Monitor someone."""
 		if user is None:
 			return await ctx.send("Please speficy an user.")
@@ -71,6 +90,10 @@ class Monitor(commands.Cog):
 		
 		await self.client.pgdb.execute("INSERT INTO monitor(target, mentor) VALUES($1, $2)", user.id, ctx.author.id)
 		await ctx.send("New monitor created.")
+	
+	
+		
+			
 
 def setup(client):
 	client.add_cog(Monitor(client))
