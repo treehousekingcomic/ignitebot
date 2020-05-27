@@ -163,6 +163,126 @@ class Admin(commands.Cog):
     		embed.set_thumbnail(url=self.client.user.avatar_url)
     		embed.set_author(name="Ignite", url="https://discord.gg/7SaE8v2", icon_url=self.client.user.avatar_url)
     		await ctx.send(embed=embed)
+    
+    @commands.group(invoke_without_command=True, hidden=True )
+    @commands.is_owner()
+    async def disable(self, ctx):
+    	"""Disable command cog or group"""
+    	await ctx.send(f"Do `{ctx.prefix}help disable` to get help on this command")
+    
+    @disable.command(hidden=True)
+    async def command(self, ctx, command:str=None):
+    	if command is None:
+    		return await ctx.send("Please specify a command to disable")
+    	
+    	cmd = self.client.get_command(command)
+    	if cmd is None:
+    		return await ctx.send("Not found!")
+    	
+    	if isinstance(cmd, commands.Group):
+    		for c in cmd.commands:
+    			try:
+    				c.enabled = False
+    			except Exception as e:
+    				return await ctx.send(e)
+    			finally:
+    				cmd.enabled = False
+    		await ctx.send(f"All the subcommands of `{cmd.qualified_name}` is disabled now")
+    		
+    	if isinstance(cmd, commands.Command):
+    		try:
+    			cmd.enabled = False
+    		except Exception as e:
+    			return await ctx.send(e)
+    		await ctx.send(f"Command `{cmd.qualified_name}` is disabled now")
+    
+    @disable.command(hidden=True)
+    @commands.is_owner()
+    async def cog(self, ctx, cog:str=None):
+    	if cog is None:
+    		return await ctx.send("Please specify a cog")
+    	
+    	cogg = self.client.cogs[cog]
+    	
+    	if cogg is None:
+    		return await ctx.send("Not found")
+    	
+    	for command in cogg.get_commands():
+    		if isinstance(command, commands.Group):
+    			for cmd in command.commands:
+    				try:
+    					cmd.enabled = False
+    				except Exception as e:
+    					await ctx.send(e)
+    				finally:
+    					command.enabled = False
+    		if isinstance(command, commands.Command):
+    			try:
+    				command.enabled = False
+    			except Exception as e:
+    				await ctx.send(e)
+    			
+    	await ctx.send(f"All the command and group of `{cogg.qualified_name}` is disabled now")
+    
+    @commands.group(invoke_without_command=True, hidden=True )
+    @commands.is_owner()
+    async def enable(self, ctx):
+    	"""Disable command cog or group"""
+    	await ctx.send(f"Do `{ctx.prefix}help enable` to get help on this command")
+    
+    @enable.command(hidden=True)
+    async def cmd(self, ctx, command:str=None):
+    	if command is None:
+    		return await ctx.send("Please specify a command to enable")
+    	
+    	cmd = self.client.get_command(command)
+    	if cmd is None:
+    		return await ctx.send("Not found!")
+    	
+    	if isinstance(cmd, commands.Group):
+    		for c in cmd.commands:
+    			try:
+    				c.enabled = False
+    			except Exception as e:
+    				return await ctx.send(e)
+    			finally:
+    				cmd.enabled = True
+    		await ctx.send(f"All the subcommands of `{cmd.qualified_name}` is disabled now")
+    		
+    	if isinstance(cmd, commands.Command):
+    		try:
+    			cmd.enabled = True
+    		except Exception as e:
+    			return await ctx.send(e)
+    		await ctx.send(f"Command `{cmd.qualified_name}` is disabled now")
+    
+    @enable.command(hidden=True)
+    @commands.is_owner()
+    async def cogg(self, ctx, cog:str=None):
+    	if cog is None:
+    		return await ctx.send("Please specify a cog")
+    	
+    	cogg = self.client.cogs[cog]
+    	
+    	if cogg is None:
+    		return await ctx.send("Not found")
+    	
+    	for command in cogg.get_commands():
+    		if isinstance(command, commands.Group):
+    			for cmd in command.commands:
+    				try:
+    					cmd.enabled = True
+    				except Exception as e:
+    					await ctx.send(e)
+    				finally:
+    					command.enabled = True
+    		if isinstance(command, commands.Command):
+    			try:
+    				command.enabled = True
+    			except Exception as e:
+    				await ctx.send(e)
+    			
+    	await ctx.send(f"All the command and group of `{cogg.qualified_name}` is enabled now")
     		
 def setup(client):
     client.add_cog(Admin(client))
