@@ -23,7 +23,7 @@ class MyHelpCommand(commands.HelpCommand):
 			if await ctx.bot.is_owner(ctx.author):
 				cogs.append(cog)
 			else:
-				cog_commands = [command for command in cog.get_commands() if command.hidden == False]
+				cog_commands = [command for command in cog.get_commands() if command.hidden == False and command.enabled == True]
 				if len(cog_commands) >0:
 					cogs.append(cog)
 		
@@ -43,7 +43,7 @@ class MyHelpCommand(commands.HelpCommand):
 				if await ctx.bot.is_owner(ctx.author):
 					cog_commands = [command for command in cog.get_commands()]
 				else:
-					cog_commands = [command for command in cog.get_commands() if command.hidden == False]
+					cog_commands = [command for command in cog.get_commands() if command.hidden == False and command.enabled == True]
 				
 				if len(cog_commands) > 0:
 					if cog.description:
@@ -114,7 +114,7 @@ class MyHelpCommand(commands.HelpCommand):
 		if await ctx.bot.is_owner(ctx.author):
 				shown_commands = [command for command in cog.get_commands()]
 		else:
-			shown_commands = [command for command in cog.get_commands() if command.hidden == False]
+			shown_commands = [command for command in cog.get_commands() if command.hidden == False and command.enabled == True]
 			
 		if len(shown_commands) == 0:
 			return await ctx.send("This cog has no command.")
@@ -149,8 +149,8 @@ class MyHelpCommand(commands.HelpCommand):
 			description = ""
 		)
 		
-		if command.hidden == True and await ctx.bot.is_owner(ctx.author) == False:
-			return await ctx.send("No command found.")
+		if (command.hidden == True or command.enabled == False) and await ctx.bot.is_owner(ctx.author) == False:
+			return await ctx.send(f"No command called \"{command.qualified_name}\" found.")
 		
 		msg = ""
 		if command.signature:
@@ -190,7 +190,17 @@ class MyHelpCommand(commands.HelpCommand):
 		
 		embed.description += f"\nUse `{pre}help {group.qualified_name} <sub_command>` to get help on a group command. \n\n**Subcommands : **\n"
 		
-		for command in group.commands:
+		if await ctx.bot.is_owner(ctx.author):
+			group_commands = [command for command in group.commands]
+			if len(group_commands) == 0:
+				return await ctx.send("This group doesnt seem to have any sub command")
+		else:
+			group_commands = [command for command in group.commands if command.hidden == False and command.enabled == True]
+		
+		if len(group_commands) == 0:
+			return await ctx.send(f"No command called \"{group.qualified_name}\" found.")
+			
+		for command in group_commands:
 			if command.signature:
 				command_help = f"▪︎{pre}{command.qualified_name} {command.signature} \n"
 			else:
