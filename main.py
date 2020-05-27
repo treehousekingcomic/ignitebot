@@ -50,7 +50,7 @@ async def create_db_pool():
 	)
 	""")	
 	await client.pgdb.execute("""
-	CREATE TABLE keys(
+	CREATE TABLE IF NOT EXISTS keys(
 	id serial PRIMARY KEY,
 	key VARCHAR(30) NOT NULL,
 	guildid bigint NOT NULL,

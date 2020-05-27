@@ -1,88 +1,61 @@
-2020-05-26 00:38:51.206 ERROR 31382 --- [XNIO-1 task-5] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /45.83.66.25:26818
-2020-05-26 01:37:52.040 ERROR 31382 --- [XNIO-1 task-6] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /198.108.66.200:39262
-2020-05-26 02:09:12.506 ERROR 31382 --- [XNIO-1 task-7] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /203.153.117.227:46244
-2020-05-26 02:20:27.579 ERROR 31382 --- [XNIO-1 task-8] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /85.105.18.45:51629
-2020-05-26 02:22:38.545 ERROR 31382 --- [XNIO-1 task-9] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /190.69.25.178:56024
-2020-05-26 02:27:59.800 ERROR 31382 --- [XNIO-1 task-10] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /178.128.222.196:61000
-2020-05-26 03:15:43.549  WARN 31382 --- [XNIO-1 task-11] l.s.config.RequestAuthorizationFilter    : Authorization missing for 85.119.151.251 on POST /azenv.php
-2020-05-26 03:15:48.647 ERROR 31382 --- [XNIO-1 I/O-2] io.undertow.request                      : UT005071: Undertow request failed HttpServerExchange{ CONNECT check.best-proxies.ru:80}
+2020-05-27 21:14:05.970  INFO 27413 --- [main] lavalink.server.Launcher                 : 
 
-java.lang.IllegalArgumentException: UT000068: Servlet path match failed
-	at io.undertow.servlet.handlers.ServletPathMatchesData.getServletHandlerByPath(ServletPathMatchesData.java:83) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.servlet.handlers.ServletPathMatches.getServletHandlerByPath(ServletPathMatches.java:88) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.servlet.handlers.ServletInitialHandler.handleRequest(ServletInitialHandler.java:146) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.server.handlers.HttpContinueReadHandler.handleRequest(HttpContinueReadHandler.java:65) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.server.Connectors.executeRootHandler(Connectors.java:376) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.server.protocol.http.HttpReadListener.handleEventWithNoRunningRequest(HttpReadListener.java:255) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.server.protocol.http.HttpReadListener.handleEvent(HttpReadListener.java:136) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.server.protocol.http.HttpReadListener.handleEvent(HttpReadListener.java:59) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
-	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
-	at org.xnio.conduits.ReadReadyHandler$ChannelListenerHandler.readReady(ReadReadyHandler.java:66) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
-	at org.xnio.nio.NioSocketConduit.handleReady(NioSocketConduit.java:88) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
-	at org.xnio.nio.WorkerThread.run(WorkerThread.java:561) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+[32m       .  [31m _                  _ _       _    [32m__ _ _
+[32m      /\\ [31m| | __ ___   ____ _| (_)_ __ | | __[32m\ \ \ \
+[32m     ( ( )[31m| |/ _` \ \ / / _` | | | '_ \| |/ /[32m \ \ \ \
+[32m      \\/ [31m| | (_| |\ V / (_| | | | | | |   < [32m  ) ) ) )
+[32m       '  [31m|_|\__,_| \_/ \__,_|_|_|_| |_|_|\_\[32m / / / /
+[0m    =========================================[32m/_/_/_/[0m
 
-2020-05-26 03:36:27.380 ERROR 31382 --- [XNIO-1 task-12] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /45.227.255.233:61000
-2020-05-26 04:31:01.505  WARN 31382 --- [XNIO-1 task-13] l.s.config.RequestAuthorizationFilter    : Authorization missing for 128.14.133.58 on GET /version
-2020-05-26 04:31:01.665 ERROR 31382 --- [XNIO-1 task-14] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /128.14.133.58:52936
-2020-05-26 05:04:02.683  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "700374484955299900", "sessionId": "4d523660c3c8e0df1a485350cb043a28", "event": {"token": "610928370ad20f4e", "guild_id": "700374484955299900", "endpoint": "us-central137.discord.media:80"}}
-2020-05-26 05:04:03.876  INFO 31382 --- [XNIO-1 task-15] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-26 05:04:04.691  INFO 31382 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Lovely
-2020-05-26 05:04:04.818  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "700374484955299900", "track": "QAAAhQIAHkJpbGxpZSBFaWxpc2gsIEtoYWxpZCAtIGxvdmVseQANQmlsbGllIEVpbGlzaAAAAAAAAxEoAAtWMVBsOEN6TnpDdwABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PVYxUGw4Q3pOekN3AAd5b3V0dWJlAAAAAAAAAAA=", "noReplace": false, "startTime": "0"}
-2020-05-26 05:08:46.297  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "700374484955299900"}
-2020-05-26 05:08:46.303  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "700374484955299900"}
-2020-05-26 05:08:46.306  INFO 31382 --- [XNIO-1 task-1] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:59510
-2020-05-26 05:08:46.328  INFO 31382 --- [XNIO-1 task-1] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:59510
-2020-05-26 05:08:50.270  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "700374484955299900", "sessionId": "4d523660c3c8e0df1a485350cb043a28", "event": {"token": "ec94e8da7c1048b8", "guild_id": "700374484955299900", "endpoint": "us-central137.discord.media:80"}}
-2020-05-26 05:08:51.433  INFO 31382 --- [XNIO-1 task-2] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-26 05:08:52.153  INFO 31382 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: lovely
-2020-05-26 05:08:52.262  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "700374484955299900", "track": "QAAAhQIAHkJpbGxpZSBFaWxpc2gsIEtoYWxpZCAtIGxvdmVseQANQmlsbGllIEVpbGlzaAAAAAAAAxEoAAtWMVBsOEN6TnpDdwABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PVYxUGw4Q3pOekN3AAd5b3V0dWJlAAAAAAAAAAA=", "noReplace": false, "startTime": "0"}
-2020-05-26 05:08:59.536  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "volume", "guildId": "700374484955299900", "volume": 100}
-2020-05-26 05:09:01.544  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "volume", "guildId": "700374484955299900", "volume": 90}
-2020-05-26 05:09:01.562  INFO 31382 --- [lava-daemon-pool-playback-1-thread-1] c.s.l.c.natives.NativeLibraryLoader      : Native library libmpg123-0: loading with filter com.sedmelluq.discord.lavaplayer.natives.ConnectorNativeLibLoader$$Lambda$663/0x0000000800d8e040@1f9f7b56
-2020-05-26 05:09:01.564  INFO 31382 --- [lava-daemon-pool-playback-1-thread-1] c.s.l.c.natives.NativeLibraryLoader      : Native library connector: loading with filter null
-2020-05-26 05:09:01.622  INFO 31382 --- [lava-daemon-pool-playback-1-thread-1] c.s.l.c.natives.NativeLibraryLoader      : Native library connector: successfully loaded.
-2020-05-26 05:09:06.544  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "volume", "guildId": "700374484955299900", "volume": 80}
-2020-05-26 05:09:11.271  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "volume", "guildId": "700374484955299900", "volume": 70}
-2020-05-26 05:09:18.665  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "volume", "guildId": "700374484955299900", "volume": 100}
-2020-05-26 05:12:25.728  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "700374484955299900"}
-2020-05-26 05:12:25.738  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "700374484955299900"}
-2020-05-26 05:12:25.787  INFO 31382 --- [parallel-1] s.n.m.impl.connections.AudioWebSocket    : Websocket to wss://us-central137.discord.media/?v=4 closed with code 4014 and reason Disconnected.
-2020-05-26 05:12:25.789  INFO 31382 --- [parallel-1] s.n.m.impl.connections.AudioWebSocket    : Closing
-2020-05-26 05:13:02.953  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "700374484955299900"}
-2020-05-26 05:13:02.953  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "700374484955299900"}
-2020-05-26 05:13:02.968  INFO 31382 --- [XNIO-1 task-4] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:59536
-2020-05-26 05:13:02.993  INFO 31382 --- [XNIO-1 task-4] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:59536
-2020-05-26 05:13:08.994  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "700374484955299900", "sessionId": "4d523660c3c8e0df1a485350cb043a28", "event": {"token": "3a869342305e6692", "guild_id": "700374484955299900", "endpoint": "us-central137.discord.media:80"}}
-2020-05-26 05:13:10.156  INFO 31382 --- [XNIO-1 task-5] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-26 05:13:10.941  INFO 31382 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Lovely
-2020-05-26 05:13:11.034  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "700374484955299900", "track": "QAAAhQIAHkJpbGxpZSBFaWxpc2gsIEtoYWxpZCAtIGxvdmVseQANQmlsbGllIEVpbGlzaAAAAAAAAxEoAAtWMVBsOEN6TnpDdwABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PVYxUGw4Q3pOekN3AAd5b3V0dWJlAAAAAAAAAAA=", "noReplace": false, "startTime": "0"}
-2020-05-26 05:13:17.616  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "700374484955299900", "pause": true}
-2020-05-26 05:13:25.728  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "700374484955299900", "pause": false}
-2020-05-26 05:15:14.693  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "700374484955299900"}
-2020-05-26 05:15:14.695  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "700374484955299900"}
-2020-05-26 05:15:14.701  INFO 31382 --- [XNIO-1 task-7] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:59554
-2020-05-26 05:15:14.726  INFO 31382 --- [XNIO-1 task-7] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:59554
-2020-05-26 05:15:23.225  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "700374484955299900", "sessionId": "4d523660c3c8e0df1a485350cb043a28", "event": {"token": "b408f48215b0ac34", "guild_id": "700374484955299900", "endpoint": "us-central137.discord.media:80"}}
-2020-05-26 05:15:24.339  INFO 31382 --- [XNIO-1 task-8] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-26 05:15:25.205  INFO 31382 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Lovely
-2020-05-26 05:15:25.316  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "700374484955299900", "track": "QAAAhQIAHkJpbGxpZSBFaWxpc2gsIEtoYWxpZCAtIGxvdmVseQANQmlsbGllIEVpbGlzaAAAAAAAAxEoAAtWMVBsOEN6TnpDdwABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PVYxUGw4Q3pOekN3AAd5b3V0dWJlAAAAAAAAAAA=", "noReplace": false, "startTime": "0"}
-2020-05-26 05:15:30.162  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "700374484955299900", "pause": true}
-2020-05-26 05:15:35.522  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "volume", "guildId": "700374484955299900", "volume": 100}
-2020-05-26 05:15:38.829  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "700374484955299900", "pause": false}
-2020-05-26 05:17:06.773  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "700374484955299900"}
-2020-05-26 05:17:06.774  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "700374484955299900"}
-2020-05-26 05:17:06.784  INFO 31382 --- [XNIO-1 task-10] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:59564
-2020-05-26 05:17:06.810  INFO 31382 --- [XNIO-1 task-10] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:59564
-2020-05-26 05:17:13.172  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "700374484955299900"}
-2020-05-26 05:17:13.178  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "700374484955299900"}
-2020-05-26 05:17:14.345  INFO 31382 --- [XNIO-1 task-11] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-26 05:17:15.155  INFO 31382 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Despacito
-2020-05-26 05:17:15.375  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "700374484955299900", "track": "QAAAiwIAJ0x1aXMgRm9uc2kgLSBEZXNwYWNpdG8gZnQuIERhZGR5IFlhbmtlZQAKTHVpcyBGb25zaQAAAAAABE2QAAtrSlFQN2tpdzVGawABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PWtKUVA3a2l3NUZrAAd5b3V0dWJlAAAAAAAAAAA=", "noReplace": false, "startTime": "0"}
-2020-05-26 05:17:22.946  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "700374484955299900"}
-2020-05-26 05:17:22.947  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "700374484955299900"}
-2020-05-26 05:17:27.914  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "700374484955299900", "sessionId": "4d523660c3c8e0df1a485350cb043a28", "event": {"token": "247ce29aa4a4291b", "guild_id": "700374484955299900", "endpoint": "us-central137.discord.media:80"}}
-2020-05-26 05:17:29.011  INFO 31382 --- [XNIO-1 task-13] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
-2020-05-26 05:17:29.674  INFO 31382 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Lovely
-2020-05-26 05:17:29.866  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "700374484955299900", "track": "QAAAhQIAHkJpbGxpZSBFaWxpc2gsIEtoYWxpZCAtIGxvdmVseQANQmlsbGllIEVpbGlzaAAAAAAAAxEoAAtWMVBsOEN6TnpDdwABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PVYxUGw4Q3pOekN3AAd5b3V0dWJlAAAAAAAAAAA=", "noReplace": false, "startTime": "0"}
-2020-05-26 05:17:35.805  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "700374484955299900", "pause": true}
-2020-05-26 05:17:39.549  INFO 31382 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "700374484955299900", "pause": false}
+	Version:        3.3.1
+	Build:          997
+	Build time:     25.03.2020 12:30:43 UTC
+	Branch          master
+	Commit:         29f68ba
+	Commit time:    25.03.2020 12:28:48 UTC
+	JVM:            13.0.1
+	Lavaplayer      1.3.38
+
+2020-05-27 21:14:06.364  INFO 27413 --- [main] lavalink.server.Launcher                 : Starting Launcher on shahriyar with PID 27413 (/root/Bots/ignite/Lavalink.jar started by root in /root/Bots/ignite)
+2020-05-27 21:14:06.367  INFO 27413 --- [main] lavalink.server.Launcher                 : No active profile set, falling back to default profiles: default
+2020-05-27 21:14:06.741  WARN 27413 --- [background-preinit] o.s.h.c.j.Jackson2ObjectMapperBuilder    : For Jackson Kotlin classes support please add "com.fasterxml.jackson.module:jackson-module-kotlin" to the classpath
+2020-05-27 21:14:31.591  INFO 27436 --- [main] lavalink.server.Launcher                 : 
+
+[32m       .  [31m _                  _ _       _    [32m__ _ _
+[32m      /\\ [31m| | __ ___   ____ _| (_)_ __ | | __[32m\ \ \ \
+[32m     ( ( )[31m| |/ _` \ \ / / _` | | | '_ \| |/ /[32m \ \ \ \
+[32m      \\/ [31m| | (_| |\ V / (_| | | | | | |   < [32m  ) ) ) )
+[32m       '  [31m|_|\__,_| \_/ \__,_|_|_|_| |_|_|\_\[32m / / / /
+[0m    =========================================[32m/_/_/_/[0m
+
+	Version:        3.3.1
+	Build:          997
+	Build time:     25.03.2020 12:30:43 UTC
+	Branch          master
+	Commit:         29f68ba
+	Commit time:    25.03.2020 12:28:48 UTC
+	JVM:            13.0.1
+	Lavaplayer      1.3.38
+
+2020-05-27 21:14:31.917  INFO 27436 --- [main] lavalink.server.Launcher                 : Starting Launcher on shahriyar with PID 27436 (/root/Bots/ignite/Lavalink.jar started by root in /root/Bots/ignite)
+2020-05-27 21:14:31.918  INFO 27436 --- [main] lavalink.server.Launcher                 : No active profile set, falling back to default profiles: default
+2020-05-27 21:14:32.265  WARN 27436 --- [background-preinit] o.s.h.c.j.Jackson2ObjectMapperBuilder    : For Jackson Kotlin classes support please add "com.fasterxml.jackson.module:jackson-module-kotlin" to the classpath
+2020-05-27 21:14:35.186  WARN 27436 --- [main] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2020-05-27 21:14:35.242  INFO 27436 --- [main] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
+2020-05-27 21:14:35.248  INFO 27436 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 3163 ms
+2020-05-27 21:14:36.021  WARN 27436 --- [main] l.server.config.SentryConfiguration      : Turning off sentry
+2020-05-27 21:14:36.040  INFO 27436 --- [main] l.s.c.AudioSendFactoryConfiguration      : OS: Linux, Arch: amd64
+2020-05-27 21:14:36.043  INFO 27436 --- [main] l.s.c.AudioSendFactoryConfiguration      : JDA-NAS supported system detected. Enabled native audio sending.
+2020-05-27 21:14:36.044  INFO 27436 --- [main] l.s.c.AudioSendFactoryConfiguration      : Setting buffer to 400ms
+2020-05-27 21:14:36.045  INFO 27436 --- [main] l.s.c.AudioSendFactoryConfiguration      : Setting playlist load limit to 6
+2020-05-27 21:14:36.868  INFO 27436 --- [main] c.s.d.l.tools.GarbageCollectionMonitor   : GC monitoring enabled, reporting results every 2 minutes.
+2020-05-27 21:14:37.869  INFO 27436 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-05-27 21:14:38.672  INFO 27436 --- [main] org.xnio                                 : XNIO version 3.3.8.Final
+2020-05-27 21:14:38.711  INFO 27436 --- [main] org.xnio.nio                             : XNIO NIO Implementation Version 3.3.8.Final
+2020-05-27 21:14:38.856  INFO 27436 --- [main] o.s.b.w.e.u.UndertowServletWebServer     : Undertow started on port(s) 8080 (http) with context path ''
+2020-05-27 21:14:38.869  INFO 27436 --- [main] lavalink.server.Launcher                 : Started Launcher in 8.889 seconds (JVM running for 10.1)
+2020-05-27 21:15:53.790  INFO 27436 --- [XNIO-1 task-1] io.undertow.servlet                      : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-05-27 21:15:53.793  INFO 27436 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2020-05-27 21:15:53.818  INFO 27436 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 23 ms
+2020-05-27 21:15:53.885  INFO 27436 --- [XNIO-1 task-1] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:38694
+2020-05-27 21:15:54.320  INFO 27436 --- [XNIO-1 task-1] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:38694
