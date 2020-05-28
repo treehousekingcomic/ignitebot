@@ -120,3 +120,7 @@ java.lang.IllegalArgumentException: UT000068: Servlet path match failed
 2020-05-28 11:25:50.899  INFO 27436 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
 2020-05-28 11:27:20.868  INFO 27436 --- [XNIO-1 task-1] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:41950
 2020-05-28 11:27:20.898  INFO 27436 --- [XNIO-1 task-1] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:41950
+2020-05-28 11:47:13.672  INFO 27436 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:41950 -- CloseStatus[code=1006, reason=]
+2020-05-28 11:47:13.673  INFO 27436 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-05-28 11:50:50.104  INFO 27436 --- [XNIO-1 task-2] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:42060
+2020-05-28 11:50:50.120  INFO 27436 --- [XNIO-1 task-2] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:42060

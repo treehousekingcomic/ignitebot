@@ -94,7 +94,7 @@ class Monitor(commands.Cog):
 		data = await self.client.pgdb.fetch("SELECT * FROM monitor WHERE mentor = $1", ctx.author.id)
 		
 		if not data:
-			return await ctx.send("You have no monititor right now.")
+			return await ctx.send("You have no monitor right now.")
 		
 		abandon_msg = ""
 		success_msg = ""
