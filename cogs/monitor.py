@@ -61,7 +61,7 @@ class Monitor(commands.Cog):
 	
 	@commands.group(invoke_without_command=True)
 	async def monitor(self, ctx):
-		"""Monitor a member"""
+		"""Monitor a member when they they go offline or come online you will get notified"""
 		await ctx.send(f"Do `{ctx.prefix}help monitor` to get help")
 	
 	@monitor.command()
