@@ -72,6 +72,42 @@ class Utility(commands.Cog):
 			await ctx.send("Data : " + data[0]["symbol"][0]["data"])
 		else:
 			await ctx.send("This is not a valid qr code!")
+	
+	@commands.command(aliases=['discrim'])
+	async def discriminator(self, ctx, discrim:str=None):
+		"""Find users having specific descriminator"""
+		if discrim is None:
+			discrim = ctx.author.discriminator
+		else:
+			discrim = discrim
+		
+		embed = discord.Embed(
+			color = discord.Color.gold(),
+			description ="",
+			timestamp = ctx.message.created_at
+		)
+		
+		count = 0
+		msg = ""
+		
+		match = []
+		for user in self.client.users:
+			if user.discriminator == discrim:
+				match.append(user)
+		
+		if len(match) == 0:
+			return await ctx.send(f"No user found with `{discrim}` discriminator.")
+
+		show = match[:10]
+		
+		embed.title = f"Found {len(match)} users with `{discrim}` discriminator. Showing {len(show)}."
+		
+		index = 0
+		for row in show:
+			index += 1
+			embed.description += f"`{str(index)}` {str(row)} \n"
+		
+		await ctx.send(embed = embed)
     
 	
 def setup(client):

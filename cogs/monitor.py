@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 import asyncpg
+import asyncio
+from random import randint
 
 class Monitor(commands.Cog):
 	def __init__(self, client):
@@ -17,25 +19,15 @@ class Monitor(commands.Cog):
 		
 		online = [discord.Status.online, discord.Status.idle, discord.Status.dnd]
 		
-		online_name = [name.name for name in online]
+		# online_name = [name.name for name in online]
 		
-		data = await self.client.pgdb.fetch("SELECT * FROM monitor WHERE target = $1", after.id)
+		data = await self.client.pgdb.fetch("SELECT * FROM monitor WHERE target = $1 and guild = $2", after.id, after.guild.id)
 		if not data:
 			return
 		
+		
 		if after_status in online and before_status in online:
 			return
-		
-		prev = await self.client.pgdb.fetchrow("SELECT * FROM monitor_helper WHERE target = $1", before.id)
-		
-		if prev:
-			prev_status = prev['last_status']
-			if prev_status == after.status.name:
-				return
-			else:
-				await self.client.pgdb.execute("UPDATE monitor_helper SET last_status =$1 WHERE target = $2", after.status.name, after.id)
-		else:
-			await self.client.pgdb.execute("INSERT INTO monitor_helper(target, last_status) VALUES($1,$2)", after.id, after.status.name)
 		
 		if after_status in online and before_status not in online:
 
@@ -44,7 +36,7 @@ class Monitor(commands.Cog):
 					mentor = self.client.get_user(row['mentor'])
 					target = self.client.get_user(row['target'])
 					try:
-						await mentor.send(f"{str(target)} is now online. ")
+						await mentor.send(f"🍏 {str(target)} is now online. ")
 					except:
 						await self.client.pgdb.execute("DELETE FROM monitor WHERE target = $1 and mentor = $2", row['target'], row['mentor'])
 		
@@ -54,7 +46,7 @@ class Monitor(commands.Cog):
 					mentor = self.client.get_user(row['mentor'])
 					target = self.client.get_user(row['target'])
 					try:
-						await mentor.send(f"{str(target)} is now offline.")
+						await mentor.send(f"🍎 {str(target)} is now offline.")
 					except:
 						await self.client.pgdb.execute("DELETE FROM monitor WHERE target = $1 and mentor = $2", row['target'], row['mentor'])
 						
@@ -73,7 +65,7 @@ class Monitor(commands.Cog):
 		data = await self.client.pgdb.fetchrow("SELECT * FROM monitor WHERE target = $1 and mentor = $2", user.id, ctx.author.id)
 		
 		if data is None:
-			return await ctx.send("You are not monitoring this user")
+			return await ctx.send("You are not monitoring this user. Or you have mentioned invalid user.")
 		
 		await self.client.pgdb.execute("DELETE FROM monitor WHERE target =$1 and mentor =$2", data['target'], data['mentor'])
 		await ctx.send("Monitor removed.")
@@ -86,13 +78,43 @@ class Monitor(commands.Cog):
 		
 		data = await self.client.pgdb.fetchrow("SELECT * FROM monitor WHERE target = $1 and mentor = $2", user.id, ctx.author.id)
 		if data:
-			return await ctx.send("You are already monitoring this user.")
+			gld = self.client.get_guild(data['guild'])
+			if gld:
+				return await ctx.send("You are already monitoring this user.")
+			else:
+				await self.client.bot.pgdb.execute("UPDATE monitor SET guild = $1 WHERE target = $2 and mentor = $3", ctx.author.guild.id, user.id, ctx.author.id)
+				await ctx.send(f"New monitor created. {str(user)}")
 		
-		await self.client.pgdb.execute("INSERT INTO monitor(target, mentor) VALUES($1, $2)", user.id, ctx.author.id)
-		await ctx.send("New monitor created.")
+		await self.client.pgdb.execute("INSERT INTO monitor(target, mentor, guild) VALUES($1, $2,$3)", user.id, ctx.author.id, ctx.author.guild.id)
+		await ctx.send(f"New monitor created. {str(user)}")
 	
-	
+	@monitor.command()
+	async def ls(self, ctx):
+		"""View list of your monitors"""
+		data = await self.client.pgdb.fetch("SELECT * FROM monitor WHERE mentor = $1", ctx.author.id)
 		
+		if not data:
+			return await ctx.send("You have no monititor right now.")
+		
+		abandon_msg = ""
+		success_msg = ""
+		abandon_count = 0
+		success_count =0
+		
+		for row in data:
+			try:
+				target = self.client.get_user(row['target'])
+				success_count +=1
+				success_msg += f"{success_count}. {str(target)}\n"
+			except:
+				abandon_count +=1
+				await self.client.pgdb.execute("DELETE FROM moitor WHERE target = $1", row['target'])
+				
+		
+		if abandon_count > 0:
+			abandon_msg = f"\n{abandon_count} nonitor deleted `Reason - Bot dont have access to that user or account not available.\n"
+		
+		await ctx.send(success_msg + abandon_msg)	
 			
 
 def setup(client):
