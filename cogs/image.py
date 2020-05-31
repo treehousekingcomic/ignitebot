@@ -1,3 +1,4 @@
+#pylint:disable=W0312
 import discord
 from discord.ext import commands
 import aiohttp
@@ -9,7 +10,7 @@ import asyncio
 from PIL import Image, ImageChops, ImageFilter, ImageDraw, ImageFont
 from colorthief import ColorThief
 import functools
-
+import re
 
 class ImageEdit(commands.Cog, name="Image"):
 	"""Some cool image filters and funny edits."""
@@ -253,6 +254,89 @@ class ImageEdit(commands.Cog, name="Image"):
 		file = discord.File(some_stuff , "colors.png")
 		await ctx.send(file=file)
 		os.remove(img)
+	
+	@commands.command()
+	@commands.cooldown(1,15, commands.BucketType.user)
+	async def caption(self, ctx, link:str=None):
+		"""Summarizes the content of an image in a one sentence description."""
+		if len(ctx.message.attachments) > 0:
+			filename = ctx.message.attachments[0].filename
+			
+			if filename.endswith("jpg") or filename.endswith("png") or filename.endswith("jpeg"):
+				plink = ctx.message.attachments[0].url
+			else:
+				return await ctx.send("Invalid file format.")
+		else:
+			links = re.findall("http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+", link)
+			if len(links) > 0:
+				plink = link
+			else:
+				return await ctx.send("Please attach a file or paste a link.")
+		async with aiohttp.ClientSession() as s:
+			async with s.post("https://api.deepai.org/api/neuraltalk", data={'image':plink}, headers={'api-key': '2da0f0f5-361e-416e-822c-8429107891f4'}) as r:
+				data = await r.json()
+		embed = discord.Embed(
+			color = discord.Color.gold(),
+			title = data['output']
+		)
+		embed.set_image(url=plink)
+		await ctx.send(embed= embed)
+	
+	@commands.command()
+	@commands.cooldown(1,15, commands.BucketType.user)
+	async def colorize(self, ctx, link:str=None):
+		"""Colorize balck and white photo."""
+		if len(ctx.message.attachments) > 0:
+			filename = ctx.message.attachments[0].filename
+			
+			if filename.endswith("jpg") or filename.endswith("png") or filename.endswith("jpeg"):
+				plink = ctx.message.attachments[0].url
+			else:
+				return await ctx.send("Invalid file format.")
+		else:
+			links = re.findall("http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+", link)
+			if len(links) > 0:
+				plink = link
+			else:
+				return await ctx.send("Please attach a file or paste a link.")
+		async with aiohttp.ClientSession() as s:
+			async with s.post("https://api.deepai.org/api/colorizer", data={'image':plink}, headers={'api-key': '2da0f0f5-361e-416e-822c-8429107891f4'}) as r:
+				data = await r.json()
+		
+		embed = discord.Embed(
+			color = discord.Color.gold()
+		)
+		embed.set_image(url=data['output_url'])
+		await ctx.send(embed= embed)
+	
+	@commands.command(hidden=True )
+	@commands.cooldown(1,15, commands.BucketType.user)
+	async def isnsfw(self, ctx, link:str=None):
+		"""Check NSFW Score of an Image."""
+		if len(ctx.message.attachments) > 0:
+			filename = ctx.message.attachments[0].filename
+			
+			if filename.endswith("jpg") or filename.endswith("png") or filename.endswith("jpeg"):
+				plink = ctx.message.attachments[0].url
+			else:
+				return await ctx.send("Invalid file format.")
+		else:
+			links = re.findall("http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+", link)
+			if len(links) > 0:
+				plink = link
+			else:
+				return await ctx.send("Please attach a file or paste a link.")
+		async with aiohttp.ClientSession() as s:
+			async with s.post("https://api.deepai.org/api/nsfw-detector", data={'image':plink}, headers={'api-key': '2da0f0f5-361e-416e-822c-8429107891f4'}) as r:
+				data = await r.json()
+		
+		embed = discord.Embed(
+			color = discord.Color.gold(),
+			title = 'Nsfw Score'
+		)
+		#embed.set_image(url=data['output_url'])
+		embed.description = str(data['output']['nsfw_score'])
+		await ctx.send(embed= embed)
 
 def setup(client):
 	client.add_cog(ImageEdit(client))
