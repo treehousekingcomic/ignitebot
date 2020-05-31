@@ -3,6 +3,13 @@ from discord.ext import commands
 import asyncpg
 import re
 import aiohttp
+import os
+import dotenv
+
+env_path = os.path.join(os.getcwd(), '.env')
+dotenv.load_dotenv(dotenv_path=env_path)
+
+DEEPAI= os.getenv("DEEPAI")
 
 class Filter(commands.Cog):
 	def __init__(self,client):
@@ -22,7 +29,7 @@ class Filter(commands.Cog):
 		for link in links:
 			try:
 				async with aiohttp.ClientSession() as s:
-					async with s.post("https://api.deepai.org/api/nsfw-detector", data={'image':link}, headers={'api-key': '2da0f0f5-361e-416e-822c-8429107891f4'}) as r:
+					async with s.post("https://api.deepai.org/api/nsfw-detector", data={'image':link}, headers={'api-key': DEEPAI}) as r:
 						data = await r.json()
 			except:
 				pass
@@ -36,7 +43,7 @@ class Filter(commands.Cog):
 		for file in files:
 			try:
 				async with aiohttp.ClientSession() as s:
-					async with s.post("https://api.deepai.org/api/nsfw-detector", data={'image':file.url}, headers={'api-key': '2da0f0f5-361e-416e-822c-8429107891f4'}) as r:
+					async with s.post("https://api.deepai.org/api/nsfw-detector", data={'image':file.url}, headers={'api-key': DEEPAI}) as r:
 						data = await r.json()
 			except:
 				continue

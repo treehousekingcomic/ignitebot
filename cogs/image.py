@@ -11,6 +11,12 @@ from PIL import Image, ImageChops, ImageFilter, ImageDraw, ImageFont
 from colorthief import ColorThief
 import functools
 import re
+import dotenv
+
+env_path = os.path.join(os.getcwd(), '.env')
+dotenv.load_dotenv(dotenv_path=env_path)
+
+DEEPAI= os.getenv("DEEPAI")
 
 class ImageEdit(commands.Cog, name="Image"):
 	"""Some cool image filters and funny edits."""
@@ -273,7 +279,7 @@ class ImageEdit(commands.Cog, name="Image"):
 			else:
 				return await ctx.send("Please attach a file or paste a link.")
 		async with aiohttp.ClientSession() as s:
-			async with s.post("https://api.deepai.org/api/neuraltalk", data={'image':plink}, headers={'api-key': '2da0f0f5-361e-416e-822c-8429107891f4'}) as r:
+			async with s.post("https://api.deepai.org/api/neuraltalk", data={'image':plink}, headers={'api-key': DEEPAI}) as r:
 				data = await r.json()
 		embed = discord.Embed(
 			color = discord.Color.gold(),
@@ -300,7 +306,7 @@ class ImageEdit(commands.Cog, name="Image"):
 			else:
 				return await ctx.send("Please attach a file or paste a link.")
 		async with aiohttp.ClientSession() as s:
-			async with s.post("https://api.deepai.org/api/colorizer", data={'image':plink}, headers={'api-key': '2da0f0f5-361e-416e-822c-8429107891f4'}) as r:
+			async with s.post("https://api.deepai.org/api/colorizer", data={'image':plink}, headers={'api-key': DEEPAI}) as r:
 				data = await r.json()
 		
 		embed = discord.Embed(
@@ -327,7 +333,7 @@ class ImageEdit(commands.Cog, name="Image"):
 			else:
 				return await ctx.send("Please attach a file or paste a link.")
 		async with aiohttp.ClientSession() as s:
-			async with s.post("https://api.deepai.org/api/nsfw-detector", data={'image':plink}, headers={'api-key': '2da0f0f5-361e-416e-822c-8429107891f4'}) as r:
+			async with s.post("https://api.deepai.org/api/nsfw-detector", data={'image':plink}, headers={'api-key': DEEPAI}) as r:
 				data = await r.json()
 		
 		embed = discord.Embed(
