@@ -46,7 +46,7 @@ class ImageEdit(commands.Cog, name="Image"):
 			return fp
 		except:
 			os.remove(fp)
-			return Flase
+			return False
 	
 	@commands.command()
 	@commands.cooldown(1,10, commands.BucketType.user)
