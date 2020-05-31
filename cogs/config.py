@@ -252,6 +252,29 @@ class SeverConfig(commands.Cog, name="Config"):
 				return await ctx.send(f"Unable to add {str(member)} in blacklist. Make sure the warning role is lower than my top role. And I have `manage roles` permission. Its highly recommended to give me the Administrator permission and keep my role on top of other memebrs top role. so I can work smothly")
 		else:
 			return await ctx.send(f"I was unable to remove this member from blacklist. Make sure i have `Manage roles` permission and my top role is higher than his role.")
+		
+	@commands.group(invoke_without_command=True)
+	async def nsfw(self, ctx):
+		"""View settings of nsfw filter"""
+		data = await self.client.pgdb.fetchrow("SELECT * FROM guilddata WHERE guildid = $1", ctx.guild.id)
+		state = data['nsfw']
+		
+		await ctx.send(f"NSFW filter is {state}")
+	
+	@nsfw.command()
+	@commands.has_permissions(administrator=True)
+	async def toggle(self, ctx):
+		"""Toggle nsfw filter"""
+		data = await self.client.pgdb.fetchrow("SELECT * FROM guilddata WHERE guildid = $1", ctx.guild.id)
+		state = data['nsfw']
+		
+		if state == "On":
+			await self.client.pgdb.execute("UPDATE guilddata SET nsfw = 'Off' WHERE guildid = $1", ctx.guild.id)
+			await ctx.send("NSFW filter config updated")
+		if state == "Off":
+			await self.client.pgdb.execute("UPDATE guilddata SET nsfw = 'On' WHERE guildid = $1", ctx.guild.id)
+			await ctx.send("NSFW filter config updated")
 
+		
 def setup(client):
 	client.add_cog(SeverConfig(client))
