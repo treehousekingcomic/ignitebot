@@ -3,6 +3,7 @@ from discord.ext import commands
 import aiohttp
 import random
 from art import *
+import libmorse as morse
 
 class Text(commands.Cog):
 	"""Some cool text features."""
@@ -23,53 +24,9 @@ class Text(commands.Cog):
 	async def morsify(self, ctx, *,word:str=None):
 		"""Generate morse code from a text"""
 		await self.ucmd("morsify")
-		code = {
-			"a" : ".-",
-			"b" : "-...",
-			"c" : "-.-.",
-			"d" : "-..",
-			"e" : ".",
-			"f" : "..-.",
-			"g" : "--.",
-			"h" : "....",
-			"i"  : "..",
-			"j"  : ".---",
-			"k" : "-.-",
-			"l"  : ".-..",
-			"m" : "--",
-			"n" : "-.",
-			"o" : "---",
-			"p" : ".--.",
-			"q" : "--.-",
-			"r"  : ".-.",
-			"s" : "...",
-			"t" : "-",
-			"u": "..-",
-			"v" : "...-",
-			"w" : ".--",
-			"x"  : "-..-",
-			"y"  : "-.--",
-			"z" : "--..",
-			"1" : ".----",
-			"2" : "..---",
-			"3" : "...--",
-			"4" : "....-",
-			"5" : ".....",
-			"6" : "-....",
-			"7" : "--...",
-			"8" : "---..",
-			"9" : "----.",
-			"0" : "-----",
-		}
-		word = str(word).lower().replace(".", "").replace("-", "")
-		chars = list(word)
-		msg = ""
-		for w in chars:
-			try:
-				msg += code[w] + " "
-			except:
-				msg += " "
 				
+		msg = morse.morsify(word)
+		
 		if len(list(word)) > 500:
 			await ctx.send("This string is too big for me to decode!")
 		else:
@@ -82,53 +39,8 @@ class Text(commands.Cog):
 	async def demorse(self, ctx, *,word:str=None):
 		"""Read morse code"""
 		await self.ucmd("demorse")
-		code = {
-			".-" : "a",
-			"-..." : "b",
-			"-.-." : "c",
-			"-.." : "d",
-			"." : "e",
-			"..-." : "f",
-			"--.": "g",
-			"...." : "h",
-			".." : "i",
-			".---" : "j",
-			"-.-" : "k",
-			".-.." : "l",
-			"--" : "m",
-			"-." : "n",
-			"---" : "o",
-			".--." : "p",
-			"--.-" : "q",
-			".-." : "r",
-			"..." : "s",
-			"-" : "t",
-			"..-" : "u",
-			"...-" : "v",
-			".--" : "w",
-			"-..-" : "x",
-			"-.--" : "y",
-			"--.." : "z",
-			".----" : "1",
-			"..---" : "2",
-			"...--" : "3",
-			"....-" : "4",
-			"....." : "5",
-			"-...." : "6",
-			"--..." : "7",
-			"---.." : "8",
-			"----." : "9",
-			"-----" : "0",
-		}
-		word = str(word).lower()
-		chars = word.split(" ")
-		msg = ""
 		
-		for w in chars:
-			try:
-				msg += code[w]
-			except:
-				msg += " "
+		msg = morse.demorse(word)
 			
 		if len(list(word)) > 2000:
 			await ctx.send("This string is too big for me to decode!")

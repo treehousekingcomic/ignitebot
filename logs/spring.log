@@ -1,62 +1,6 @@
-2020-05-28 00:00:44.823 ERROR 27436 --- [XNIO-1 task-4] io.undertow.request                      : UT005023: Exception handling request to /tmUnblock.cgi
-
-java.lang.RuntimeException: java.io.IOException: UT000128: Remote peer closed connection before all data could be read
-	at io.undertow.servlet.spec.HttpServletRequestImpl.parseFormData(HttpServletRequestImpl.java:841) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.servlet.spec.HttpServletRequestImpl.getParameter(HttpServletRequestImpl.java:714) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
-	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:84) ~[spring-web-5.1.9.RELEASE.jar!/:5.1.9.RELEASE]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:118) ~[spring-web-5.1.9.RELEASE.jar!/:5.1.9.RELEASE]
-	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:61) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:200) ~[spring-web-5.1.9.RELEASE.jar!/:5.1.9.RELEASE]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:118) ~[spring-web-5.1.9.RELEASE.jar!/:5.1.9.RELEASE]
-	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:61) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.servlet.handlers.FilterHandler.handleRequest(FilterHandler.java:84) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.servlet.handlers.security.ServletSecurityRoleHandler.handleRequest(ServletSecurityRoleHandler.java:62) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.servlet.handlers.ServletChain$1.handleRequest(ServletChain.java:68) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.servlet.handlers.ServletDispatchingHandler.handleRequest(ServletDispatchingHandler.java:36) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.servlet.handlers.RedirectDirHandler.handleRequest(RedirectDirHandler.java:68) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.servlet.handlers.security.SSLInformationAssociationHandler.handleRequest(SSLInformationAssociationHandler.java:132) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.servlet.handlers.security.ServletAuthenticationCallHandler.handleRequest(ServletAuthenticationCallHandler.java:57) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.security.handlers.AbstractConfidentialityHandler.handleRequest(AbstractConfidentialityHandler.java:46) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.servlet.handlers.security.ServletConfidentialityConstraintHandler.handleRequest(ServletConfidentialityConstraintHandler.java:64) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.security.handlers.AuthenticationMechanismsHandler.handleRequest(AuthenticationMechanismsHandler.java:60) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.servlet.handlers.security.CachedAuthenticatedSessionHandler.handleRequest(CachedAuthenticatedSessionHandler.java:77) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.security.handlers.AbstractSecurityContextAssociationHandler.handleRequest(AbstractSecurityContextAssociationHandler.java:43) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.servlet.handlers.ServletInitialHandler.handleFirstRequest(ServletInitialHandler.java:269) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.servlet.handlers.ServletInitialHandler.access$100(ServletInitialHandler.java:78) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.servlet.handlers.ServletInitialHandler$2.call(ServletInitialHandler.java:133) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.servlet.handlers.ServletInitialHandler$2.call(ServletInitialHandler.java:130) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.servlet.core.ServletRequestContextThreadSetupAction$1.call(ServletRequestContextThreadSetupAction.java:48) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.servlet.core.ContextClassLoaderSetupAction$1.call(ContextClassLoaderSetupAction.java:43) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.servlet.handlers.ServletInitialHandler.dispatchRequest(ServletInitialHandler.java:249) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.servlet.handlers.ServletInitialHandler.access$000(ServletInitialHandler.java:78) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.servlet.handlers.ServletInitialHandler$1.handleRequest(ServletInitialHandler.java:99) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.server.Connectors.executeRootHandler(Connectors.java:376) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.server.HttpServerExchange$1.run(HttpServerExchange.java:830) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128) ~[na:na]
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628) ~[na:na]
-	at java.base/java.lang.Thread.run(Thread.java:830) ~[na:na]
-Caused by: java.io.IOException: UT000128: Remote peer closed connection before all data could be read
-	at io.undertow.conduits.FixedLengthStreamSourceConduit.exitRead(FixedLengthStreamSourceConduit.java:338) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.conduits.FixedLengthStreamSourceConduit.read(FixedLengthStreamSourceConduit.java:255) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
-	at org.xnio.conduits.ConduitStreamSourceChannel.read(ConduitStreamSourceChannel.java:127) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
-	at io.undertow.channels.DetachableStreamSourceChannel.read(DetachableStreamSourceChannel.java:209) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.server.HttpServerExchange$ReadDispatchChannel.read(HttpServerExchange.java:2343) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.server.handlers.form.FormEncodedDataDefinition$FormEncodedDataParser.doParse(FormEncodedDataDefinition.java:136) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.server.handlers.form.FormEncodedDataDefinition$FormEncodedDataParser.parseBlocking(FormEncodedDataDefinition.java:294) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
-	at io.undertow.servlet.spec.HttpServletRequestImpl.parseFormData(HttpServletRequestImpl.java:835) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
-	... 38 common frames omitted
-
-2020-05-28 00:00:44.918 ERROR 27436 --- [XNIO-1 task-4] io.undertow.servlet.request              : UT015012: Failed to generate error page /error for original exception: java.lang.RuntimeException: java.io.IOException: UT000128: Remote peer closed connection before all data could be read. Generating error page resulted in a 406.
-2020-05-28 00:00:44.927  WARN 27436 --- [XNIO-1 task-4] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpMediaTypeNotAcceptableException: Could not parse 'Accept' header [/]: Invalid mime type "/": does not contain subtype after '/']
-2020-05-28 02:38:29.422 ERROR 27436 --- [XNIO-1 task-5] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /177.50.195.110:52017
-2020-05-28 03:02:54.318  WARN 27436 --- [XNIO-1 task-6] l.s.config.RequestAuthorizationFilter    : Authorization missing for 162.243.141.164 on GET /hudson
-2020-05-28 03:16:37.102  WARN 27436 --- [XNIO-1 task-7] l.s.config.RequestAuthorizationFilter    : Authorization missing for 85.119.151.253 on POST /azenv.php
-2020-05-28 03:16:42.168 ERROR 27436 --- [XNIO-1 I/O-2] io.undertow.request                      : UT005071: Undertow request failed HttpServerExchange{ CONNECT check.best-proxies.ru:80}
+2020-05-31 00:32:26.172  WARN 18102 --- [XNIO-1 task-11] l.s.config.RequestAuthorizationFilter    : Authorization missing for 185.128.41.50 on GET /manager/html
+2020-05-31 03:16:25.202  WARN 18102 --- [XNIO-1 task-12] l.s.config.RequestAuthorizationFilter    : Authorization missing for 5.178.86.76 on POST /azenv.php
+2020-05-31 03:16:30.286 ERROR 18102 --- [XNIO-1 I/O-1] io.undertow.request                      : UT005071: Undertow request failed HttpServerExchange{ CONNECT check.best-proxies.ru:80}
 
 java.lang.IllegalArgumentException: UT000068: Servlet path match failed
 	at io.undertow.servlet.handlers.ServletPathMatchesData.getServletHandlerByPath(ServletPathMatchesData.java:83) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
@@ -72,12 +16,8 @@ java.lang.IllegalArgumentException: UT000068: Servlet path match failed
 	at org.xnio.nio.NioSocketConduit.handleReady(NioSocketConduit.java:88) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
 	at org.xnio.nio.WorkerThread.run(WorkerThread.java:561) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
 
-2020-05-28 03:37:36.423 ERROR 27436 --- [XNIO-1 task-8] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /36.79.240.16:44580
-2020-05-28 05:36:35.535  WARN 27436 --- [XNIO-1 task-9] l.s.config.RequestAuthorizationFilter    : Authorization missing for 113.247.134.52 on GET /setup.cgi
-2020-05-28 05:40:05.399 ERROR 27436 --- [XNIO-1 task-10] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /177.134.196.68:49614
-2020-05-28 06:08:06.394 ERROR 27436 --- [XNIO-1 task-11] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /5.200.81.160:39664
-2020-05-28 07:16:15.074  WARN 27436 --- [XNIO-1 task-12] l.s.config.RequestAuthorizationFilter    : Authorization missing for 85.119.151.252 on POST /azenv.php
-2020-05-28 07:16:20.133 ERROR 27436 --- [XNIO-1 I/O-2] io.undertow.request                      : UT005071: Undertow request failed HttpServerExchange{ CONNECT check.best-proxies.ru:80}
+2020-05-31 07:16:19.442  WARN 18102 --- [XNIO-1 task-13] l.s.config.RequestAuthorizationFilter    : Authorization missing for 5.178.86.78 on POST /azenv.php
+2020-05-31 07:16:24.517 ERROR 18102 --- [XNIO-1 I/O-1] io.undertow.request                      : UT005071: Undertow request failed HttpServerExchange{ CONNECT check.best-proxies.ru:80}
 
 java.lang.IllegalArgumentException: UT000068: Servlet path match failed
 	at io.undertow.servlet.handlers.ServletPathMatchesData.getServletHandlerByPath(ServletPathMatchesData.java:83) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
@@ -93,10 +33,11 @@ java.lang.IllegalArgumentException: UT000068: Servlet path match failed
 	at org.xnio.nio.NioSocketConduit.handleReady(NioSocketConduit.java:88) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
 	at org.xnio.nio.WorkerThread.run(WorkerThread.java:561) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
 
-2020-05-28 08:28:34.056 ERROR 27436 --- [XNIO-1 task-13] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /198.108.66.250:36754
-2020-05-28 08:50:05.984 ERROR 27436 --- [XNIO-1 task-14] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /36.90.61.212:42968
-2020-05-28 11:16:05.003  WARN 27436 --- [XNIO-1 task-15] l.s.config.RequestAuthorizationFilter    : Authorization missing for 85.119.151.250 on POST /azenv.php
-2020-05-28 11:16:10.062 ERROR 27436 --- [XNIO-1 I/O-1] io.undertow.request                      : UT005071: Undertow request failed HttpServerExchange{ CONNECT check.best-proxies.ru:80}
+2020-05-31 08:13:56.358 ERROR 18102 --- [XNIO-1 task-14] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /181.198.245.41:47727
+2020-05-31 09:34:26.888 ERROR 18102 --- [XNIO-1 task-15] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /216.218.206.66:60168
+2020-05-31 09:48:00.809  WARN 18102 --- [XNIO-1 task-16] l.s.config.RequestAuthorizationFilter    : Authorization missing for 222.186.57.32 on GET /script
+2020-05-31 11:16:24.721  WARN 18102 --- [XNIO-1 task-1] l.s.config.RequestAuthorizationFilter    : Authorization missing for 5.178.86.78 on POST /azenv.php
+2020-05-31 11:16:29.797 ERROR 18102 --- [XNIO-1 I/O-1] io.undertow.request                      : UT005071: Undertow request failed HttpServerExchange{ CONNECT check.best-proxies.ru:80}
 
 java.lang.IllegalArgumentException: UT000068: Servlet path match failed
 	at io.undertow.servlet.handlers.ServletPathMatchesData.getServletHandlerByPath(ServletPathMatchesData.java:83) ~[undertow-servlet-2.0.26.Final.jar!/:2.0.26.Final]
@@ -112,15 +53,3 @@ java.lang.IllegalArgumentException: UT000068: Servlet path match failed
 	at org.xnio.nio.NioSocketConduit.handleReady(NioSocketConduit.java:88) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
 	at org.xnio.nio.WorkerThread.run(WorkerThread.java:561) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
 
-2020-05-28 11:18:15.637  INFO 27436 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:38694 -- CloseStatus[code=1006, reason=]
-2020-05-28 11:18:15.637  INFO 27436 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
-2020-05-28 11:25:12.889  INFO 27436 --- [XNIO-1 task-16] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:41922
-2020-05-28 11:25:12.923  INFO 27436 --- [XNIO-1 task-16] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:41922
-2020-05-28 11:25:50.891  INFO 27436 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:41922 -- CloseStatus[code=1006, reason=]
-2020-05-28 11:25:50.899  INFO 27436 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
-2020-05-28 11:27:20.868  INFO 27436 --- [XNIO-1 task-1] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:41950
-2020-05-28 11:27:20.898  INFO 27436 --- [XNIO-1 task-1] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:41950
-2020-05-28 11:47:13.672  INFO 27436 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:41950 -- CloseStatus[code=1006, reason=]
-2020-05-28 11:47:13.673  INFO 27436 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
-2020-05-28 11:50:50.104  INFO 27436 --- [XNIO-1 task-2] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:42060
-2020-05-28 11:50:50.120  INFO 27436 --- [XNIO-1 task-2] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:42060

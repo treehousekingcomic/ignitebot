@@ -11,7 +11,7 @@ class KeyCheck(commands.Cog):
         self.check_exp.start()
     
     async def doit(self):
-    	print("Checking for expired keys")
+    	# print("Checking for expired keys")
     	res = await self.client.pgdb.fetch("SELECT * FROM keys")
     	
     	for result in res:

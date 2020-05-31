@@ -224,50 +224,44 @@ class ServerInfo(commands.Cog, name="Server"):
 			days = delta.days
 			seconds = delta.seconds
 			
-			if days > 365:
-				year = days//365
-				if year > 1:
-					dur += f"{year} years "
-				else:
-					dur += f"{year} year "
-				
+			year = 0
+			month = 0
+			day = 0
+			hour = 0
+			minute = 0
+			second = 0
+			
+			if days >= 365:
+				year = days//365	
 				days = days%365
 				
 			
-			if days > 30:
+			if days >=30:
 				month = days//30
 				
-				if month > 1:
-					dur += f"{month} months "
-				else:
-					dur += f"{month} month "
-				days = days%30
-				if days > 1:
-					dur += f"{days} days "
-				else:
-					dur += f"{days} day "
+				if month >= 12:
+					year += month // 12
 					
-			if days < 30 and days > 1:
-				dur += f"{days} days "
+					month = month % 12
+				
+				days = days %30
+					
+			if days > 0:
+				day = days
 				
 			if seconds > 3600:
-				hour = seconds//3600
-				
-				if hour > 1:
-					dur += f"{hour} hours "
-				else:
-					dur += f"{hour} hour "
-				
+				hour = seconds//3600	
 				seconds = seconds%3600
 			
-			if seconds > 60:
+			if seconds >= 60:
 				minute = seconds//60
-				dur += f"{minute} minutes "
 				
 				seconds = seconds%60
 			
 			if seconds > 0:
-				dur += f"{seconds} seconds"
+				second = seconds
+				
+			dur = f"{f'{year} Years ' if year > 0 else ''}{f'{month} Months ' if month > 0 else ''}{f'{day} Days ' if day > 0 else ''}{f'{hour} Hours ' if hour > 0 else ''}{f'{minute} Minutes ' if minute > 0 else ''}{f'{second} Seconds ' if second > 0 else ''}"
 				
 			await ctx.send(f"Premium membership of this server will expire in **{dur}**")
 		

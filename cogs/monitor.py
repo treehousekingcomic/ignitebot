@@ -56,8 +56,8 @@ class Monitor(commands.Cog):
 		"""Monitor a member when they they go offline or come online you will get notified"""
 		await ctx.send(f"Do `{ctx.prefix}help monitor` to get help")
 	
-	@monitor.command()
-	async def dl(self, ctx, user:discord.Member=None):
+	@monitor.command(name="delete")
+	async def _dl(self, ctx, user:discord.Member=None):
 		"""Remove monitor."""
 		if user is None:
 			return await ctx.send("Please speficy an user.")
@@ -88,8 +88,8 @@ class Monitor(commands.Cog):
 		await self.client.pgdb.execute("INSERT INTO monitor(target, mentor, guild) VALUES($1, $2,$3)", user.id, ctx.author.id, ctx.author.guild.id)
 		await ctx.send(f"New monitor created. {str(user)}")
 	
-	@monitor.command()
-	async def ls(self, ctx):
+	@monitor.command(name="list")
+	async def _ls(self, ctx):
 		"""View list of your monitors"""
 		data = await self.client.pgdb.fetch("SELECT * FROM monitor WHERE mentor = $1", ctx.author.id)
 		
