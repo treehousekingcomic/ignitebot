@@ -10,20 +10,10 @@ class Text(commands.Cog):
 	def __init__(self, client):
 		self.client = client
 	
-	async def ucmd(self, cmd:str):
-		data = await self.client.pgdb.fetchrow("SELECT * FROM cmduse WHERE name = $1", cmd)
-	
-		if data:
-			uses = data['uses'] + 1
-			await self.client.pgdb.execute("UPDATE cmduse SET uses = $1 WHERE name = $2", uses, data['name'])
-			
-		else:
-			await self.client.pgdb.execute("INSERT INTO cmduse(name, uses) VALUES($1, $2)", cmd, 1)
 	
 	@commands.command()
-	async def morsify(self, ctx, *,word:str=None):
+	async def morsify(self, ctx, *,word:str):
 		"""Generate morse code from a text"""
-		await self.ucmd("morsify")
 				
 		msg = morse.morsify(word)
 		
@@ -36,9 +26,8 @@ class Text(commands.Cog):
 				await ctx.send("Something went wrong!")
 	
 	@commands.command()
-	async def demorse(self, ctx, *,word:str=None):
+	async def demorse(self, ctx, *,word:str):
 		"""Read morse code"""
-		await self.ucmd("demorse")
 		
 		msg = morse.demorse(word)
 			

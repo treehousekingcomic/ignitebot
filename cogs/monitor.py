@@ -57,7 +57,7 @@ class Monitor(commands.Cog):
 		await ctx.send(f"Do `{ctx.prefix}help monitor` to get help")
 	
 	@monitor.command(name="delete")
-	async def _dl(self, ctx, user:discord.Member=None):
+	async def _dl(self, ctx, user:discord.Member):
 		"""Remove monitor."""
 		if user is None:
 			return await ctx.send("Please speficy an user.")
@@ -71,7 +71,7 @@ class Monitor(commands.Cog):
 		await ctx.send("Monitor removed.")
 	
 	@monitor.command()
-	async def add(self, ctx, user:discord.Member=None):
+	async def add(self, ctx, user:discord.Member):
 		"""Monitor someone."""
 		if user is None:
 			return await ctx.send("Please speficy an user.")

@@ -12,15 +12,6 @@ class SeverConfig(commands.Cog, name="Config"):
 	"""Edit server configuration."""
 	def __init__(self, client):
 		self.client = client
-  
-	async def ucmd(self, cmd:str):
-		data = await self.client.pgdb.fetchrow("SELECT * FROM cmduse WHERE name = $1", cmd)
-  	
-		if data:
-			uses = data['uses'] + 1
-			await self.client.pgdb.execute("UPDATE cmduse SET uses = $1 WHERE name = $2", uses, data['name'])
-		else:
-			await self.client.pgdb.execute("INSERT INTO cmduse(name, uses) VALUES($1, $2)", cmd, 1)
 	
 	async def sem(self, ctx, title, des):
 		embed = discord.Embed(color=ctx.author.color, timestamp=ctx.message.created_at, description=des)
@@ -32,7 +23,7 @@ class SeverConfig(commands.Cog, name="Config"):
 	@commands.has_permissions(administrator=True)
 	async def config(self, ctx):
 		"""Edit server configuration"""
-		await self.ucmd("config")
+		
 		return await ctx.send(f"Do `{ctx.prefix}help config` to see available commands.")
 	
 	@config.command()

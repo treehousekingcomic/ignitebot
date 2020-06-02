@@ -8,23 +8,11 @@ class Fun(commands.Cog):
 	"""Some funny stuff."""
 	def __init__(self, client):
 		self.client = client
-    
-	async def ucmd(self, cmd:str):
-		data = await self.client.pgdb.fetchrow("SELECT * FROM cmduse WHERE name = $1", cmd)
-		
-		if data:
-			uses = data['uses'] + 1
-			await self.client.pgdb.execute("UPDATE cmduse SET uses = $1 WHERE name = $2", uses, data['name'])
-		else:
-			await self.client.pgdb.execute("INSERT INTO cmduse(name, uses) VALUES($1, $2)", cmd, 1)
-     
 
 	@commands.command(aliases=['q','quotes'])
 	@commands.cooldown(1,5,commands.BucketType.user)
 	async def quote(self,ctx):
 		"""Random quotes"""
-      
-		await self.ucmd("quote")
 
 		sg = self.client.get_guild(700374484955299900)
 		q1 = discord.utils.get(sg.emojis, name="igquote1")
@@ -41,7 +29,6 @@ class Fun(commands.Cog):
 	@commands.cooldown(1,5,commands.BucketType.user)
 	async def meme(self, ctx):
 		"""Random meme"""
-		await self.ucmd("meme")
 
 		async with aiohttp.ClientSession() as s:
 			async with s.get("https://apis.duncte123.me/meme") as r:
@@ -57,8 +44,6 @@ class Fun(commands.Cog):
 	async def joke(self, ctx):
 		"""Random jokes"""
 		
-		await self.ucmd("joke")
-		
 		async with aiohttp.ClientSession() as s:
 			async with s.get("https://apis.duncte123.me/joke") as r:
 				data = await r.json() 
@@ -69,8 +54,6 @@ class Fun(commands.Cog):
 	@commands.cooldown(1,10,commands.BucketType.user)
 	async def love(self, ctx, name1, name2):
 		"""Love calculator"""
-		
-		await self.ucmd("love")
 		
 		async with aiohttp.ClientSession() as s:
 			async with s.get(f"https://apis.duncte123.me/love/{name1}/{name2}") as r:

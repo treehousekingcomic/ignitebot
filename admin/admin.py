@@ -105,13 +105,11 @@ class Admin(commands.Cog):
     @commands.command(hidden=True)
     @commands.is_owner()
     async def uses(self, ctx):
-    	data = await self.client.pgdb.fetch("SELECT * FROM cmduse ORDER BY uses DESC")
+    	data = await self.client.pgdb.fetchrow("SELECT * FROM cmduse WHERE name = $1", "total")
     	msg = ""
     	
     	if data:
-    		for row in data:
-    			msg += f"{row['name'].title()} - {row['uses']} \n"
-    		await ctx.send(msg)
+    		await ctx.send(f"Total command ran `{data['uses']}` time.")
     	else:
     		await ctx.send("No data to show!")
     		

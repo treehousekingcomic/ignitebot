@@ -14,20 +14,10 @@ class User(commands.Cog):
 	"""Some user accessories"""
 	def __init__(self, client):
 		self.client = client
-	
-	async def ucmd(self, cmd:str):
-		data = await self.client.pgdb.fetchrow("SELECT * FROM cmduse WHERE name = $1", cmd)
-		
-		if data:
-			uses = data['uses'] + 1
-			await self.client.pgdb.execute("UPDATE cmduse SET uses = $1 WHERE name = $2", uses, data['name'])
-		else:
-			await self.client.pgdb.execute("INSERT INTO cmduse(name, uses) VALUES($1, $2)", cmd, 1)
-	
-	@commands.command(aliases=['uinfo', 'uinf'])
+
+	@commands.command(aliases=['uinfo', 'uinf', 'ui'])
 	async def userinfo(self, ctx, member: discord.Member=None):
 		"""Get info of a user"""
-		await self.ucmd("userinfo")
 		if member is None:
 			member = ctx.author
 		
@@ -46,7 +36,7 @@ class User(commands.Cog):
 	@commands.command(aliases=['image', 'av'])
 	async def avatar(self, ctx, member:discord.Member=None):
 		"""Get avatar/picture of a user"""
-		await self.ucmd("avatar")
+
 		if member is None:
 			member = ctx.author
 		embed = discord.Embed(colour=member.color, timestamp=ctx.message.created_at)
@@ -173,7 +163,7 @@ class User(commands.Cog):
 	@commands.command(aliases=["rank"])
 	async def profile(self, ctx):
 		"""Nice profile card. Shows level, xp, rank and status"""
-		await self.ucmd("profile")
+
 		res = await self.client.pgdb.fetch(f"SELECT * FROM levels WHERE guildid = $1 ORDER BY exp DESC", ctx.guild.id)
 		pos = 0;
 		xp = 0;

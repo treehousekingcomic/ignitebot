@@ -135,26 +135,7 @@ async def get_prefix(client, message):
 
 client = commands.AutoShardedBot(command_prefix=get_prefix)
 client.launch_time = datetime.utcnow()
-#client.remove_command('help')
 
-async def is_prem(self,gld):
-		data = await client.pgdb.fetchrow(f"SELECT * FROM keys WHERE guildid = $1", gld)
-		if data:
-			return Tru
-		else:
-			return False
-			
-async def tag_is_prem(tagname, gld):
-		data = await client.pgdb.fetchrow(f"SELECT * FROM tags WHERE tagname = $1 AND guildid = $2", tagname, gld)
-		tagtype = data['tagtype']
-		
-		if tagtype == 'free':
-			return False
-		else:
-			return True
-  
-	
-#predata = db.execute("SELECT prefix FROM guilddata"
 
 @client.event
 async def on_ready():
@@ -165,6 +146,15 @@ async def on_ready():
 async def on_message(message):
   await client.process_commands(message)
   
+@client.event
+async def on_command(ctx):
+	data = await client.pgdb.fetchrow("SELECT * FROM cmduse WHERE name = $1", "total")
+		
+	if data:
+		uses = data['uses'] + 1
+		await client.pgdb.execute("UPDATE cmduse SET uses = $1 WHERE name = $2", uses, data['name'])
+	else:
+		await client.pgdb.execute("INSERT INTO cmduse(name, uses) VALUES($1, $2)", "total", 1)
 
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
@@ -179,9 +169,6 @@ for filename in os.listdir('./admin'):
 
 client.loop.run_until_complete(create_db_pool())
 client.load_extension('jishaku')
-#client.load_extension('cogs.tags')
-#client.load_extension('cogs.todo')
+
+
 client.run(TOKEN)
-#client.load_extension('admin.keychecker')
-#print("Hi")
-#Added a new comment

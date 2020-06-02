@@ -10,19 +10,9 @@ class Clear(commands.Cog):
   def __init__(self, client):
     self.client = client
   
-  async def ucmd(self, cmd:str):
-  	data = await self.client.pgdb.fetchrow("SELECT * FROM cmduse WHERE name = $1", cmd)
-  	
-  	if data:
-  		uses = data['uses'] + 1
-  		await self.client.pgdb.execute("UPDATE cmduse SET uses = $1 WHERE name = $2", uses, data['name'])
-  	else:
-  		await self.client.pgdb.execute("INSERT INTO cmduse(name, uses) VALUES($1, $2)", cmd, 1)
-
   @commands.command(aliases=['clr','c'])
   async def clear(self, ctx, amount='1'):
     """Clears specific amount of messages from current channel"""
-    await self.ucmd("clear")
     
     if ctx.author.permissions_in(ctx.channel).manage_messages:
       try:
@@ -43,7 +33,6 @@ class Clear(commands.Cog):
   @commands.cooldown(1,5, commands.BucketType.channel)
   async def nuke(self, ctx, channel:typing.Union[discord.TextChannel, discord.VoiceChannel, str] = None):
     """Delete all mesaages of a channel"""
-    await self.ucmd("nuke")
   	
     if ctx.author.permissions_in(ctx.channel).manage_messages:
       gld = self.client.get_guild(700374484955299900)

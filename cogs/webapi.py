@@ -21,53 +21,9 @@ class Api(commands.Cog):
   def __init__(self, client):
     self.client = client
   
-  async def ucmd(self, cmd:str):
-  	data = await self.client.pgdb.fetchrow("SELECT * FROM cmduse WHERE name = $1", cmd)
-  	
-  	if data:
-  		uses = data['uses'] + 1
-  		await self.client.pgdb.execute("UPDATE cmduse SET uses = $1 WHERE name = $2", uses, data['name'])
-  	else:
-  		await self.client.pgdb.execute("INSERT INTO cmduse(name, uses) VALUES($1, $2)", cmd, 1)
-  	
-  @commands.command()
-  @commands.cooldown(1,10, commands.BucketType.user)
-  async def insta(self, ctx, *, username):
-    """Search an instagram account using username."""
-    
-    await self.ucmd("insta")
-    bg = self.client.get_guild(700374484955299900)
-    ig = discord.utils.get(bg.emojis, name="igigverify")
-    #print(ig.emoji)
-    async with aiohttp.ClientSession() as s:
-      async with s.get(f"https://apis.duncte123.me/insta/{username}") as r:
-        data = await r.json()
-    
-    if data['success']:
-      dsc = data['user']['biography']
-      followers = str(data['user']['followers']['count'])
-      following = str(data['user']['following']['count'])
-      uploads = str(data['user']['uploads']['count'])
-      verified = data['user']['is_verified']
-      if verified:
-        ext = " ✅"
-      else:
-        ext = ""
-    
-    #await ctx.send(ig)
-      embed = discord.Embed(color=ctx.author.color, timestamp=ctx.message.created_at, description=dsc)
-      embed.set_author(name=data['user']['full_name'] + ext, icon_url="https://i.ibb.co/ZM89rXv/images-7.jpg")
-      embed.set_thumbnail(url=data['user']['profile_pic_url'])
-      embed.add_field(name="Followers", value=followers,inline=False)
-      embed.add_field(name="Following", value=following,inline=False)
-      embed.add_field(name="Uploads", value=uploads)
-      await ctx.send(embed=embed)
-    else:
-      await ctx.send("🙄 Nothing found! Try with correct username.")
-  
   @commands.command()
   async def randommath(self, ctx):
-    await self.ucmd("randommath")
+    
     async with aiohttp.ClientSession() as s:
       async with s.get("http://numbersapi.com/random/math") as r:
         data = await r.text()
@@ -79,7 +35,6 @@ class Api(commands.Cog):
   async def pixabay(self, ctx,*,query):
     """Search images on pixabay"""
     
-    await self.ucmd("pixabay")
     sg = self.client.get_guild(700374484955299900)
     
     cou = 200
@@ -195,7 +150,7 @@ class Api(commands.Cog):
   @commands.cooldown(1,30, commands.BucketType.user)
   async def giphy(self, ctx,*, search:str="random"):
     """Search for gifs on giphy."""
-    await self.ucmd("giphy")
+    
     sg = self.client.get_guild(700374484955299900)
     
     nextbtn = discord.utils.get(sg.emojis, name="ignext")
@@ -306,7 +261,7 @@ class Api(commands.Cog):
   @commands.command()
   async def short(self, ctx, *, link:str="hh"):
     """Shorten a link."""
-    await self.ucmd("short")
+    
     async with ctx.channel.typing():
       async with aiohttp.ClientSession() as s:
         async with s.get(f"https://api.shrtco.de/v2/shorten?url={link}") as r:

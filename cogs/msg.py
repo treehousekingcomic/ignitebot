@@ -9,21 +9,11 @@ class Announce(commands.Cog, name="Message"):
     """Send an user a message. Or send message in a channel. Only server administrators can send message. And when a message sent to a member, sender name and server name will be added"""
     def __init__(self, client):
         self.client = client
-    
-    async def ucmd(self, cmd:str):
-      data = await self.client.pgdb.fetchrow("SELECT * FROM cmduse WHERE name = $1", cmd)
-  	
-      if data:
-  	    uses = data['uses'] + 1
-  	    await self.client.pgdb.execute("UPDATE cmduse SET uses = $1 WHERE name = $2", uses, data['name'])
-      else:
-          await self.client.pgdb.execute("INSERT INTO cmduse(name, uses) VALUES($1, $2)", cmd, 1)
-    
+  
     @commands.command()
     @commands.has_permissions(manage_guild=True)
     async def msg(self, ctx, channel_or_member:typing.Union[discord.Member, discord.TextChannel, str], *, msg:str):
             """Send message to a user or member"""
-            await self.ucmd("msg")
             
             if type( channel_or_member) == discord.Role:
               await ctx.send("Cant send msg to a role!")

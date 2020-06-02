@@ -13,19 +13,9 @@ class Info(commands.Cog):
 	def __init__(self, client):
 		self.client = client
   
-	async def ucmd(self, cmd:str):
-		data = await self.client.pgdb.fetchrow("SELECT * FROM cmduse WHERE name = $1", cmd)
-		
-		if data:
-			uses = data['uses'] + 1
-			await self.client.pgdb.execute("UPDATE cmduse SET uses = $1 WHERE name = $2", uses, data['name'])
-		else:
-			await self.client.pgdb.execute("INSERT INTO cmduse(name, uses) VALUES($1, $2)", cmd, 1)
-  
 	@commands.group()
 	async def info(self, ctx):
 		"""Get bot info"""
-		await self.ucmd("info")
     
 		pyv = str(sys.version_info[0]) + "." + str(sys.version_info[1]) + "." + str(sys.version_info[2])
 		lib = "discord.py"
@@ -117,7 +107,6 @@ class Info(commands.Cog):
 		
 	@commands.command()
 	async def invite(self, ctx):
-		await self.ucmd("invite")
 		link = "https://discordapp.com/oauth2/authorize?client_id=696975708907503636&permissions=8&scope=bot"
 		embed = discord.Embed(color=ctx.author.color, title="Ignite Invite", description=f"[click here]({link})")
 		embed.set_thumbnail(url=self.client.user.avatar_url)

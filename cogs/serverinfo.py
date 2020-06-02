@@ -13,20 +13,11 @@ class ServerInfo(commands.Cog, name="Server"):
 	"""Get server information."""
 	def __init__(self, client):
 		self.client = client
-    
-	async def ucmd(self, cmd:str):
-		data = await self.client.pgdb.fetchrow("SELECT * FROM cmduse WHERE name = $1", cmd)
-  	
-		if data:
-			uses = data['uses'] + 1
-			await self.client.pgdb.execute("UPDATE cmduse SET uses = $1 WHERE name = $2", uses, data['name'])
-		else:
-			await self.client.pgdb.execute("INSERT INTO cmduse(name, uses) VALUES($1, $2)", cmd, 1)
 	
 	@commands.command(aliases=['lb'])
 	async def leaderboard(self, ctx, flag:str="server"):
 		"""Learderboard of your server according to their XP"""
-		await self.ucmd("leaderboard")
+
 		if flag == "server":
 			members = ctx.guild.members
 			lb = ctx.guild.name
@@ -89,7 +80,7 @@ class ServerInfo(commands.Cog, name="Server"):
 	@commands.command(aliases=['serverstatus', 'sinfo', 'si'])
 	async def serverinfo(self, ctx):
 		"""Server information"""
-		await self.ucmd("serverinfo")
+
 		members = ctx.guild.member_count
 		total_online_members = 0
 		online_members = 0
@@ -146,7 +137,7 @@ class ServerInfo(commands.Cog, name="Server"):
 	@commands.command()
 	async def logo(self,ctx):
 		"""Get server logo"""
-		await self.ucmd("logo")
+		
 		async with aiohttp.ClientSession() as s:
 			async with s.get(str(ctx.guild.icon_url)) as r:
 				data = await r.read()
@@ -164,7 +155,6 @@ class ServerInfo(commands.Cog, name="Server"):
 	@commands.has_permissions(manage_guild=True)
 	async def serverbg(self, ctx):
 		"""Change the background image of profile/rank card. `serverbg reset` Will reset it to default"""
-		await self.ucmd("serverbg")
 		fname = f"static/img/{ctx.guild.id}.png"
 		
 		if len(ctx.message.attachments) >0:

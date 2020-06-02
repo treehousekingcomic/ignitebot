@@ -7,24 +7,13 @@ class Moderation(commands.Cog):
     """Server moderation. Such as Kick, Ban, Mute."""
     def __init__(self, client):
         self.client = client
-    
-    async def ucmd(self, cmd:str):
-      data = await self.client.pgdb.fetchrow("SELECT * FROM cmduse WHERE name = $1", cmd)
-  	
-      if data:
-          uses = data['uses'] + 1
-          await self.client.pgdb.execute("UPDATE cmduse SET uses = $1 WHERE name = $2", uses, data['name'])
-      else:
-         await self.client.pgdb.execute("INSERT INTO cmduse(name, uses) VALUES($1, $2)", cmd, 1)
 
     @commands.command()
     @commands.has_permissions(kick_members=True)
     @commands.bot_has_permissions(kick_members=True)
-    async def kick(self, ctx, member:discord.Member=None, * , reason='Unspecified'):
+    async def kick(self, ctx, member:discord.Member, * , reason='Unspecified'):
         """Kicks someone. Requires kick members permission."""
-        if member is None:
-        	return await ctx.send("Please mention a member to kick.")
-        await self.ucmd("kick")
+        
         try:
             await member.kick(reason=reason)
             await ctx.send(f'**{member.name}** has been kicked.')
@@ -35,11 +24,9 @@ class Moderation(commands.Cog):
     @commands.command()
     @commands.has_permissions(ban_members=True)
     @commands.bot_has_permissions(ban_members=True)
-    async def ban(self, ctx, member:discord.Member=None, * , reason='Unspecified'):
+    async def ban(self, ctx, member:discord.Member,* , reason='Unspecified'):
         """Bans someone. Requires ban members permission"""
-        if member is None:
-        	return await ctx.send("Please mention a member to ban.")
-        await self.ucmd("ban")
+        
         try:
         	await member.ban(reason=reason)
         	await ctx.send(f'**{member.name} has been Banned**')
@@ -48,14 +35,9 @@ class Moderation(commands.Cog):
     
     @commands.command()
     @commands.has_permissions(manage_roles=True)
-    async def mute(self, ctx, member:discord.Member = None, *, reason='Unspecified'):
+    async def mute(self, ctx, member:discord.Member, *, reason='Unspecified'):
         """Mute someone. Requires manage roles permission. Also setup warning role first in server config."""
-        
-        if member is None:
-        	return await ctx.send("Please mention a member to mute.")
-        
-        await self.ucmd("mute")
-        #await self.client.pgdb.execute("INSERT INTO guilddata(guildid, prefix) VALUES(696962067332071454, '..')")
+
         res =await self.client.pgdb.fetchrow("SELECT * FROM guilddata WHERE guildid= $1", ctx.guild.id)
         wnr = res['wnr']
         
@@ -79,13 +61,9 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
-    async def unmute(self, ctx, member:discord.Member = None):
+    async def unmute(self, ctx, member:discord.Member):
         """Unmutes a muted member"""
         
-        if member is None:
-        	return await ctx.send("Please mention a muted member to unmute.")
-        
-        await self.ucmd("unmute")
         res =await self.client.pgdb.fetchrow("SELECT * FROM guilddata WHERE guildid= $1", ctx.guild.id)
         wnr = res['wnr']
         if member != None:
@@ -116,17 +94,6 @@ class Moderation(commands.Cog):
     async def addrole(self, ctx, member:discord.Member,  role:discord.Role):
         """Give someone a role."""
         
-        if role is None and member is None:
-        	return await ctx.send("Please mention a member and a role")
-        
-        if role is None:
-        	return await ctx.send("Please mention a role.")
-        
-        if member is None:
-        	return await ctx.send("Please mention a member to remove role.")
-        	
-        
-        await self.ucmd("addrole")
         already = False
         for mrole in member.roles:
             if role == mrole:
@@ -149,19 +116,9 @@ class Moderation(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
-    async def removerole(self, ctx, member:discord.Member=None,  role:discord.Role=None):
+    async def removerole(self, ctx, member:discord.Member,  role:discord.Role):
         """Remove a role from someone"""
-        
-        if role is None and member is None:
-        	return await ctx.send("Please mention a member and a role")
-        
-        if role is None:
-        	return await ctx.send("Please mention a role.")
-        
-        if member is None:
-        	return await ctx.send("Please mention a member to remove role.")
-        	
-        await self.ucmd("removerole")
+
         already = False
         for mrole in member.roles:
             if role == mrole:

@@ -22,23 +22,15 @@ class CleverBot(commands.Cog, name="Cleverbot"):
 	async def get_prefix(self, id):
 		data = await self.client.pgdb.fetchrow("SELECT * FROM guilddata WHERE guildid = $1", id)
 		return data['prefix']	
-	
-	async def ucmd(self, cmd:str):
-		data = await self.client.pgdb.fetchrow("SELECT * FROM cmduse WHERE name = $1", cmd)
-  	
-		if data:
-			uses = data['uses'] + 1
-			await self.client.pgdb.execute("UPDATE cmduse SET uses = $1 WHERE name = $2", uses, data['name'])
-		else:
-			await self.client.pgdb.execute("INSERT INTO cmduse(name, uses) VALUES($1, $2)", cmd, 1)
-	
+
 	@commands.command()
 	@commands.cooldown(1, 7, commands.BucketType.user)
 	async def ask(self, ctx, *, question:str):
 		"""Ask a question to bot."""
-		await self.ucmd("ask")
+		
 		async with ctx.channel.typing():
 			resp = await self.cb.ask(question)
+			#await ctx.send(resp)
 			await ctx.send(f"> {question} \n{ctx.author.mention} {resp.text}")
 	
 	@ask.error
@@ -50,7 +42,7 @@ class CleverBot(commands.Cog, name="Cleverbot"):
 	@commands.command(aliases=['conv', 'talk'])
 	async def conversation(self, ctx):
 		"""Start conversation with bot."""
-		await self.ucmd("convo")
+
 		prefix = await self.get_prefix(ctx.guild.id)
 		
 		data = await self.client.pgdb.fetchrow("SELECT * FROM convo WHERE userid = $1", ctx.author.id)

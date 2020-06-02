@@ -7,20 +7,11 @@ class Todo(commands.Cog):
 	"""What to do?"""
 	def __init__(self, client):
 		self.client = client
-  
-	async def ucmd(self, cmd:str):
-		data = await self.client.pgdb.fetchrow("SELECT * FROM cmduse WHERE name = $1", cmd)
-  	
-		if data:
-			uses = data['uses'] + 1
-			await self.client.pgdb.execute("UPDATE cmduse SET uses = $1 WHERE name = $2", uses, data['name'])
-		else:
-			await self.client.pgdb.execute("INSERT INTO cmduse(name, uses) VALUES($1, $2)", cmd, 1)
-
+ 
 	@commands.group(invoke_without_command=True)
 	async def todo(self, ctx):
 		"""Add, view and clear todo"""
-		await self.ucmd("todo")
+
 		query = await self.client.pgdb.fetch(f"SELECT * FROM todos WHERE userid = $1", ctx.author.id)
 		msg = ""
 		count = 0
@@ -37,9 +28,9 @@ class Todo(commands.Cog):
 			await ctx.send(embed=embed)
 	
 	@todo.command()
-	async def add(self, ctx, *, todo:str):
-		await self.client.pgdb.execute("INSERT INTO todos(userid, content) VALUES($1, $2)", ctx.author.id, todo)
-		await ctx.send("Todo added!")
+	async def add(self, ctx, *, text:str):
+		await self.client.pgdb.execute("INSERT INTO todos(userid, content) VALUES($1, $2)", ctx.author.id, text)
+		await ctx.send(f"Todo added! `{text}`")
 
 	@todo.command()
 	async def delete(self, ctx, index:int):

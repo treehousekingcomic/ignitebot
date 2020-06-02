@@ -15,15 +15,6 @@ class Covid(commands.Cog):
 		self.corona = coroapi.Corona()
 		self.countries = self.corona.countries
   
-	async def ucmd(self, cmd:str):
-		data = await self.client.pgdb.fetchrow("SELECT * FROM cmduse WHERE name = $1", cmd)
-  	
-		if data:
-			uses = data['uses'] + 1
-			await self.client.pgdb.execute("UPDATE cmduse SET uses = $1 WHERE name = $2", uses, data['name'])
-		else:
-			await self.client.pgdb.execute("INSERT INTO cmduse(name, uses) VALUES($1, $2)", cmd, 1)
-	
 	def get_global(self):
 		data = self.corona.get_global_stats()
 		return data
@@ -39,7 +30,7 @@ class Covid(commands.Cog):
 	@commands.command(aliases=['corona','covid-19','covid19'])
 	async def covid(self, ctx, *,country:str=None):
 		"""Get stats of a country or whole world"""
-		await self.ucmd("covid")
+		
 		gld = self.client.get_guild(700374484955299900)
 		
 		emj = discord.utils.get(gld.emojis, name="igloading")
@@ -75,10 +66,6 @@ class Covid(commands.Cog):
 				embed.description = some_stuff
 				
 				await ctx.send(embed=embed)
-			
-				
-				
-				
 
 def setup(client):
 	client.add_cog(Covid(client))

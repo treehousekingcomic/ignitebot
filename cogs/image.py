@@ -22,16 +22,7 @@ class ImageEdit(commands.Cog, name="Image"):
 	"""Some cool image filters and funny edits."""
 	def __init__(self, client):
 		self.client = client
-	
-	async def ucmd(self, cmd:str):
-		data = await self.client.pgdb.fetchrow("SELECT * FROM cmduse WHERE name = $1", cmd)
-  	
-		if data:
-			uses = data['uses'] + 1
-			await self.client.pgdb.execute("UPDATE cmduse SET uses = $1 WHERE name = $2", uses, data['name'])
-		else:
-			await self.client.pgdb.execute("INSERT INTO cmduse(name, uses) VALUES($1, $2)", cmd, 1)
-	
+
 	async def dl_img(self, link, filename):
 		async with aiohttp.ClientSession() as s:
 			async with s.get(link) as r:
@@ -59,7 +50,7 @@ class ImageEdit(commands.Cog, name="Image"):
 	@commands.cooldown(1,10, commands.BucketType.user)
 	async def stars(self, ctx):
 		"""Add a layer of stars on your photo"""
-		await self.ucmd("stars")
+
 		link = str(ctx.author.avatar_url)
 		fp = await self.grn(ctx.author.id)
 		
@@ -118,7 +109,6 @@ class ImageEdit(commands.Cog, name="Image"):
 		p1 = boy
 		p2 = girl
 		
-		await self.ucmd("lovers")
 		if p2 is None:
 			if p1 is None:
 				await ctx.send("Please mention atleast one person!")
@@ -178,7 +168,6 @@ class ImageEdit(commands.Cog, name="Image"):
 	@commands.cooldown(1,10, commands.BucketType.user)
 	async def frame(self, ctx, member:typing.Union[discord.Member, str]=None):
 		"""Add your photo in a frame. Or mention someone for his photo."""
-		await self.ucmd("frame")
 		
 		mem = member
 		
@@ -241,7 +230,6 @@ class ImageEdit(commands.Cog, name="Image"):
 	@commands.cooldown(1,15, commands.BucketType.user)
 	async def getcolors(self, ctx, member:discord.Member=None):
 		"""Get colors from a photo with color value"""
-		await self.ucmd("getcolors")
 		
 		mem = member
 		
@@ -261,10 +249,11 @@ class ImageEdit(commands.Cog, name="Image"):
 		await ctx.send(file=file)
 		os.remove(img)
 	
-	@commands.command()
+	@commands.command(hidden=True)
 	@commands.cooldown(1,15, commands.BucketType.user)
 	async def caption(self, ctx, link:str=None):
 		"""Summarizes the content of an image in a one sentence description."""
+		
 		if len(ctx.message.attachments) > 0:
 			filename = ctx.message.attachments[0].filename
 			
@@ -288,10 +277,11 @@ class ImageEdit(commands.Cog, name="Image"):
 		embed.set_image(url=plink)
 		await ctx.send(embed= embed)
 	
-	@commands.command()
+	@commands.command(hidden=True)
 	@commands.cooldown(1,15, commands.BucketType.user)
 	async def colorize(self, ctx, link:str=None):
 		"""Colorize balck and white photo."""
+		
 		if len(ctx.message.attachments) > 0:
 			filename = ctx.message.attachments[0].filename
 			
@@ -319,6 +309,7 @@ class ImageEdit(commands.Cog, name="Image"):
 	@commands.cooldown(1,15, commands.BucketType.user)
 	async def isnsfw(self, ctx, link:str=None):
 		"""Check NSFW Score of an Image."""
+		
 		if len(ctx.message.attachments) > 0:
 			filename = ctx.message.attachments[0].filename
 			
