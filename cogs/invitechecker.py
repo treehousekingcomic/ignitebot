@@ -14,14 +14,9 @@ class Invites(commands.Cog):
     	user = ctx.author
     
     invites = await ctx.guild.invites()
-    #await ctx.send(invites)
-    uinv = []
-    for invite in invites:
-      if invite.inviter == user:
-        uinv.append(invite)
-    count = 0
-    for i in uinv:
-      count += i.uses
+    uinv = [] # Not needed
+    uinv = [invite for invite in invites if invite.inviter == user] # Get list of invites | Then you for loop for count or:
+    count = len([invite for invite in invites if invite.inviter == user]) # Does everything and gives you a number
     
     await ctx.send(f"**{user}** have {count} active invites in this server!")
     
