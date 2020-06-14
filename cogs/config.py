@@ -135,29 +135,18 @@ class SeverConfig(commands.Cog, name="Config"):
 		await self.sem(ctx, "Auto role config", msg )
 	
 	@config.command()
-	async def prefix(self, ctx, prefix:str=None ):
+	async def prefix(self, ctx, prefix:str):
 		"""Change prefix for your server"""
 		
-		if prefix is None:
-			return await ctx.send("New prefix is required.")
-		
-		if type(prefix) == int:
-			prefix = str(prefix)
-		if type(prefix) == str:
-			data = prefix
-			msg = "`" + data + "` is the new pefix for this server."
-			await self.client.pgdb.execute(f"UPDATE guilddata SET prefix= $1 WHERE guildid=$2", data, ctx.guild.id)
-		else:
-			msg = "Not a valid prefix. Try a new one"
+		data = prefix
+		msg = "`" + data + "` is the new pefix for this server."
+		await self.client.pgdb.execute(f"UPDATE guilddata SET prefix= $1 WHERE guildid=$2", data, ctx.guild.id)
 	
 		await self.sem(ctx, "Prefix config", msg )
 	
 	@config.command()
-	async def welcomemessage(self, ctx, *,message:str=None):
+	async def welcomemessage(self, ctx, *,message:str):
 		"""Setup a welcome message"""
-		
-		if message is None:
-			return await ctx.send("Message is required.")
 		
 		if type(message) == str and message != 'disable':
 			data = message

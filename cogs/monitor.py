@@ -71,16 +71,26 @@ class Monitor(commands.Cog):
 		await ctx.send("Monitor removed.")
 	
 	@monitor.command()
-	async def add(self, ctx, user:discord.Member):
+	async def add(self, ctx, bot:discord.Member):
 		"""Monitor someone."""
-		if user is None:
-			return await ctx.send("Please speficy an user.")
+		if bot is None:
+			return await ctx.send("Please speficy a bot.")
 		
+		user = bot
+		
+		if not user.bot:
+			return await ctx.send("Only bot can be monitored.")
+		
+		data = await self.client.pgdb.fetch("SELECT * FROM monitor WHERE mentor = $1", ctx.author.id)
+				
+		if len(data) >= 3:
+			return await ctx.send("Maximum monitor reached. Delete any previous monitor to create new one.")
+
 		data = await self.client.pgdb.fetchrow("SELECT * FROM monitor WHERE target = $1 and mentor = $2", user.id, ctx.author.id)
 		if data:
 			gld = self.client.get_guild(data['guild'])
 			if gld:
-				return await ctx.send("You are already monitoring this user.")
+				return await ctx.send("You are already monitoring this bot.")
 			else:
 				await self.client.bot.pgdb.execute("UPDATE monitor SET guild = $1 WHERE target = $2 and mentor = $3", ctx.author.guild.id, user.id, ctx.author.id)
 				await ctx.send(f"New monitor created. {str(user)}")

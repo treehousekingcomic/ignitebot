@@ -37,9 +37,7 @@ class Essentials(commands.Cog):
 			pass
     
 		try:
-		#res = await self.client.pgdb.fetchrow(f"SELECT * FROM guilddata WHERE guildid= $1", ctx.guild.id)
 			role = discord.utils.get(ctx.guild.roles, id=wres['wr'])
-			#print(role)
 			await ctx.add_roles(role)
 		except:
 			pass
@@ -139,8 +137,10 @@ class Essentials(commands.Cog):
 	async def on_guild_join(self, guild):
 		sg = self.client.get_guild(700374484955299900)
 		chan = discord.utils.get(sg.text_channels, id=703622522503168126)
-		await chan.send(f"🎉 Server invite: **{guild.name}** > **{guild.member_count}**")
-    
+		msg = f"🎉 Server invite: **{guild.name}** > **{guild.member_count}**"
+		msg = discord.utils.escape_markdown(discord.utils.escape_mentions(msg))
+		
+		await chan.send(msg)
 		try:
 			sc = guild.system_channel
 			await sc.send("🏍 Beep. Boop. look, I am here! To get started type `..help`")
@@ -158,7 +158,10 @@ class Essentials(commands.Cog):
 	async def on_guild_remove(self, guild):
 		sg = self.client.get_guild(700374484955299900)
 		chan = discord.utils.get(sg.text_channels, id=703622522503168126)
-		await chan.send(f"👋 Server leave : **{guild.name}** > **{guild.member_count}**")
+		msg = f"👋 Server leave : **{guild.name}** > **{guild.member_count}**"
+		msg = discord.utils.escape_markdown(discord.utils.escape_mentions(msg))
+		
+		await chan.send(msg)
     
 	@commands.command(hidden=True)
 	@commands.is_owner()

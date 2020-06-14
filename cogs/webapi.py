@@ -166,7 +166,7 @@ class Api(commands.Cog):
       if search == "random":
         url = f"https://api.giphy.com/v1/gifs/random?api_key={GIPHYKEY}&rating=G"
       else:
-        url = f"https://api.giphy.com/v1/gifs/search?api_key=GDCrrFk8RzjzjU0bwKQpfJNaY3Ypmb3M&q={search}&limit=30&offset=0&rating=G&lang=en"
+        url = f"https://api.giphy.com/v1/gifs/search?api_key={GIPHYKEY}&q={search}&limit=30&offset=0&rating=G&lang=en"
       async with aiohttp.ClientSession() as s:
         async with s.get(str(url)) as r:
           data = await r.json()

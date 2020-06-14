@@ -138,18 +138,10 @@ class ServerInfo(commands.Cog, name="Server"):
 	async def logo(self,ctx):
 		"""Get server logo"""
 		
-		async with aiohttp.ClientSession() as s:
-			async with s.get(str(ctx.guild.icon_url)) as r:
-				data = await r.read()
-      
-		fname = "static/logos/" + ctx.guild.name.replace(" ","_") + str(random.randint(1,10000)) + ".png"
-      
-		with open(fname, 'wb') as f:
-			f.write(data)
-      
-		file = discord.File(fp=fname, filename="icon.png")
-		await ctx.send(file=file)
-		os.remove(fname)
+		embed = discord.Embed(title=ctx.guild.name)
+		embed.set_image(url=str(ctx.guild.icon_url))
+		
+		await ctx.send(embed=embed)
 	
 	@commands.group(invoke_without_command=True)
 	@commands.has_permissions(manage_guild=True)
