@@ -169,6 +169,7 @@ class Admin(commands.Cog):
     	await ctx.send(f"Do `{ctx.prefix}help disable` to get help on this command")
     
     @disable.command(hidden=True)
+    @commands.is_owner()
     async def command(self, ctx, command:str=None):
     	if command is None:
     		return await ctx.send("Please specify a command to disable")
@@ -228,7 +229,8 @@ class Admin(commands.Cog):
     	"""Disable command cog or group"""
     	await ctx.send(f"Do `{ctx.prefix}help enable` to get help on this command")
     
-    @enable.command(hidden=True)
+    @enable.command(hidden=True, name="command")
+    @commands.is_owner()
     async def cmd(self, ctx, command:str=None):
     	if command is None:
     		return await ctx.send("Please specify a command to enable")
@@ -254,7 +256,7 @@ class Admin(commands.Cog):
     			return await ctx.send(e)
     		await ctx.send(f"Command `{cmd.qualified_name}` is disabled now")
     
-    @enable.command(hidden=True)
+    @enable.command(hidden=True, name="cog")
     @commands.is_owner()
     async def cogg(self, ctx, cog:str=None):
     	if cog is None:

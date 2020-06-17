@@ -20,13 +20,14 @@ class SeverConfig(commands.Cog, name="Config"):
 		await ctx.send(embed=embed)
 
 	@commands.group(invoke_without_command = True)
-	@commands.has_permissions(administrator=True)
+	@commands.has_permissions(manage_guild=True)
 	async def config(self, ctx):
 		"""Edit server configuration"""
 		
 		return await ctx.send(f"Do `{ctx.prefix}help config` to see available commands.")
 	
 	@config.command()
+	@commands.has_permissions(manage_guild=True)
 	async def joinchannel(self, ctx, channel:typing.Union[discord.TextChannel, str]=None):
 		"""Setup welcome/join channel"""
 		
@@ -46,6 +47,7 @@ class SeverConfig(commands.Cog, name="Config"):
 		await self.sem(ctx, "Join channel config", msg )
 	
 	@config.command()
+	@commands.has_permissions(manage_guild=True)
 	async def leavechannel(self, ctx, channel:typing.Union[discord.TextChannel, str]=None ):
 		"""Setup leave/bye bye channel"""
 		
@@ -67,6 +69,7 @@ class SeverConfig(commands.Cog, name="Config"):
 	
 
 	@config.command()
+	@commands.has_permissions(manage_guild=True)
 	async def warningrole(self, ctx, role:typing.Union[discord.Role, str]=None ):
 		"""Setup warning role."""
 		
@@ -91,6 +94,7 @@ class SeverConfig(commands.Cog, name="Config"):
 		await self.sem(ctx, "Warning role config", msg )
 	
 	@config.command()
+	@commands.has_permissions(manage_guild=True)
 	async def leveluplog(self, ctx, channel:typing.Union[discord.TextChannel, str]=None ):
 		"""Setup level up log channel"""
 		
@@ -111,6 +115,7 @@ class SeverConfig(commands.Cog, name="Config"):
 		await self.sem(ctx, "Level Up log config", msg )
 
 	@config.command()
+	@commands.has_permissions(manage_guild=True)
 	async def autorole(self, ctx, role:typing.Union[discord.Role, str]=None ):
 		"""Add role to a member"""
 		
@@ -135,6 +140,7 @@ class SeverConfig(commands.Cog, name="Config"):
 		await self.sem(ctx, "Auto role config", msg )
 	
 	@config.command()
+	@commands.has_permissions(manage_guild=True)
 	async def prefix(self, ctx, prefix:str):
 		"""Change prefix for your server"""
 		
@@ -145,6 +151,7 @@ class SeverConfig(commands.Cog, name="Config"):
 		await self.sem(ctx, "Prefix config", msg )
 	
 	@config.command()
+	@commands.has_permissions(manage_guild=True)
 	async def welcomemessage(self, ctx, *,message:str):
 		"""Setup a welcome message"""
 		
@@ -242,7 +249,7 @@ class SeverConfig(commands.Cog, name="Config"):
 		await ctx.send(f"NSFW filter is {state}")
 	
 	@nsfw.command()
-	@commands.has_permissions(administrator=True)
+	@commands.has_permissions(manage_guild=True)
 	async def toggle(self, ctx):
 		"""Toggle nsfw filter"""
 		data = await self.client.pgdb.fetchrow("SELECT * FROM guilddata WHERE guildid = $1", ctx.guild.id)

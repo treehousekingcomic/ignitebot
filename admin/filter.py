@@ -18,6 +18,9 @@ class Filter(commands.Cog):
 	@commands.Cog.listener()
 	async def on_message(self, message):
 		data = await self.client.pgdb.fetchrow("SELECT * FROM guilddata WHERE guildid = $1", message.guild.id)
+		if not data:
+			return
+		
 		state = data['nsfw']
 		
 		if state == "Off":

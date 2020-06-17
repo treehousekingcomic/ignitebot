@@ -12,15 +12,6 @@ class Tag(commands.Cog):
 	def __init__(self, client):
 		self.client = client
 	
-	async def ucmd(self, cmd:str):
-		data = await self.client.pgdb.fetchrow("SELECT * FROM cmduse WHERE name = $1", cmd)
-		
-		if data:
-			uses = data['uses'] + 1
-			await self.client.pgdb.execute("UPDATE cmduse SET uses = $1 WHERE name = $2", uses, data['name'])
-		else:
-			await self.client.pgdb.execute("INSERT INTO cmduse(name, uses) VALUES($1, $2)", cmd, 1)
-	
 	async def tag_exists(self, tagname, guildid):
 		data = await self.client.pgdb.fetchrow("SELECT * FROM tags WHERE tagname = $1 AND guildid = $2", tagname, guildid)
 		if data:
@@ -131,7 +122,7 @@ class Tag(commands.Cog):
 	#@commands.has_permissions(administrator=True)
 	async def create(self, ctx, *, name:str=None):
 		"""Create a tag"""
-		reserved_words = ["create", "edit", "delete", "list", "info", "stats"]
+		reserved_words = ["create", "edit", "delete", "list", "info", "stats", "transfer", "claim","search"]
 		def check(m):
 			return m.author == ctx.author and m.channel == ctx.channel
 		
@@ -176,14 +167,12 @@ class Tag(commands.Cog):
 			await ctx.send(f"This tag doesn't exists. `{name}`")
 		
 	@tag.command(name="info")
-	async def _tag_info(self, ctx, *, name:str=None):
+	async def _tag_info(self, ctx, *, name):
 		"""View info of a tag"""
 		embed = discord.Embed(
 			color = discord.Color.blurple(),
 			description = ""
 		)
-		if name is None:
-			return await ctx.send("Please specify a tag name.")
 		
 		tag = await self.tag_exists(name, ctx.guild.id)
 		if tag[0]:
@@ -203,11 +192,10 @@ class Tag(commands.Cog):
 		
 	@tag.command(name="delete")
 	#@commands.has_permissions(administrator=True)
-	async def delete_tag(self, ctx, *,name:str=None):
+	async def delete_tag(self, ctx, *,name:str):
 		"""Delete a tag"""
 		dt = await self.tag_exists(name, ctx.guild.id)
 		if dt[0]:
-			
 			if ctx.author.guild_permissions.administrator:
 				pass
 			elif dt[1]['userid'] == ctx.author.id:
