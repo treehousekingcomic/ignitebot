@@ -55,14 +55,14 @@ async def on_message(message):
 
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
-        client.load_extension(f'cogs.{filename[:-3]}')
+        bot.load_extension(f'cogs.{filename[:-3]}')
 
 for filename in os.listdir('./admin'):
     if filename.endswith('.py') and filename.startswith("keychecker") == False:
-        client.load_extension(f'admin.{filename[:-3]}')
+        bot.load_extension(f'admin.{filename[:-3]}')
 
-client.loop.run_until_complete(create_db_pool())
-client.load_extension('jishaku')
+bot.loop.run_until_complete(create_db_pool())
+bot.load_extension('jishaku')
 
 
-client.run(TOKEN)
+bot.run(TOKEN)
