@@ -1,9 +1,6 @@
 import discord
-import json
-import time
 import os
 from discord.ext import commands, tasks
-import re
 from itertools import groupby
 from discord.utils import get
 import dotenv
