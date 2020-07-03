@@ -61,9 +61,6 @@ async def on_message(message):
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[:-3]}')
-for filename in os.listdir('./games'):
-  if filename.endswith('.py'):
-    client.load_extension(f"games.{filename[:-3]}")
 
 for filename in os.listdir('./admin'):
     if filename.endswith('.py') and filename.startswith("keychecker") == False:
