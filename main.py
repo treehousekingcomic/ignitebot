@@ -15,6 +15,7 @@ dotenv.load_dotenv(dotenv_path=env_path)
 #from Webserver import keep_alive
 
 TOKEN = os.getenv("TOKEN")
+DEVID = 579298652938305551
 
 
 os.environ["JISHAKU_NO_UNDERSCORE"] = "True"
@@ -23,138 +24,39 @@ os.environ["JISHAKU_HIDE"] = "True"
 
 
 async def create_db_pool():
-	client.pgdb = await asyncpg.create_pool(host="localhost", database="main", user="shah", password="shah")
-	
-	await client.pgdb.execute("""
-	CREATE TABLE IF NOT EXISTS guilddata(
-	id serial PRIMARY KEY,
-	guildid bigint NOT NULL,
-	prefix VARCHAR(20) NOT NULL,
-	wnr bigint NULL,
-	wci bigint NULL,
-	bci bigint NULL,
-	wr bigint NULL,
-	igr bigint NULL,
-	wlcmsg TEXT NULL,
-	nameprefix TEXT NULL
-	)
-	""")
-	
-	await client.pgdb.execute("""
-	CREATE TABLE IF NOT EXISTS admin(
-	id serial PRIMARY KEY,
-	name VARCHAR(50) NOT NULL,
-	password VARCHAR(50) NOT NULL,
-	userid bigint NOT NULL,
-	loggedin INTEGER NOT NULL
-	)
-	""")	
-	await client.pgdb.execute("""
-	CREATE TABLE IF NOT EXISTS keys(
-	id serial PRIMARY KEY,
-	key VARCHAR(30) NOT NULL,
-	guildid bigint NOT NULL,
-	created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	valid_till timestamp NOT NULL
-	)
-	""")
-	
-	await client.pgdb.execute("""
-	CREATE TABLE IF NOT EXISTS rr(
-	id serial PRIMARY KEY,
-	messageid bigint NOT NULL,
-	roleid bigint NOT NULL,
-	emojiid bigint NOT NULL,
-	guildid bigint NOT NULL
-	)
-	""")
-	
-	await client.pgdb.execute("""
-	CREATE TABLE IF NOT EXISTS todos(
-	id serial PRIMARY KEY,
-	userid bigint NOT NULL,
-	content TEXT NOT NULL
-	)
-	""")
-	
-	await client.pgdb.execute("""
-	CREATE TABLE IF NOT EXISTS levels(
-	id serial PRIMARY KEY,
-	userid bigint NOT NULL,
-	guildid bigint NOT NULL,
-	exp bigint NOT NULL,
-	level bigint NOT NULL,
-	prev_msg TEXT NULL
-	)""")
-	
-	await client.pgdb.execute("""
-	CREATE TABLE IF NOT EXISTS tags(
-	id serial PRIMARY KEY,
-	tagname VARCHAR(200) NOT NULL,
-	content TEXT NULL,
-	userid bigint NOT NULL,
-	guildid bigint NOT NULL,
-	tagtype VARCHAR(10) NULL,
-	ttp VARCHAR(20) NOT NULL,
-	emt VARCHAR(200) NULL,
-	emb TEXT NULL,
-	rid bigint NULL
-	)""")
-	
-	await client.pgdb.execute("""
-	CREATE TABLE IF NOT EXISTS cash(
-	id serial PRIMARY KEY,
-	userid bigint NOT NULL,
-	cash bigint NOT NULL)"""
-	)
-	
-	await client.pgdb.execute("""
-	CREATE TABLE IF NOT EXISTS cmduse(
-	id serial PRIMARY KEY,
-	name VARCHAR(50) NOT NULL,
-	uses bigint NOT NULL DEFAULT 1
-	)
-	""")
-	
-	await client.pgdb.execute("""
-	CREATE TABLE IF NOT EXISTS convo(
-	id serial PRIMARY KEY,
-	userid bigint NOT NULL,
-	channelid bigint NOT NULL
-	)
-	""")
-	
-	
-	
+	bot.pgdb = await asyncpg.create_pool(host="localhost", database="main", user="shah", password="shah")
 
-async def get_prefix(client, message):
-  id = message.guild.id
-  res = await client.pgdb.fetchrow("SELECT prefix FROM guilddata WHERE guildid = $1" , id)
-  prefix = res['prefix']
-  return prefix
-
-client = commands.AutoShardedBot(command_prefix=get_prefix)
-client.launch_time = datetime.utcnow()
+bot = commands.Bot(
+    command_prefix="m!",
+    description='Ignite Music',
+    owner_id=DEVID,
+    case_insensitive=True
+)
+bot.launch_time = datetime.utcnow()
 
 
-@client.event
+@bot.event
 async def on_ready():
-	print("Bot is ready")
-	client.load_extension("admin.keychecker")
+	print(f'{bot.user} has connected to Discord! ID:{bot.user.id}')
+        await bot.change_presence(activity=discord.Game(name="Trying to join 75+ servers😩"),
+                                  status=discord.Status.online)
+        for cog in cogs:
+            bot.load_extension(cog)
+        bot.load_extension("pro.delete_expired")
+        bot.load_extension("pro.system")
+        print("Total Users: " + str(len(bot.users)))
+        print("Total Servers: " + str(len(bot.guilds)))
+        bot.DEVUSER = bot.get_user(579298652938305551)
+        DEVUSER = bot.DEVUSER
+        shared = len(
+            [g for g in bot.guilds
+             if DEVUSER in g.members]
+        )
+        print("Total # of Shared Servers with DEV: " + str(shared))
 
-@client.event
+@bot.event
 async def on_message(message):
-  await client.process_commands(message)
-  
-@client.event
-async def on_command(ctx):
-	data = await client.pgdb.fetchrow("SELECT * FROM cmduse WHERE name = $1", "total")
-		
-	if data:
-		uses = data['uses'] + 1
-		await client.pgdb.execute("UPDATE cmduse SET uses = $1 WHERE name = $2", uses, data['name'])
-	else:
-		await client.pgdb.execute("INSERT INTO cmduse(name, uses) VALUES($1, $2)", "total", 1)
+  await bot.process_commands(message)
 
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
