@@ -8,7 +8,6 @@ import random
 import re
 import typing
 import wavelink
-import asyncio
 from discord.ext import commands, menus
 
 # URL matching REGEX...
