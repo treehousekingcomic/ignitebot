@@ -1,7 +1,5 @@
-#pylint:disable=W0312
 import discord
 from discord.ext import commands
-import traceback
 import asyncio
 
 class Essentials(commands.Cog):
