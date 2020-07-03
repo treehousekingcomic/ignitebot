@@ -8,10 +8,6 @@ class Essentials(commands.Cog):
 
 	@commands.Cog.listener()
 	async def on_command_error(self, ctx, error):
-		sg = self.client.get_guild(700374484955299900)
-		chan = discord.utils.get(sg.text_channels, id=711777804412387369)
-		
-
 		if isinstance(error, commands.BotMissingPermissions):
 			if hasattr(ctx.command, "on_error"):
 				return
