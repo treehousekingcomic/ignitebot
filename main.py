@@ -1,8 +1,6 @@
 import discord
 import os
-from discord.ext import commands, tasks
-from itertools import groupby
-from discord.utils import get
+from discord.ext import commands
 import dotenv
 from datetime import datetime
 import asyncpg
