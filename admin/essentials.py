@@ -1,11 +1,8 @@
 #pylint:disable=W0312
 import discord
-import json
-import os
-from discord.ext import tasks, commands
+from discord.ext import commands
 import traceback
 import asyncio
-import traceback
 import sys
 
 class Essentials(commands.Cog):
